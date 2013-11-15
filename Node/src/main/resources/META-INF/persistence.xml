@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+  <persistence-unit name="soda4LCADBPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <non-jta-data-source>java:comp/env/jdbc/soda4LCAdbconnection</non-jta-data-source>
+    <class>eu.europa.ec.jrc.lca.commons.domain.NodeCredentials</class>
+	<class>eu.europa.ec.jrc.lca.commons.domain.RegistryCredentials</class>
+	<class>eu.europa.ec.jrc.lca.commons.domain.Nonce</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <shared-cache-mode>ALL</shared-cache-mode>
+    <properties>
+      <property name="eclipselink.cache.type.default" value="SoftWeak"/>
+      <property name="javax.persistence.nonJtaDataSource" value="java:comp/env/jdbc/soda4LCAdbconnection"/>
+      <property name="eclipselink.session.customizer" value="de.iai.ilcd.persistence.JPAEclipseLinkSessionCustomizer"/>
+      <property name="eclipselink.target-database" value="MySQL"/>
+      <property name="eclipselink.weaving" value="static"/>
+<!--      <property name="eclipselink.cache.shared.default" value="false"/>-->
+
+<!--      <property name="eclipselink.ddl-generation" value="create-tables" />  
+      <property name="eclipselink.ddl-generation.output-mode" value="both"/>
+      <property name="eclipselink.create-ddl-jdbc-file-name" value="soda_ddl.sql" />
+      <property name="eclipselink.application-location" value="/Users/oliver.kusche/Desktop" />
+-->      <property name="eclipselink.logging.level" value="WARNING"/> 
+    </properties>
+  </persistence-unit>
+</persistence>

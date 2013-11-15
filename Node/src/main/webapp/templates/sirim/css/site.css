@@ -1,0 +1,289 @@
+/*-------------------------------------------------------------------------------
+ Copyright (c) 2011 Karlsruhe Institute of Technology (KIT) - Institute for 
+ Applied Computer Science (IAI). 
+ 
+ This file is part of ILCD Database.
+ 
+ ILCD Database is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ 
+ ILCD Database is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ 
+ You should have received a copy of the GNU General Public License
+ along with ILCD Database.  If not, see <http://www.gnu.org/licenses/>.
+ 
+ Contributors:
+     clemens.duepmeier@kit.edu - initial API and implementation
+-------------------------------------------------------------------------------*/
+* {
+    font-family: Arial, Helvetica, sans-serif !important;
+}
+
+body {
+  margin: 0px;
+  margin-top: 1em;
+  padding: 0px;
+  color: #000;
+  /* background: url(../image/bg2.jpg); */
+}
+
+.englishText {
+    color: #6d3813;
+    font-style: italic;
+}
+
+
+h1{font-size:1.5em;margin-top:1.5em;padding:0;}
+h2{font-size:1.2em;margin-top:1.2em;padding:0;}
+h3{font-size:1.2em;margin-top:0.7em;padding:0;}
+h4{font-size:1.0em;}
+h5{font-size:0.9em;}
+
+a:link {
+  color: #6d3813;
+  text-decoration: underline;
+}
+a:visited {
+  color: #6F5E53;
+  text-decoration: underline;
+}
+a:hover {
+  color: #6d3813;
+  text-decoration: none;
+}
+a:active {
+  color: #6d3813;
+  text-decoration: underline;
+}
+
+
+.txtwhite {
+  color: #fff;
+  background-color: #1f3303;
+  padding: 5px !important;
+}
+
+.menuBackground {
+  background-color: #1f3303;
+}
+
+.footlink, .footlink:link, .footlink:visited, .footlink:hover, .footlink:active {
+	text-decoration: underline;
+	color: #FFFFFF;
+	font-weight: bolder;
+	cursor:pointer;
+}
+.foottxt {
+	color: #FFFFFF;
+	font-weight: bolder;
+}
+
+.lmenuBar {
+    margin-left: 5px;
+    margin-bottom: 3px;
+}
+
+.lmenu {
+    padding: 5px;
+    margin-right: 3px;
+    background-color: #6d3813;
+    color: white;
+}
+
+.lmenu a {
+    color: white;
+}
+
+.chosenLMenu {
+    padding: 5px;
+    margin-right: 3px;
+    background-color: white;
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    border-bottom: 1px solid white; 
+}
+
+#outerTable {    
+    width: 100%;
+    height: 100%;
+}
+
+div#messagesBox {
+    display: inline-block;
+    margin: 1em 0;
+}
+
+div.ui-panel {
+    margin-bottom: 1em;
+}
+
+table {
+    font-size: 12px;
+}
+
+div#datasetPage table {
+    border-spacing: 1px;
+    width: 100%;
+}
+
+td.datasetBlock {
+    vertical-align: top;
+    padding: 5px;
+}
+
+div.datasetLabel {
+    font-size: 10px;
+}
+
+.highlighted {
+    border: 2px solid !important;
+}
+
+#processSearchForm {
+    display: inline-block;
+    margin: 10px;
+}
+
+#processSearchForm input, #processSearchForm select {
+    padding: 2px;
+    margin: 4px;
+    vertical-align: middle;
+}
+
+#processSearchForm .tdVAlignTop td {
+	vertical-align: top;
+}
+
+#generalForm {
+    display: inline-block;
+}
+
+#generalForm textarea {
+    width: 250px;
+    height: 100px;
+}
+
+#generalForm input, #generalForm select {
+    padding: 2px;
+    margin: 4px;
+    vertical-align: middle;
+}
+
+.loginForm {
+    display: inline-block;
+}
+
+div.buttonRight {
+    margin-top: 1em;
+    margin-right: 1em;
+    text-align: right;
+}
+
+div.buttonLeft {
+    margin-top: 1em;
+}
+
+div.buttonCenter {
+    margin-top: 1em;
+    text-align: center;
+}
+
+#filterForm #filterPanel {
+	min-width: 180px;
+}
+
+#tableForm {
+}
+
+#tableForm button {
+    margin-bottom: 1em;
+    margin-right: 1em;
+}
+
+#tableForm .ui-paginator-rpp-options {
+    margin-right: 0.5em !important;
+}
+
+iframe#console {
+    display: block;
+    margin-bottom: 2em;
+    width: 100%;
+    height: 300px;
+}
+
+span.redText {
+    color: red;
+}
+
+.boldText {
+    font-weight: bold;
+}
+
+div.floatRight {
+    float: right;
+}
+
+div.clearRight {
+    clear: right;
+}
+
+div.ourDataList ul, div.ourDataListNoBullet ul {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+div.ourDataList > .ui-widget-content, div.ourDataListNoBullet > .ui-widget-content {
+    border: none;
+}
+
+div.ourDataListNoBullet li {
+    list-style-type: none;
+}
+
+div.ourDataList li {
+    list-style-type: circle;
+    margin-left: 1.2em;
+}
+
+.ui-datatable {
+    text-align: left;
+}
+
+.ui-datatable th {
+    white-space: normal;
+}
+
+#leftColumn li.ui-widget-header {
+    margin-top: 1em !important;
+}
+
+.ui-state-active span {
+    color: #ffffff;
+}
+
+.ui-tooltip .headline {
+	display: block;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+.ui-tooltip .legendHeader {
+	display: block;
+	font-weight: bold;
+	font-size: smaller;
+	decoration: underline;
+}
+.ui-tooltip .listItem {
+	display: block;
+	font-weight: normal;
+	margin-top: 5px;
+}
+.ui-sortable-column-icon + span {
+	margin-left: 2px;
+}

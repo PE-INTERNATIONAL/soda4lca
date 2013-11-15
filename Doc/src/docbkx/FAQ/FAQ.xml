@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://www.oasis-open.org/docbook/xml/5.0/rng/docbook.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<article xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <info>
+        <title>soda4LCA release <?eval ${project.version}?> Frequently Asked Questions (FAQ)</title>
+        <subtitle>
+            <inlinemediaobject>
+                <imageobject>
+                    <imagedata fileref="images/soda4LCA_logo.png" width="200px" align="center"/>
+                </imageobject>
+            </inlinemediaobject>
+        </subtitle>
+    </info>
+    <sect1>
+        <title>What is soda4LCA?</title>
+        <para>soda4LCA is a web-based database application designed to store and retrieve Life Cycle Inventory (LCI) and Life Cycle Impact Assessment (LCIA) datasets formatted in
+            the ILCD format. It also exposed a RESTful service interface to communicate directly with other LCA software tools and/or databases. Multiple soda4LCA nodes can be
+            joined to a network, where a search operation will query all nodes in the network.</para>
+    </sect1>
+    <sect1>
+        <title>Do I have to purchase a license?</title>
+        <para>No. soda4LCA is provided in source and binary form under the <link xlink:href="http://www.gnu.org/licenses/">GNU General Public License (GPL)</link> that gives you
+            legal permission to run, copy, distribute and/or modify the software.</para>
+    </sect1>
+    <sect1>
+        <title>Does soda4LCA include any LCI/LCIA data?</title>
+        <para>No. soda4LCA is merely a sofware application. One source where you may obtain ILCD datasets free of charge is the European Commission's Platform on LCA at <link
+                xlink:href="http://lca.jrc.it/">http://lca.jrc.it/</link>.</para>
+    </sect1>
+    <sect1>
+        <title>What data formats are supported?</title>
+        <para>Currently, the European Commission's International Reference Life Cycle Data Format (ILCD Format) version 1.1 is supported.</para>
+    </sect1>
+    <sect1>
+        <title>What do I need to run a soda4LCA database node?</title>
+        <para>You need a computer running an operating system that supports both Java and MySQL. Usually that will be Linux, Mac OS X or Windows. Java (version 1.6 or newer), a
+            MySQL database (version 5.0 or newer) and Tomcat (version 6.0 or newer) need to be installed on that machine.</para>
+    </sect1>
+    <sect1>
+        <title>I want to join multiple nodes to a network. Do I need to setup a registry?</title>
+        <para>To join multiple soda4LCA nodes to a network, a registry is not necessarily needed. For every node that is supposed to be searching other nodes, follow these steps: <orderedlist>
+                <listitem>
+                    <para>Log in to the administration interface.</para>
+                </listitem>
+                <listitem>
+                    <para>From the "Network" menu, select "Add Node".</para>
+                </listitem>
+                <listitem>
+                    <para>Enter the service URL of the node you want to add to the list of network nodes.</para>
+                </listitem>
+                <listitem>
+                    <para>Repeat step 2 and 3 for every node that you want to be queried.</para>
+                </listitem>
+            </orderedlist>
+        </para>
+    </sect1>
+</article>

@@ -1,0 +1,898 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+#set( $process = $dataset )
+#set ($xmlProcess = $xmlDataset)
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+      <title>Process data set: $!process.getName().getValue()</title>
+      
+      #include("/html/style.vm")
+   </head>
+   <body>
+      <table class="top" cellpadding="3px">
+         <tr>
+            <td class="title" colspan="2">$!process.getName().getValue()</td>
+         </tr>
+         <tr>
+            <td class="toc" colspan="2"> Table of Contents: <a href="#processInformation">Process information</a>  -  <a href="#modellingAndValidation">Modelling and validation</a>  -  <a href="#administrativeInformation">Administrative information</a>  -  <a href="#exchanges">Inputs and Outputs</a></td>
+         </tr>
+
+         <tr>
+            <td class="section" colspan="2" style="padding-left: 10px;"><a name="processInformation"></a>Process information
+            </td>
+         </tr>
+
+         <tr xmlns:ilcd="http://lca.jrc.it/ILCD">
+            <td class="subsection" colspan="2" style="padding-left: 20px;">Key Data Set Information</td>
+         </tr>
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Location<span>Location, country or region the data set represents. [Note 1: This field does not refer to e.g. the country in which a specific
+                     site is located that is represented by this data set but to the actually represented country, region, or site. Note 2: Entry
+                     can be of type "two-letter ISO 3166 country code" for countries, "seven-letter regional codes" for regions or continents,
+                     or "market areas and market organisations", as predefined for the ILCD. Also a name for e.g. a specific plant etc. can be
+                     given here (e.g. "FR, Lyon, XY Company, Z Site"; user defined). Note 3: The fact whether the entry refers to production or
+                     to consumption / supply has to be stated in the name-field "Mix and location types" e.g. as "Production mix".]</span></a></td>
+            <td class="data"><span class="data_neutral">$!process.getGeography().getLocation()</span></td>
+         </tr>
+         #if ($process.getGeography().getDescription())
+         <tr class="">
+            <td class="fieldname" style="padding-left: 40px;"><a class="info" href="javascript:void(0);">Geographical representativeness description<span>Further explanations about additional aspects of the location: e.g. a company and/or site description and address, whether
+                     for certain sub-areas within the "Location" the data set is not valid, whether data is only valid for certain regions within
+                     the location indicated, or whether certain elementary flows or intermediate product flows are extrapolated from another geographical
+                     area.</span></a></td>
+            <td class="data"><span class="data_neutral">$!process.getGeography().getDescription().getDefaultValue()</span></td>
+         </tr>
+         #end
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Reference year<span>Start year of the time period for which the data set is valid (until year of "Data set valid until:"). For data sets that
+                     combine data from different years, the most representative year is given regarding the overall environmental impact. In that
+                     case, the reference year is derived by expert judgement.</span></a></td>
+            <td class="data"><span class="data_neutral">$!process.getTimeInformation().getReferenceYear()</span></td>
+         </tr>
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Name<span>General descriptive and specifying name of the process.</span></a></td>
+            <td class="data"><span class="data_neutral">
+                  <table xmlns:ilcd="http://lca.jrc.it/ILCD" width="100%" border="0">
+                     <tr valign="bottom">
+                        <td class="fieldname"><a class="info" href="javascript:void(0);">Base name<span>General descriptive name of the process and/or its main good(s) or service(s) and/or it's level of processing.</span></a><a class="info" href="javascript:void(0);">; Treatment, standards, routes<span>Specifying information on the good, service, or process in technical term(s): treatment received, standard fulfilled, product
+                                 quality, use information, production route name, educt name, primary / secondary etc. Separated by commata.</span></a><a class="info" href="javascript:void(0);">; Mix and location types<span>Specifying information on the good, service, or process whether being a production mix or consumption mix, location type of
+                                 availability (such as e.g. "to consumer" or "at plant"). Separated by commata.</span></a></td>
+                     </tr>
+                     <tr valign="bottom">
+                        <td class="data">$!process.getName().getValue()</td>
+                     </tr>
+                  </table></span></td>
+         </tr>
+         #if ($process.getUseAdvice())
+         <tr class="highlight">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Use advice for data set<span>Specific methodological advice for data set users that requires attention. E.g. on inclusion/exclusion of recycling e.g. in
+                     material data sets, specific use phase behavior to be modelled, and other methodological advices. See also field "Technological
+                     applicability".</span></a></td>
+            <td class="data"><span class="data_neutral">$!process.getUseAdvice().getDefaultValue()</span></td>
+         </tr>
+         #end
+         #set ($techApplicabilities=$xmlProcess.getProcessInformation().getTechnology().getTechnologicalApplicability())
+         #if ($techApplicabilities.size() > 0)
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Technical purpose of product or process<span>Description of the intended / possible applications of the good, service, or process. E.g. for which type of products the
+                     material, represented by this data set, is used. Examples: "This high purity chemical is used for analytical laboratories
+                     only." or "This technical quality bulk chemical is used for large scale synthesis in chemical industry.". Or: "This truck
+                     is used only for long-distance transport of liquid bulk chemicals".</span></a></td>
+            <td class="data"><span class="data_neutral">$!techApplicabilities.get(0).getValue()</span></td>
+         </tr>
+         #end
+         #if ($process.getSynonyms().getDefaultValue())
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Synonyms<span>Synonyms / alternative names / brands of the good, service, or process. Separated by semicolon.</span></a></td>
+            <td class="data"><span class="data_neutral">$process.getSynonyms().getDefaultValue()</span></td>
+         </tr>
+         #end
+         <tr>
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Classification<span>Optional statistical or other classification of the data set. Typically also used for structuring LCA databases.</span></a></td>
+            <td class="data">
+               <table class="data">
+                  <tr>
+                     <td class="fieldname"><a class="info" href="javascript:void(0);">Class name<span>Name of the class.</span></a><a class="info" href="javascript:void(0);"> / Hierarchy level<span>Hierarchy level (1,2,...), if the categorization system is hierachical, otherwise emtpy or not used.</span></a></td>
+                  </tr>
+                  <tr>
+                     <td class="data">$!process.getClassification().getClassHierarchyAsString()</td>
+                  </tr>
+               </table>
+            </td>
+         </tr>
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">General comment on data set<span>General information about the data set, including e.g. general (internal, not reviewed) quality statements as well as information
+                     sources used. (Note: Please also check the more specific fields e.g. on "Intended application", "Advice on data set use" and
+                     the fields in the "Modelling and validation" section to avoid overlapping entries.)</span></a></td>
+            <td class="data"><span class="data_neutral">$!process.getDescription().getDefaultValue()</span></td>
+         </tr>
+         <tr xmlns:ilcd="http://lca.jrc.it/ILCD">
+            <td></td>
+            <td class="data">
+               <table class="data">
+                  <tr>
+                     <td valign="bottom">
+                        <table class="data">
+                           <tr>
+                              <td class="data"><span class="data_neutral">
+                                    <tr class="">
+                                       <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Copyright?<span>Indicates whether or not a copyright on the data set exists. Decided upon by the "Owner of data set". [Note: See also field
+                                                "Access and use restrictions".]</span></a></td>
+                                       <td class="data"><span class="data_neutral">#if($process.getAccessInformation().isCopyright())Yes#{else}No#end</span></td>
+                                    </tr></span></td>
+                           </tr>
+                        </table>
+                     </td>
+                     <td valign="bottom">
+                        <table class="data">
+                           <tr>
+                              <td class="data"><span class="data_neutral">
+                                    <tr class="">
+                                       <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Owner of data set (contact data set)<span>"Contact data set" of the person or entity who owns this data set. (Note: this is not necessarily the publisher of the data
+                                                set.)</span></a></td>
+                                       <td class="data"><span class="data_neutral">
+                                            #if($process.getOwnerReference())
+                                            <a href="$!process.getOwnerReference().getUri()" title="contact data set" class="">$!process.getOwnerReference().getShortDescription().getDefaultValue()</a>
+                                            </span>
+                                            #end
+                                       </td>
+                                    </tr></span></td>
+                           </tr>
+                        </table>
+                     </td>
+                     <td valign="bottom">
+                        <table class="data">
+                           <tr>
+                              <td class="data"><span class="data_neutral"></span></td>
+                           </tr>
+                        </table>
+                     </td>
+                  </tr>
+               </table>
+            </td>
+         </tr>
+
+         <tr>
+            <td class="subsection" colspan="2" style="padding-left: 20px;">Quantitative reference</td>
+         </tr>
+
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Reference flow(s)<span>One or more of the Inputs or Outputs in case "Type of quantitative reference" is of type "Reference flow(s)". (Data set internal
+                     reference.)</span></a></td>
+            <td class="data"><span class="data_neutral">
+                #foreach($refExchange in $process.getReferenceExchanges())
+                    $!refExchange.getFlowName().getDefaultValue()
+                    #if($refExchange.getReferenceUnit())
+                        - $!refExchange.getMeanAmount() $refExchange.getReferenceUnit() ($!refExchange.getReferenceFlowPropertyName().getDefaultValue())
+                        #end
+                        <br/>
+                #end
+                $!process.getOtherReference().getDefaultValue()
+            </span></td>
+         </tr>
+
+
+         <tr>
+            <td class="subsection" colspan="2" style="padding-left: 20px;">Time representativeness</td>
+         </tr>
+
+
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Data set valid until:<span>End year of the time period for which the data set is still valid / sufficiently representative. This date also determines
+                     when a data set revision / remodelling is required or recommended due to expected relevant changes in environmentally or technically
+                     relevant inventory values, including in the background system.</span></a></td>
+            <td class="data">
+            	#if($process.getTimeInformation().getValidUntil())
+	                #if($process.getTimeInformation().getValidUntil() != 0)
+	                <span class="data_neutral">$process.getTimeInformation().getValidUntil()</span>
+	                #end
+                #end
+            </td>
+         </tr>
+         #if ($process.getTimeInformation().getDescription().getDefaultValue())
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Time representativeness description<span>Description of the valid time span of the data set including information on limited usability within sub-time spans (e.g.
+                     summer/winter).</span></a></td>
+            <td class="data"><span class="data_neutral">$process.getTimeInformation().getDescription().getDefaultValue()</span></td>
+         </tr>
+         #end
+
+         <!--
+         <tr>
+            <td class="subsection" colspan="2" style="padding-left: 20px;">Geographical representativeness</td>
+         </tr>
+          -->
+
+         #set ($tecDescriptions=$xmlProcess.getProcessInformation().getTechnology().getTechnologyDescriptionAndIncludedProcesses())
+         #if ($tecDescriptions.size() > 0)
+         <tr>
+            <td class="subsection" colspan="2" style="padding-left: 20px;">Technological representativeness</td>
+         </tr>
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Technology description including background system<span>Description of the technological characteristics including operating conditions of the process or product system. For the
+                     latter this includes the relevant upstream and downstream processes included in the data set. Professional terminology should
+                     be used.</span></a></td>
+            <td class="data"><span class="data_neutral">$!tecDescriptions.get(0).getValue()</span></td>
+         </tr>
+         #end
+         #foreach ($flowDiagramm in $xmlProcess.getProcessInformation().getTechnology().getReferenceToTechnologyFlowDiagrammOrPicture())
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Flow diagramm(s) or picture(s) (source data set)<span>"Source data set" of the flow diagramm(s) and/or photo(s) of the good, service, technology, plant etc represented by this
+                     data set. For clearer illustration and documentation of data set.</span></a></td>
+            <td class="data"><span class="data_neutral"><a href="$!flowDiagramm.getUri()" alt="$!flowDiagramm.getShortDescription().get(0).getValue()"><img src="$!flowDiagramm.getUri()/digitalfile" alt="$flowDiagramm.getUri()" border="0"></a></span></td>
+         </tr>
+         #end
+
+         #set ($modeldescrList=$xmlProcess.getProcessInformation().getMathematicalRelations().getModelDescription())
+         #if ($modeldescrList.size() > 0)
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Model description<span>Description of the model(s) represented in this section of mathematical relations. Can cover information on restrictions,
+                     model strenghts and weaknesses, etc. (Note: Also see information provided on the level of the individual formula in field
+                     "Comment" and in the general process description in the fields in section "Technology".)</span></a></td>
+
+            <td class="data"><span class="data_neutral">$!modeldescrList.get(0).getValue()</span></td>
+         </tr>
+         #end
+         #set ($variableParameterList=$xmlProcess.getProcessInformation().getMathematicalRelations().getVariableParameter())
+         #if ($variableParameterList.size() > 0)
+         <tr xmlns:ilcd="http://lca.jrc.it/ILCD">
+            <td class="subsection" colspan="2" style="padding-left: 20px;">Variable / parameter</td>
+         </tr>
+         <tr xmlns:ilcd="http://lca.jrc.it/ILCD">
+            <td colspan="2">
+               <table width="100%">
+                  <tr>
+                     <th class="table_header"><a class="info" href="javascript:void(0);">Name of variable<span>Name of variable or parameter used as scaling factors for the "Mean amount" of individual inputs or outputs of the data set.</span></a></th>
+                     <th class="table_header"><a class="info" href="javascript:void(0);">Formula<span>Mathematical expression that determines the value of a variable. [Note: A parameter is defined by entering the value manually into the field "Mean value" and this field can be left empty.]</span></a></th>
+                     <th class="table_header"><a class="info" href="javascript:void(0);">Mean value<span>Parameter value entered by user OR in case a formula is given in the "Formula" field, the result of the formula for the variable is displayed here.</span></a></th>
+                     <th class="table_header"><a class="info" href="javascript:void(0);">Minimum value<span>Minimum value permissible for this parameter. For variables this field is empty.</span></a></th>
+                     <th class="table_header"><a class="info" href="javascript:void(0);">Maximum value<span>Maximum value permissible for this parameter. For variables this field is empty.</span></a></th>
+                     <th class="table_header"><a class="info" href="javascript:void(0);">Uncertainty distribution type<span>Defines the kind of uncertainty distribution that is valid for this particular object or parameter.</a></th>
+                     <th class="table_header"><a class="info" href="javascript:void(0);">Relative StdDev in %<span>The resulting overall uncertainty of the calculated variable value considering uncertainty of measurements, modelling, appropriateness etc. [Notes: For log-normal distribution the square of the geometric standard deviation (SDg^2) is stated. Mean value times SDg^2 equals the 97.5% value (= Maximum value), Mean value divided by SDg^2 equals the 2.5% value (= Minimum value). For normal distribution the doubled standard deviation value (2*SD) is entered. Mean value plus 2*SD equals 97.5% value (= Maximum value), Mean value minus 2*SD equals 2.5% value (= Minimum value). This data field remains empty when uniform or triangular uncertainty distribution is applied.]</span></a></th>
+                     <th class="table_header"><a class="info" href="javascript:void(0);">Comment, units, defaults<span>Comment or description of variable or parameter. Typically including its unit and default values, e.g. in the pattern &lt;[unit] description; defaults; comments&gt;.</span></a></th>
+                  </tr>
+                  #foreach ($variableParameter in $variableParameterList)
+                  <tr>
+                  	 <td class="exchanges_data"><span class="data_neutral">$!variableParameter.getName()</span></td>
+                  	 <td class="exchanges_data"><span class="data_neutral">$!variableParameter.getFormula()</span></td>
+                  	 <td class="exchanges_data"><span class="data_neutral">$!variableParameter.getMeanValue()</span></td>
+                  	 <td class="exchanges_data"><span class="data_neutral">$!variableParameter.getMinimumValue()</span></td>
+                  	 <td class="exchanges_data"><span class="data_neutral">$!variableParameter.getMaximumValue()</span></td>
+                  	 <td class="exchanges_data"><span class="data_enum"><a href="javascript:void(0);" class="info">undefined<span>Probability distribution information not available.</span></a></span></td>
+                  	 <td class="exchanges_data"><span class="data_neutral">$!variableParameter.getRelativeStandardDeviation95In()</span></td>
+                  	 <td class="exchanges_data"><span class="data_neutral">$!variableParameter.getComment().getValue()</span></td>
+                  </tr>
+                  #end
+               </table>
+            </td>
+         </tr>
+         #end
+
+         <tr>
+            <td class="section" colspan="2" style="padding-left: 10px;"><a name="modellingAndValidation"></a>Modelling and validation
+            </td>
+         </tr>
+
+         <tr>
+            <td class="subsection" colspan="2" style="padding-left: 20px;">LCI method and allocation</td>
+         </tr>
+
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Type of data set<span>Type of the data set regarding systematic inclusion/exclusion of upstream or downstream processes, transparency and internal
+                     (hidden) multi-functionality, and the completeness of modelling.</span></a></td>
+            <td class="data"><span class="data_enum">
+                    <a class="info" href="javascript:void(0);">
+                        $!process.getType().getValue()
+                    <span></span></a></span></td>
+         </tr>
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">LCI method principle<span>LCI method principle followed in the product system modelling, i.e. regarding using average data (= attributional = non-marginal)
+                     or modelling effects in a change-oriented way (= consequential = marginal).</span></a></td>
+            <td class="data"><span class="data_enum"><a class="info" href="javascript:void(0);">
+                        $!process.getLCIMethodInformation().getMethodPrinciple().getValue()
+          <span></span></a></span></td>
+         </tr>
+         #set ($deviationFromMethodPrinciple=$xmlProcess.getModellingAndValidation().getLCIMethodAndAllocation().getDeviationsFromLCIMethodPrinciple())
+         #if ($deviationFromMethodPrinciple.size() > 0)
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Deviation from LCI method principle / explanations<span>Short description of any deviations from the general "LCI method principles" and additional explanations. Refers especially
+                     to specific processes/cases where the stated "attributional" or "consequential" approach was not applied. Or where deviations
+                     were made from any specific rules for applying the "Consequential with attributional components" approach. A reference to
+                     the "Intended application" of the data collection can be made here, too. Allocated co-products may be reported here as well.
+                     In case of no (quantitatively relevant) deviations from the LCI method principle, "none" should be stated.</span></a></td>
+            <td class="data"><span class="data_neutral">$!deviationFromMethodPrinciple.get(0).getValue()</span></td>
+         </tr>
+         #end
+
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">LCI method approaches<span>Names briefly the specific approach(es) used in LCI modeling, e.g. allocation, substitution etc. In case of LCI results and
+                     Partly terminated system data sets this also covers those applied in the included background system.</span></a></td>
+            <td class="data">
+            #foreach($lciMethodApproach in $process.getLCIMethodInformation().getApproaches())
+                <span class="data_enum"><a class="info" href="javascript:void(0);">$!lciMethodApproach.getValue()<span></span></a></span>
+            #end
+            </td>
+         </tr>
+         #set ($deviationsFromMethodApproaches=$xmlProcess.getModellingAndValidation().getLCIMethodAndAllocation().getDeviationsFromLCIMethodApproaches())
+         #if ($deviationsFromMethodApproaches.size() > 0)
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Deviations from LCI method approaches / explanations<span>Description of relevant deviations from the applied approaches as well as of the relevant specific approaches that were applied,
+                     including in an possibly included background system. Further explanations and details of the allocation, substitution and
+                     other consequential approaches applied for relevant processes, e.g. how the marginal substitute was identified, year and region
+                     of which market prices were used in market allocation, i.e. method, procedure, data/information details. In case of no (result
+                     relevant) deviations from the before stated LCI method approaches, and in case of no need for further explanations, "none"
+                     is entered.</span></a></td>
+            <td class="data"><span class="data_neutral">$!deviationsFromMethodApproaches.get(0).getValue()</span></td>
+         </tr>
+         #end
+         #set ($modellingConstants=$xmlProcess.getModellingAndValidation().getLCIMethodAndAllocation().getModellingConstants())
+         #if ($modellingConstants.size() > 0)
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Modelling constants<span>Short identification and description of constants applied in LCI modelling other than allocation / substitution, e.g. systematic
+                     setting of recycling quota, use of gross or net calorific value, etc.</span></a></td>
+            <td class="data"><span class="data_neutral">$!modellingConstants.get(0).getValue()</span></td>
+         </tr>
+         #end
+         #set ($deviationFromModellingConstants=$xmlProcess.getModellingAndValidation().getLCIMethodAndAllocation().getDeviationsFromModellingConstants())
+         #if ($deviationFromModellingConstants.size() > 0)
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Deviation from modelling constants / explanations<span>Short description of data set specific deviations from the "Modelling constants" if any, including in the possibly included
+                     background system.</span></a></td>
+            <td class="data"><span class="data_neutral">$!deviationFromModellingConstants.get(0).getValue()</span></td>
+         </tr>
+         #end
+         #set ($methodologyReports=$xmlProcess.getModellingAndValidation().getLCIMethodAndAllocation().getReferenceToLCAMethodDetails())
+         #foreach ($methodologyReport in $methodologyReports)
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">LCA methodology report (source data set)<span>"Source data set"(s) where the generally used LCA methods including the LCI method principles and specific approaches, the
+                     modelling constants details, as well as any other applied methodological conventions are described.</span></a></td>
+            <td class="data"><span class="data_neutral"><a href="$!methodologyReport.getUri()" title="source data set" class="">$!methodologyReport.getShortDescription().get(0).getValue()</a></span></td>
+         </tr>
+         #end
+
+         <tr>
+            <td class="subsection" colspan="2" style="padding-left: 20px;">Data sources, treatment, and representativeness</td>
+         </tr>
+         #set ($dataCutOffPrinciples=$xmlProcess.getModellingAndValidation().getDataSourcesTreatmentAndRepresentativeness().getDataCutOffAndCompletenessPrinciples())
+         #if ($dataCutOffPrinciples.size() > 0)
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Data cut-off and completeness principles<span>Principles applied in data collection regarding completeness of (also intermediate) product and waste flows and of elementary
+                     flows. Examples are: cut-off rules, systematic exclusion of infrastructure, services or auxiliaries, etc. systematic exclusion
+                     of air in incineration processes, coling water, etc.</span></a></td>
+            <td class="data"><span class="data_neutral">$!dataCutOffPrinciples.get(0).getValue()</span></td>
+         </tr>
+         #end
+         #set ($deviationsFromCutOff=$xmlProcess.getModellingAndValidation().getDataSourcesTreatmentAndRepresentativeness().getDeviationsFromCutOffAndCompletenessPrinciples())
+         #if ($deviationsFromCutOff > 0)
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Deviation from data cut-off and completeness principles / explanations<span>Short description of any deviations from the "Data completeness principles". In case of no (result relevant) deviations, "none"
+                     is entered.</span></a></td>
+            <td class="data"><span class="data_neutral">$!deviationsFromCutOff.get(0).getValue()</span></td>
+         </tr>
+         #end
+         #set ($dataSelectionPrinciples=$xmlProcess.getModellingAndValidation().getDataSourcesTreatmentAndRepresentativeness().getDataSelectionAndCombinationPrinciples())
+         #if ($dataSelectionPrinciples.size() > 0)
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Data selection and combination principles<span>Principles applied in data selection and in combination of data from different sources. Includes brief discussion of consistency
+                     of data sources regarding data itself, modelling, appropriateness. In case of averaging: Principles and data selection applied
+                     in horizontal and / or vertical averaging.</span></a></td>
+            <td class="data"><span class="data_neutral">$!dataSelectionPrinciples.get(0).getValue()</span></td>
+         </tr>
+         #end
+         #set ($deviationsSelectionPrinciples=$xmlProcess.getModellingAndValidation().getDataSourcesTreatmentAndRepresentativeness().getDeviationsFromSelectionAndCombinationPrinciples())
+         #if ($deviationsSelectionPrinciples.size() > 0)
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Deviation from data selection and combination principles / explanations<span>Short description of any deviations from the "Data selection and combination principles". In case of no (result relevant)
+                     deviations, "none" is entered.</span></a></td>
+            <td class="data"><span class="data_neutral">$!deviationsSelectionPrinciples.get(0).getValue()</span></td>
+         </tr>
+         #end
+         #set ($dataTreatmentPrinciples=$xmlProcess.getModellingAndValidation().getDataSourcesTreatmentAndRepresentativeness().getDataTreatmentAndExtrapolationsPrinciples())
+         #if ($dataTreatmentPrinciples.size() > 0)
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Data treatment and extrapolations principles<span>Principles applied regarding methods, sources, and assumptions done in data adjustment including extrapolations of data from
+                     another time period, another geographical area, or another technology.</span></a></td>
+            <td class="data"><span class="data_neutral">$!dataTreatmentPrinciples.get(0).getValue()</span></td>
+         </tr>
+         #end
+         #set ($deviationsTreatmentPrinciples=$xmlProcess.getModellingAndValidation().getDataSourcesTreatmentAndRepresentativeness().getDeviationsFromTreatmentAndExtrapolationPrinciples())
+         #if ($deviationsTreatmentPrinciples.size() > 0)
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Deviation from data treatment and extrapolations principles / explanations<span>Short description of any deviations from the " Data treatment and extrapolations principles". In case of no (result relevant)
+                     deviations, "none" is entered. (Note: If data representative for one "Location" is used for another "Location", its original
+                     representativity can be indicated here; see field "Percentage supply or production covered".)</span></a></td>
+            <td class="data"><span class="data_neutral">$!deviationsTreatmentPrinciples.get(0).getValue()</span></td>
+         </tr>
+         #end
+         #set ($dataSourceReports=$xmlProcess.getModellingAndValidation().getDataSourcesTreatmentAndRepresentativeness().getReferenceToDataSource())
+         #foreach ($dataSourceReport in $dataSourceReports)
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;">#if($velocityCount==1)<a class="info" href="javascript:void(0);">Data source(s) used for this data set (source data set)<span>"Source data set"(s) of the source(s) used for deriving/compiling the inventory of this data set e.g. questionnaires, monographies,
+                     plant operation protocols, etc. For LCI results and Partly terminated systems the sources for relevant background system data
+                     are to be given, too. For parameterised data sets the sources used for the parameterisation / mathematical relations in the
+                     section "Mathematical model" are referenced here as well. [Note: If the data set stems from another database or data set publication
+                     and is only re-published: identify the origin of a converted data set in "Converted original data set from:" field in section
+                     "Data entry by" and its unchanged re-publication in "Unchanged re-publication of:" in the section "Publication and ownership".
+                     The data sources used to model a converted or re-published data set are nevertheless to be given here in this field, for transparency
+                     reasons.]</span></a>#end</td>
+            <td class="data"><span class="data_neutral"><a href="$!dataSourceReport.getUri()" title="source data set" class="">$escape.html($!dataSourceReport.getShortDescription().get(0).getValue())</a></span></td>
+         </tr>
+         #end
+
+         #if($xmlProcess.getModellingAndValidation().getDataSourcesTreatmentAndRepresentativeness().getPercentageSupplyOrProductionCovered())
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Percentage supply or production covered<span>Percentage of the overall supply, consumption, or production of the specific good, service, or technology represented by this
+                     data set, in the region/market of the stated "Location". For multi-functional processes the market share of the specific technology
+                     is stated. If data that is representative for a process operated in one "Location" is used for another "Location", the entry
+                     is '0'. The representativity for the original "Location" is documented in the field "Deviation from data treatment and extrapolation
+                     principles, explanations".</span></a></td>
+            <td class="data"><span class="data_neutral">$xmlProcess.getModellingAndValidation().getDataSourcesTreatmentAndRepresentativeness().getPercentageSupplyOrProductionCovered() % </span></td>
+         </tr>
+         #end
+         #set ($dataCollectionTimePeriod=$xmlProcess.getModellingAndValidation().getDataSourcesTreatmentAndRepresentativeness().getDataCollectionPeriod())
+         #if ($dataCollectionTimePeriod.size() > 0)
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Data collection period<span>Date(s) or time period(s) when the data was collected. Note that this does NOT refer to e.g. the publication dates of papers
+                     or books from which the data may stem, but to the original data collection period.</span></a></td>
+            <td class="data"><span class="data_neutral">$!dataCollectionTimePeriod.get(0).getValue()</span></td>
+         </tr>
+         #end
+
+
+         <tr>
+            <td class="subsection" colspan="2" style="padding-left: 20px;">Completeness</td>
+         </tr>
+
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Completeness product model<span>Completeness of coverage of relevant product, waste and elementary flows. [Notes: For LCI results and Partly terminated systems
+                     this means throughout the underlying product system model. "Relevant" refers to the overall environmental relevance, i.e.
+                     for unit processes including the upstream and downstream burdens of product and waste flows.]</span></a></td>
+            <td class="data"><span class="data_enum"><a class="info" href="javascript:void(0);">$!process.getCompleteness().getValue()<span></span></a></span></td>
+         </tr>
+
+         #set ($reviews=$process.getReviews())
+         #if ($reviews.size() > 0)
+         <tr>
+            <td class="subsection" colspan="2" style="padding-left: 20px;">Validation</td>
+         </tr>
+         #end
+         #foreach ($review in $reviews)
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Review<span>Review information on data set.</span></a></td>
+            <td class="data"><span class="data_neutral"><span class="data_enum"><a class="info" href="javascript:void(0);">$!review.getType().getValue()<span>Reviewer(s)/verifier(s) have been involved in collecting, modelling, or entering the data set information or inventory, have
+                           commissioned or financed
+                           the work, or represent the process or product system (or quantiatitively relevant parts of it).</span></a></span>
+                  #set ($reviewScopes=$review.getScopes())
+                  #if ($reviewScopes.size() > 0)
+                  <table border="0" cellspacing="7px">
+                     <tr>
+                        <td class="fieldname"><a class="info" href="javascript:void(0);">Scope of review<span>Scope of review regarding which aspects and components of the data set was reviewed or verified. In case of aggregated e.g.
+                                 LCI results also and on which level of detail (e.g. LCI results only, included unit processes, ...) the review / verification
+                                 was performed.</span></a></td>
+                        <td class="fieldname"><a class="info" href="javascript:void(0);">Method(s) of review<span>Validation method(s) used in the respective "Scope of review".</span></a></td>
+                     </tr>
+                     #foreach ($reviewScope in $reviewScopes)
+                        #foreach ($reviewMethod in $reviewScope.getMethods())
+                     <tr>
+                        <td class="data">#if($velocityCount==1)<span class="data_enum"><a class="info" href="javascript:void(0);">$!reviewScope.getName().getValue()<span>Review/verification is done on basis of the original "raw data", i.e. the data before it was scaled, converted, or treated
+                                    in other ways to be used
+                                                      for modelling of a unit process.</span></a></span>#end</td>
+                        <td class="data"><span class="data_enum"><a class="info" href="javascript:void(0);">$!reviewMethod.getValue()<span>Comparison with other, independent data and/or information sources (can be both database and literature).</span></a></span></td>
+                     </tr>
+                        #end
+                     #end
+                  </table></span>
+                  #end
+            </td>
+         </tr>
+         
+         #set ($dqis=$review.getDataQualityIndicatorsAsList())
+		 #if ($dqis.size() > 0)
+         <tr class="">
+	         <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Data quality indicators<span>Data quality indicators serve to provide the reviewed key information on the data set in a defined, computer-readable (and hence searchable) form. This
+            serves to support LCA practitioners to identify/select the highest quality and most appropriate data sets.</span></a>
+	         </td>
+	         <td class="data">
+		         <table border="0" cellspacing="7px">
+		         	<tr>
+		         		<td class="fieldname"><a class="info" href="javascript:void(0);">Name</a></td>
+		         		<td class="fieldname"><a class="info" href="javascript:void(0);">Value</a></td>
+		            </tr>
+		         	#foreach ($dqi in $dqis)
+		         	<tr>
+		            	<td class="data"><span class="data_enum">$dqi.getName().value()</span></td>
+		            	<td class="data"><span class="data_enum">$dqi.getValue().value()</span></td>
+		            </tr>
+            #end
+		         </table>		        
+            </td>
+         </tr>
+         #end
+         
+         
+         #set ($reviewDetails=$review.getReviewDetails())
+         #if ($reviewDetails.getDefaultValue())
+         <tr class="">
+            <td class="fieldname" style="padding-left: 40px;"><a class="info" href="javascript:void(0);">Review details<span>Summary of the review. All the following items should be explicitly addressed: Representativeness, completeness, and precision
+                     of Inputs and Outputs for the process in its documented location, technology and time i.e. both completeness of technical
+                     model (product, waste, and elementary flows) and completeness of coverage of the relevant problem fields (environmental, human
+                     health, resource use) for this specific good, service, or process. Plausibility of data. Correctness and appropriateness of
+                     the data set documentation. Appropriateness of system boundaries, cut-off rules, LCI modelling choices such as e.g. allocation,
+                     consistency of included processes and of LCI methodology. If the data set comprises pre-calculated LCIA results, the correspondence
+                     of the Input and Output elementary flows (including their geographical validity) with the applied LCIA method(s) should be
+                     addressed by the reviewer. An overall quality statement on the data set may be included here.</span></a></td>
+            <td class="data"><span class="data_neutral">$reviewDetails.getDefaultValue()</span></td>
+         </tr>
+         #end
+
+         #set ($otherReviewDetails=$review.getOtherReviewDetails())
+         #if ($otherReviewDetails.getDefaultValue())
+         <tr class="">
+            <td class="fieldname" style="padding-left: 40px;"><a class="info" href="javascript:void(0);">Subsequent review comments<span>Further information from the review process, especially comments received from third parties once the data set has been published or additional reviewer
+            comments from an additional external review.</span></a></td>
+            <td class="data"><span class="data_neutral">$otherReviewDetails.getDefaultValue()</span></td>
+         </tr>
+         #end
+
+         #set ($reviewers=$review.getReferencesToReviewers())
+         #foreach ($reviewer in $reviewers)
+         <tr class="">
+            <td class="fieldname" style="padding-left: 40px;">#if($velocityCount==1)<a class="info" href="javascript:void(0);">Reviewer name and institution (contact data set)<span>"Contact data set" of reviewer. The full name of reviewer(s) and institution(s) as well as a contact address and/or email
+                     should be provided in that contact data set.</span></a>#end</td>
+            <td class="data"><span class="data_neutral"><a href="$!reviewer.getUri()" title="contact data set" class="">$!reviewer.getShortDescription().getDefaultValue()</a></span></td>
+         </tr>
+         #end
+
+        #set ($reviewReport=$review.getReferenceToReport())
+         #if ($review.getReferenceToReport())
+         <tr class="">
+            <td class="fieldname" style="padding-left: 40px;"><a class="info" href="javascript:void(0);">Complete review report (source data set)<span>"Source" dataset of the complete review report</span></a></td>
+            <td class="data"><span class="data_neutral"><a href="$!reviewReport.getUri()" title="contact data set" class="">$!reviewReport.getShortDescription().getDefaultValue()</a></span></td>
+         </tr>
+         #end
+
+         #end <!-- end of whole review element -->
+
+
+         #if ($xmlProcess.getModellingAndValidation().getComplianceDeclarations())
+         <tr>
+            <td class="subsection" colspan="2" style="padding-left: 20px;">Compliance declarations</td>
+         </tr>
+         <tr>
+            <td colspan="2">
+               <table>
+               #set($compliances=$xmlProcess.getModellingAndValidation().getComplianceDeclarations().getCompliance())
+               #foreach($compliance in $compliances)
+                  <tr>
+                        <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Compliance<span>one compliance declaration</span></a></td>
+                        <td class="data"><span class="data_neutral">
+
+                              <td class="data" valign="bottom">
+                                 <table class="data">
+                                    <tr>
+                                       <td class="fieldname"><a class="info" href="javascript:void(0);">Compliance system name (source data set)<span>"Source data set" of the "Compliance system" that is declared to be met by the data set.</span></a></td>
+                                    </tr>
+                                    <tr>
+                                       <td class="data"><span class="data_neutral"><a href="$!compliance.getReferenceToComplianceSystem().getUri()" title="source data set" class="">$!compliance.getReferenceToComplianceSystem().getShortDescription().get(0).getValue()</a></span></td>
+                                    </tr>
+                                 </table>
+                              </td>
+
+                              <td valign="bottom">
+                                 <table class="data">
+                                    <tr>
+                                       <td class="fieldname"><a class="info" href="javascript:void(0);">Approval of overall compliance<span>Official approval whether or not and in how far the data set meets all the requirements of the "Compliance system" refered
+                                                to. This approval should be issued/confirmed by the owner of that compliance system, who is identified via the respective
+                                                "Contact data set".</span></a></td>
+                                    </tr>
+                                    <tr>
+                                       <td class="data"><span class="data_enum"><a class="info" href="javascript:void(0);">$!compliance.getApprovalOfOverallCompliance().getValue()<span>Meets all requirements of this compliance aspect as defined in the respective "Compliance system".</span></a></span></td>
+                                    </tr>
+                                 </table>
+                              </td>
+
+                              <td valign="bottom">
+                                 <table class="data">
+                                    <tr>
+                                       <td class="fieldname"><a class="info" href="javascript:void(0);">Nomenclature complianceNomenclature compliance<span>Nomenclature compliance of this data set with the respective requirements set by the "compliance system" refered to.Nomenclature
+                                                compliance of this data set with the respective requirements set by the "compliance system" refered to.</span></a></td>
+                                    </tr>
+                                    <tr>
+                                       <td class="data"><span class="data_enum"><a class="info" href="javascript:void(0);">$!compliance.getNomenclatureCompliance().getValue()<span>Meets all requirements of this compliance aspect as defined in the respective "Compliance system".</span></a></span></td>
+                                    </tr>
+                                 </table>
+                              </td>
+
+                              <td valign="bottom">
+                                 <table class="data">
+                                    <tr>
+                                       <td class="fieldname"><a class="info" href="javascript:void(0);">Methodological complianceMethodological compliance<span>Methodological compliance of this data set with the respective requirements set by the "compliance system" refered to.Methodological
+                                                compliance of this data set with the respective requirements set by the "compliance system" refered to.</span></a></td>
+                                    </tr>
+                                    <tr>
+                                       <td class="data"><span class="data_enum"><a class="info" href="javascript:void(0);">$!compliance.getMethodologicalCompliance().getValue()<span>Meets all requirements of this compliance aspect as defined in the respective "Compliance system".</span></a></span></td>
+                                    </tr>
+                                 </table>
+                              </td>
+
+                              <td valign="bottom">
+                                 <table class="data">
+                                    <tr>
+                                       <td class="fieldname"><a class="info" href="javascript:void(0);">Review complianceReview compliance<span>Review/Verification compliance of this data set with the respective requirements set by the "compliance system" refered to.Review/Verification
+                                                compliance of this data set with the respective requirements set by the "compliance system" refered to.</span></a></td>
+                                    </tr>
+                                    <tr>
+                                       <td class="data"><span class="data_enum"><a class="info" href="javascript:void(0);">$!compliance.getReviewCompliance().getValue()<span>Meets all requirements of this compliance aspect as defined in the respective "Compliance system".</span></a></span></td>
+                                    </tr>
+                                 </table>
+                              </td>
+
+                              <td valign="bottom">
+                                 <table class="data">
+                                    <tr>
+                                       <td class="fieldname"><a class="info" href="javascript:void(0);">Documentation complianceDocumentation compliance<span>Documentation/Reporting compliance of this data set with the respective requirements set by the "compliance system" refered
+                                                to.Documentation/Reporting compliance of this data set with the respective requirements set by the "compliance system" refered
+                                                to.</span></a></td>
+                                    </tr>
+                                    <tr>
+                                       <td class="data"><span class="data_enum"><a class="info" href="javascript:void(0);">$!compliance.getDocumentationCompliance().getValue()<span>Meets all requirements of this compliance aspect as defined in the respective "Compliance system".</span></a></span></td>
+                                    </tr>
+                                 </table>
+                              </td>
+                  </span></td>
+                  </tr>
+                  #end
+               </table>
+            </td>
+         </tr>
+         #end
+
+         <tr>
+            <td class="section" colspan="2" style="padding-left: 10px;"><a name="administrativeInformation"></a>Administrative information
+            </td>
+         </tr>
+
+         #if ($xmlProcess.getAdministrativeInformation().getCommissionerAndGoal())
+         <tr>
+            <td class="subsection" colspan="2" style="padding-left: 20px;">Commissioner and goal</td>
+         </tr>
+         #end
+
+         #set ($commissioners= $xmlProcess.getAdministrativeInformation().getCommissionerAndGoal().getReferenceToCommissioner())
+         #foreach ($commissioner in $commissioners)
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;">#if($velocityCount==1)<a class="info" href="javascript:void(0);">Commissioner of data set (contact data set)<span>"Contact data set" of the commissioner / financing party of the data collection / compilation and of the data set modelling.
+                     For groups of commissioners, each single organisation should be named. For data set updates and for direct use of data from
+                     formerly commissioned studies, also the original commissioner should be named.</span></a>#end</td>
+            <td class="data"><span class="data_neutral"><a href="$!commissioner.getUri()" title="contact data set" class="">$!commissioner.getShortDescription().get(0).getValue()</a></span></td>
+         </tr>
+         #end
+         #set ($intendedApplication = $xmlProcess.getAdministrativeInformation().getCommissionerAndGoal().getIntendedApplications())
+         #if ($intendedApplication.size() > 0)
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Intended applications<span>Documentation of the intended application(s) of data collection and data set modelling. This indicates / includes information
+                     on the level of detail, the specifidity, and the quality ambition in the effort.</span></a></td>
+            <td class="data"><span class="data_neutral">$!intendedApplication.get(0).getValue()</span></td>
+         </tr>
+         #end
+
+         #if ($xmlProcess.getAdministrativeInformation().getDataGenerator())
+         <tr>
+            <td class="subsection" colspan="2" style="padding-left: 20px;">Data set generator / modeller</td>
+         </tr>
+         #end
+         #set ($generators = $xmlProcess.getAdministrativeInformation().getDataGenerator().getReferenceToPersonOrEntityGeneratingTheDataSet())
+         #foreach ($generator in $generators)
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;">#if($velocityCount==1)<a class="info" href="javascript:void(0);">Data set generator / modellerData set generator / modeller (contact data set)<span>"Contact data set" of the person(s), working group(s), organisation(s) or database network, that generated the data set, i.e.
+                     being responsible for its correctness regarding methods, inventory, and documentative information."Contact data set" of the
+                     person(s), working group(s), organisation(s) or database network, that generated the data set, i.e. being responsible for
+                     its correctness regarding methods, inventory, and documentative information.</span></a>#end</td>
+            <td class="data"><span class="data_neutral"><a href="$!generator.getUri()" title="contact data set" class="">$!generator.getShortDescription().get(0).getValue()</a></span></td>
+         </tr>
+         #end
+
+         #set ($dataEntryBy = $xmlProcess.getAdministrativeInformation().getDataEntryBy())
+         #if ($dataEntryBy)
+         <tr>
+            <td class="subsection" colspan="2" style="padding-left: 20px;">Data entry by</td>
+         </tr>
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Time stamp (last saved)<span>Date and time stamp of data set generation, typically an automated entry ("last saved").</span></a></td>
+            <td class="data"><span class="data_neutral">$!dataEntryBy.getTimeStamp().toString()</span></td>
+         </tr>
+
+         #set ($dataSetFormats=$xmlProcess.getAdministrativeInformation().getDataEntryBy().getReferenceToDataSetFormat())
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Data set format(s) (source data set)<span>"Source data set" of the used version of the ILCD format. If additional data format fields have been integrated into the data
+                     set file, using the "namespace" option, the used format namespace(s) are to be given. This is the case if the data sets carries
+                     additional information as specified by other, particular LCA formats, e.g. of other database networks or LCA softwares.</span></a></td>
+            <td class="data"><span class="data_neutral">
+              #foreach ($dataSetFormat in $dataSetFormats)
+                <a href="$!dataSetFormat.getUri()" title="source data set" class="">$!dataSetFormat.getShortDescription().get(0).getValue()</a><br/>
+              #end
+            </span></td>
+         </tr>
+
+         #set ($originalDataSet=$dataEntryBy.getReferenceToConvertedOriginalDataSetFrom())
+         #if ($originalDataSet)
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Converted original data set from: (source data set)<span>"Source data set" of the database or data set publication from which this data set has been obtained by conversion. This can
+                     cover e.g. conversion to a different format, applying a different nomenclature, mapping of flow names, conversion of units,
+                     etc. This may however not have changed or re-modeled the Inputs and Outputs, i.e. obtaining the same LCIA results. This entry
+                     is required for converted data sets stemming originally from other LCA databases (e.g. when re-publishing data from IISI,
+                     ILCD etc. databases). [Note: Identically re-published data sets are identied in the field "Unchanged re-publication of:" in
+                     the section "Publication and Ownership".]</span></a></td>
+            <td class="data"><span class="data_neutral"><a href="$!originalDataSet.getUri()" title="source data set" class="">$!originalDataSet.getShortDescription().get(0).getValue()</a></span></td>
+         </tr>
+         #end
+
+         #set ($entriesBy = $dataEntryBy.getReferenceToPersonOrEntityEnteringTheData())
+         #foreach ($entryBy in $entriesBy)
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Data entry by: (contact data set)<span>"Contact data set" of the responsible person or entity that has documented this data set, i.e. entered the data and the descriptive
+                     information.</span></a></td>
+            <td class="data"><span class="data_neutral"><a href="$!entryBy.getUri()" title="contact data set" class="">$!entryBy.getShortDescription().get(0).getValue()</a></span></td>
+         </tr>
+         #end
+         #set ($useApprovals = $dataEntryBy.getReferenceToDataSetUseApproval())
+         #foreach ($useApproval in $useApprovals)
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;">#if($velocityCount==1)<a class="info" href="javascript:void(0);">Official approval of data set by producer/operator: (contact data set)<span>"Source data set": Names exclusively the producer or operator of the good, service or technology represented by this data
+                     set, which officially has approved this data set in all its parts. In case of nationally or internationally averaged data
+                     sets, this will be the respective business association. If no official approval has been given, the entry "No official approval
+                     by producer or operator" is to be entered and the reference will point to an empty "Contact data set". [Notes: The producer
+                     or operator may only be named here, if a written approval of this data set was given. A recognition of this data set by any
+                     other organisation then the producer/operator of the good, service, or process is not to be stated here, but as a "review"
+                     in the validation section.]</span></a>#end</td>
+            <td class="data"><span class="data_neutral"><a href="$!useApproval.getUri()" title="contact data set" class="">$!useApproval.getShortDescription().get(0).getValue()</a></span></td>
+         </tr>
+         #end
+
+         #end <!-- end of whole dataEntryBy block -->
+
+         <tr>
+            <td class="subsection" colspan="2" style="padding-left: 20px;">Publication and ownership</td>
+         </tr>
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">UUID of Process data set<span>Automatically generated Universally Unique Identifier of this data set. Together with the "Data set version", the UUID uniquely
+                     identifies each data set.</span></a></td>
+            <td class="data"><span class="data_neutral">$!process.getUuid().getUuid()</span></td>
+         </tr>
+
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Data set version<span>Version number of data set. First two digits refer to major updates, the second two digits to minor revisions and error corrections
+                     etc. The third three digits are intended for automatic and internal counting of versions during data set development. Together
+                     with the data set's UUID, the "Data set version" uniquely identifies each data set.</span></a></td>
+            <td class="data"><span class="data_neutral">$!process.getDataSetVersion()</span></td>
+         </tr>
+
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Permanent data set URI<span>URI (i.e. an internet address) of the original of this data set. [Note: This equally globally unique identifier supports users
+                     and software tools to identify and retrieve the original version of a data set via the internet or to check for available
+                     updates. The URI must not represent an existing WWW address, but it should be unique and point to the data access point, e.g.
+                     by combining the data owner's www path with the data set's UUID, e.g. http://www.mycompany.com/lca/processes/50f12420-8855-12db-b606-0900210c9a66.]</span></a></td>
+            <td class="data"><span class="data_neutral"><a href="$!process.getPermanentUri()">$!process.getPermanentUri()</a></span></td>
+         </tr>
+         #set ($ownership=$xmlProcess.getAdministrativeInformation().getPublicationAndOwnership())
+         #if ($ownership)
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Workflow and publication status<span>Workflow or publication status of data set. Details e.g. of foreseen publication dates should be provided on request by the
+                     "Data set owner".</span></a></td>
+            <td class="data"><span class="data_enum"><a class="info" href="javascript:void(0);">$!ownership.getWorkflowAndPublicationStatus().getValue()<span></span></a></span></td>
+         </tr>
+         #set($unchangedRepublication=$ownership.getReferenceToUnchangedRepublication())
+         #if ($unchangedRepublication)
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Unchanged re-publication of: (source data set)<span>"Source data set" of the publication, in which this data set was published for the first time. [Note: This refers to exactly
+                     this data set as it is, without any format conversion, adjustments, flow name mapping, etc. In case this data set was modified/converted,
+                     the original source is documented in "Converted original data set from:" in section "Data entry by".]</span></a></td>
+            <td class="data"><span class="data_neutral"><a href="$!unchangedRepublication.getUri()" title="source data set" class="">$!unchangedRepublication.getShortDescription().get(0).getValue()</a></span></td>
+         </tr>
+         #end
+         #set($ownerOfDataSet=$process.getOwnerReference())
+         #if ($ownerOfDataSet)
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Owner of data set (contact data set)<span>"Contact data set" of the person or entity who owns this data set. (Note: this is not necessarily the publisher of the data
+                     set.)</span></a></td>
+            <td class="data"><span class="data_neutral"><a href="$!ownerOfDataSet.getUri()" title="contact data set" class="">$!ownerOfDataSet.getShortDescription().getDefaultValue()</a></span></td>
+         </tr>
+         #end
+         #set ($accessRestriction=$process.getAccessInformation().getUseRestrictions())
+         #if ($accessRestriction.getDefaultValue())
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Access and use restrictions<span>Access restrictions / use conditions for this data set as free text or referring to e.g. license conditions. In case of no
+                     restrictions "None" is entered.</span></a></td>
+            <td class="data"><span class="data_neutral">$accessRestriction.getDefaultValue()</span></td>
+         </tr>
+         #end
+
+         #end <!-- end of ownership block -->
+
+
+         <tr xmlns:ilcd="http://lca.jrc.it/ILCD">
+            <td class="section" colspan="2" style="padding-left: 10px;"><a name="exchanges"> Inputs and Outputs</a></td>
+         </tr>
+#if (! $user.hasFullViewRights($process))
+         <tr>
+            <td colspan="2" style="padding-left: 20px;"><span style="color:red; font-weight: bold">The access to the data set is restricted to metadata only. Ask the provider to get full access to the data set.</span></td>
+         </tr>
+#else
+         <tr xmlns:ilcd="http://lca.jrc.it/ILCD">
+            <td class="subsection" colspan="2" style="padding-left: 20px;">Inputs</td>
+         </tr>
+         <tr xmlns:ilcd="http://lca.jrc.it/ILCD">
+            <td colspan="2">
+               <table width="100%">
+                  <tr>
+                     <th class="table_header"><a class="info" href="javascript:void(0);">Type Of Flow<span>Names the basic type of the flow.</span></a></th>
+                     <th class="table_header"><a class="info" href="javascript:void(0);">Classification</a></th>
+                     <th class="table_header"><a class="info" href="javascript:void(0);">Flow<span>"Flow data set" of this Input or Output.</span></a></th>
+                     <th class="table_header"><a class="info" href="javascript:void(0);">Variable<span>Data set internal reference to a variable or parameter name as defined in the section "Mathematical model". The value of this variable or parameter acts as linear multiplier to the value given in the field "Mean amount" to yield the "Resulting amount", which is the final value in the inventory.</span></a></th>
+                     <th class="table_header"><a class="info" href="javascript:void(0);">Resulting amount<span>Final value to be used for calculation of the LCI results and in the product system: It is calculated as the product of the
+                              "Mean amount" value times the value of the "Variable". In case that no "Variable" entry is given, the "Resulting amount" is
+                              identical to the "Mean amount", i.e. a factor "1" is applied.</span></a></th>
+                     <th class="table_header"><a class="info" href="javascript:void(0);">Mean amount<span>Mean amount of the Input or Output. Only significant digits of the amount should be stated.</span></a></th>
+                     <th class="table_header"><a class="info" href="javascript:void(0);">Data source type<span>Identifies the data source type of each single Input or Output as being "Primary", "Secondary", or "Mixed primary/secondary".</span></a></th>
+                     <th class="table_header"><a class="info" href="javascript:void(0);">Data derivation type / status<span>Identifies the way by which the individual Input / Output amount was derived (e.g. measured, estimated etc.), respectively
+                              the status and relevancy of missing data.</span></a></th>
+                  </tr>
+                  #foreach($input in $process.getExchanges("INPUT"))
+                  <tr>
+                     <td class="exchanges_data"><span class="data_enum"><a class="info" href="javascript:void(0);">#if($input.getFlowType())$input.getFlowType()#else <b style="color:red; font-weight:bold">invalid flow reference</b>#end<span>Exchange of goods or services within technosphere, with a positive economic/market value.</span></a></span></td>
+                     <td class="exchanges_data"><span class="data_neutral">$!input.getClassificationAsString()</span></td>
+                     <td class="exchanges_data"><span class="data_neutral">#if($input.getFlowType())<a href="$!input.getFlowReference().getUri()" title="" class="">$!input.getFlowName().getDefaultValue()</a>#else$!input.getFlowName().getDefaultValue()#end</span></td>
+                     <td class="exchanges_data"><span class="data_neutral">$!input.getReferenceToVariable()</span></td>
+                     <td class="exchanges_data"><span class="data_neutral">$!input.getResultingAmount() #if($input.getReferenceUnit())$input.getReferenceUnit() ($!input.getReferenceFlowPropertyName().getDefaultValue())#end</span></td>
+                     <td class="exchanges_data"><span class="data_neutral">$!input.getMeanAmount()</span></td>
+                     <td class="exchanges_data"><span class="data_enum"><a class="info" href="javascript:void(0);">$!input.getDataSource()<span>Data was averaged from mixed primary and secondary sources with above 10% secondary data, either before entering the data
+                                 into a unit process or when
+                                 calculating the LCI results.</span></a></span></td>
+                     <td class="exchanges_data"><span class="data_enum"><a class="info" href="javascript:void(0);">$!input.getDerivationType()<span>Data derivation type information fully or at least for quantiatively relevant parts unavailable.</span></a></span></td>
+                  </tr>
+                  #end
+               </table>
+            </td>
+         </tr>
+         <tr xmlns:ilcd="http://lca.jrc.it/ILCD">
+            <td class="subsection" colspan="2" style="padding-left: 20px;">Outputs</td>
+         </tr>
+         <tr xmlns:ilcd="http://lca.jrc.it/ILCD">
+            <td colspan="2">
+               <table width="100%">
+                  <tr>
+                     <th class="table_header"><a class="info" href="javascript:void(0);">Type Of Flow<span>Names the basic type of the flow.</span></a></th>
+                     <th class="table_header"><a class="info" href="javascript:void(0);">Classification</a></th>
+                     <th class="table_header"><a class="info" href="javascript:void(0);">Flow<span>"Flow data set" of this Input or Output.</span></a></th>
+                     <th class="table_header"><a class="info" href="javascript:void(0);">Variable<span>Data set internal reference to a variable or parameter name as defined in the section "Mathematical model". The value of this variable or parameter acts as linear multiplier to the value given in the field "Mean amount" to yield the "Resulting amount", which is the final value in the inventory.</span></a></th>
+                     <th class="table_header"><a class="info" href="javascript:void(0);">Resulting amount<span>Final value to be used for calculation of the LCI results and in the product system: It is calculated as the product of the
+                              "Mean amount" value times the value of the "Variable". In case that no "Variable" entry is given, the "Resulting amount" is
+                              identical to the "Mean amount", i.e. a factor "1" is applied.</span></a></th>
+                     <th class="table_header"><a class="info" href="javascript:void(0);">Mean amount<span>Mean amount of the Input or Output. Only significant digits of the amount should be stated.</span></a></th>
+                     <th class="table_header"><a class="info" href="javascript:void(0);">Data source type<span>Identifies the data source type of each single Input or Output as being "Primary", "Secondary", or "Mixed primary/secondary".</span></a></th>
+                     <th class="table_header"><a class="info" href="javascript:void(0);">Data derivation type / status<span>Identifies the way by which the individual Input / Output amount was derived (e.g. measured, estimated etc.), respectively
+                              the status and relevancy of missing data.</span></a></th>
+                  </tr>
+                  #foreach($output in $process.getExchanges("OUTPUT"))
+                  <tr>
+                     <td class="exchanges_data"><span class="data_enum"><a class="info" href="javascript:void(0);">#if($output.getFlowType())$output.getFlowType()#else <b style="color:red; font-weight:bold">invalid flow reference</b>#end<span>Exchange of matters within the technosphere, with a economic/market value equal or below "0".</span></a></span></td>
+                     <td class="exchanges_data"><span class="data_neutral">$!output.getClassificationAsString()</span></td>
+                     <td class="exchanges_data"><span class="data_neutral">#if($output.getFlowType())<a href="$!output.getFlowReference().getUri()" title="" class="">$!output.getFlowName().getDefaultValue()</a>#else$!output.getFlowName().getDefaultValue()#end</span></td>
+                     <td class="exchanges_data"><span class="data_neutral">$!output.getReferenceToVariable()</span></td>
+                     <td class="exchanges_data"><span class="data_neutral">$!output.getResultingAmount() #if($output.getReferenceUnit())$output.getReferenceUnit() ($!output.getReferenceFlowPropertyName().getDefaultValue())#end</span></td>
+                     <td class="exchanges_data"><span class="data_neutral">$!output.getMeanAmount()</span></td>
+                     <td class="exchanges_data"><span class="data_enum"><a class="info" href="javascript:void(0);">$!output.getDataSource()<span>Data was averaged from mixed primary and secondary sources with above 10% secondary data, either before entering the data
+                                 into a unit process or when
+                                 calculating the LCI results.</span></a></span></td>
+                     <td class="exchanges_data"><span class="data_enum"><a class="info" href="javascript:void(0);">$!output.getDerivationType()<span>Data derivation type information fully or at least for quantiatively relevant parts unavailable.</span></a></span></td>
+                  </tr>
+                  #end
+               </table>
+            </td>
+         </tr>
+#end
+      </table>
+   </body>
+</html>

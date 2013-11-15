@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+Copyright (c) 2011 Karlsruhe Institute of Technology (KIT) - Institute for 
+Applied Computer Science (IAI). 
+
+This file is part of soda4LCA - the Service-Oriented Life Cycle Data Store.
+
+soda4LCA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by the 
+Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+soda4LCA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with soda4LCA.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <f:metadata>
+        <f:viewParam name="id" value="#{unitgroupHandler.dataSetIdString}" />
+        <f:viewParam name="sourceNode" value="#{unitgroupHandler.sourceNodeIdString}" />
+        <f:viewParam name="uuid" value="#{unitgroupHandler.dataSetUuidString}" />
+        <f:viewParam name="version" value="#{unitgroupHandler.dataSetVersionString}" />
+        <f:event type="javax.faces.event.PreRenderViewEvent" listener="#{unitgroupHandler.postViewParamInit}" />
+    </f:metadata>
+
+    <h:body>
+        <ui:composition template="#{conf.templatePath}/frontend.xhtml">
+            <ui:param name="pageTitle"
+                      value="#{i18n['common.unitGroup.inflected']}#{i18n['delimiter']}#{i18n['public.dataset.datasetOverviewPage']}" />
+            <ui:param name="pageSubTitle"
+                      value="#{i18n['public.dataset']}: #{unitgroupHandler.unitgroup.name.defaultValue} (#{unitgroupHandler.unitgroup.version})" />
+            <ui:param name="activeMenu" value="#{Constants.MENU_UNITGROUP}" />
+            <ui:define name="content">
+				<h:panelGroup rendered="#{unitgroupHandler.otherVersionPresent}">
+					<h:outputText value="#{i18n['public.dataset.otherVersions']}:" />
+					<ui:repeat value="#{unitgroupHandler.otherVersions}" var="ov">
+						&nbsp;
+						<h:link value="#{ov.version}" outcome="#{url.unitGroup.getDetail(ov)}" />
+					</ui:repeat>
+				</h:panelGroup>
+            
+                <div id="datasetPage">
+                    <div class="floatRight"><h:panelGrid columns="2"
+                                                         columnClasses="datasetBlock ui-widget-content,datasetBlock ui-widget-content">
+                            <h:outputLink
+                                value="#{unitgroupHandler.localHTMLResourceURL}"
+                                target="_blank">#{i18n['public.dataset.viewDataset']}</h:outputLink>
+                            <h:outputLink
+                                value="#{unitgroupHandler.localXMLResourceURL}">#{i18n['public.dataset.downloadDatasetXML']}</h:outputLink>
+                        </h:panelGrid></div>
+                    <div class="clearRight">
+                        <h:panelGrid columns="2"
+                                     columnClasses="datasetBlock ui-widget-content,datasetBlock ui-widget-content">
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['common.name']}</div>
+                                <h:outputText
+                                    value="#{unitgroupHandler.unitgroup.name.defaultValue}"
+                                    styleClass="boldText" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['common.dataset.defaultUnit']}</div>
+                                <h:outputText
+                                    value="#{unitgroupHandler.unitgroup.referenceUnit.name}"
+                                    styleClass="boldText" />
+                            </h:panelGroup>
+                        </h:panelGrid>
+                        <h:panelGrid columns="2" columnClasses="datasetBlock ui-widget-content,datasetBlock ui-widget-content">
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['common.dataset.classif']}</div>
+                                <h:outputText
+                                    value="#{unitgroupHandler.unitgroup.classification.classHierarchyAsString}" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.unitGroup.otherUnits']}</div>
+                                <p:dataList value="#{unitgroupHandler.unitgroup.unitsAsList}" var="unit" styleClass="ourDataList">
+                                    <h:outputText value="#{unit.name}" />
+                                </p:dataList>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" columnClasses="datasetBlock ui-widget-content">
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.dataset.comment']}</div>
+                                <h:outputText
+                                    value="#{unitgroupHandler.unitgroup.description.defaultValue}" />
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </div>
+                </div>
+
+                <ui:include src="/messages.xhtml" />
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

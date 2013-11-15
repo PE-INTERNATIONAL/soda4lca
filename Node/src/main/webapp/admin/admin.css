@@ -1,0 +1,37 @@
+html,body {
+	margin-top: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
+#admin_header .title a {
+	float: left;
+	font-size: 1.8em;
+	padding: 5px;
+	text-decoration: none;
+}
+
+.ui-border-none {
+	border-radius: 0px 0px 0px 0px;
+	-moz-border-radius: 0px 0px 0px 0px;
+	-khtml-border-radius: 0px 0px 0px 0px;
+	-webkit-border-radius: 0px 0px 0px 0px;
+}
+
+#admin_footer {
+	margin: 0px !important;
+	padding: 4px 0px;
+}
+
+#admin_content {
+	margin: 0px 10px 40px 10px;
+}
+
+#admin_footer {
+	position: fixed;
+	width: 100%;
+	bottom: 0px;
+	left: 0px;
+	border-bottom: 0px;
+	height: auto !important;
+}

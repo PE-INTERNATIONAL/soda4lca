@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:body>
+	<ui:composition template="/admin/layout/adminDesign.xhtml">
+		<ui:param name="pageTitle" value="#{i18n['admin.registryDetails.title']}" />
+		<ui:define name="content">
+		 	<h:panelGroup rendered="#{registryDetailsBean.registry.id==null}">
+				<p>#{i18n['common.mandatoryFields']}</p>
+			</h:panelGroup>
+			<h:form id="generalForm" prependId="false">
+				<p:panel header="#{i18n['admin.registryDetails.details']}" rendered="#{!registryDetailsBean.edit}">
+					<h:panelGrid columns="4"
+						columnClasses="column1of4,column2of4,column1of4,column2of4"
+						styleClass="detailsWidth" >
+						
+						<h:outputLabel value="#{i18n['admin.registry.name']}:" for="registryName" />
+						<h:outputText id="registryName"
+							value="#{registryDetailsBean.registry.name}" />
+
+						<h:outputLabel value="#{i18n['admin.registry.baseUrl']}:"
+							for="registryBaseUrl" />
+						<h:outputText id="registryBaseUrl"
+							value="#{registryDetailsBean.registry.baseUrl}" />
+
+						<h:outputLabel value="#{i18n['admin.registry.status']}:"
+							for="registryStatus" />
+						<h:outputText id="registryStatus"
+							value="#{registryDetailsBean.registry.status.toString()}" />
+
+						<h:outputLabel value="#{i18n['admin.registry.description']}:"
+							for="registryDecrition" />
+						<h:outputText id="registryDecrition"
+							value="#{registryDetailsBean.registry.description}" />
+							
+					</h:panelGrid>
+				</p:panel>
+				
+				<p:panel header="#{i18n['admin.registryDetails.details']}"  rendered="#{registryDetailsBean.edit}">
+					<h:panelGrid columns="2" >
+						
+						<h:outputLabel value="#{i18n['admin.registry.name']} #{i18n['common.markMandatory']}:" for="registryNameE" />
+						<p:inputText id="registryNameE" required="true"
+							value="#{registryDetailsBean.registry.name}" size="80" 
+							requiredMessage="#{i18n['admin.registryDetails.required_name']}"/>
+							
+						<h:outputLabel value="#{i18n['admin.registry.uuid']} #{i18n['common.markMandatory']}:" for="registryUUIDE" />
+						<p:inputText id="registryUUIDE" required="true"
+							value="#{registryDetailsBean.registry.uuid}" size="80" 
+							requiredMessage="#{i18n['admin.registryDetails.required_uuid']}"/>
+
+						<h:outputLabel value="#{i18n['admin.registry.baseUrl']} #{i18n['common.markMandatory']}:"
+							for="registryBaseUrlE" />
+						<p:inputText id="registryBaseUrlE" required="true"
+							value="#{registryDetailsBean.registry.baseUrl}" size="80" 
+							requiredMessage="#{i18n['admin.registryDetails.required_url']}"/>
+
+						<h:outputLabel value="#{i18n['admin.registry.description']}:"
+							for="registryDescriptionE" />
+						<p:inputText id="registryDescriptionE" 
+							value="#{registryDetailsBean.registry.description}" size="80" />
+					</h:panelGrid>
+				</p:panel>
+				
+				<p:dataTable var="node" value="#{registryDetailsBean.nodes}"
+					paginator="true" rows="10" lazy="true"
+					paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+					rowsPerPageTemplate="5,10,15" onRowSelectUpdate="display" rendered="#{!registryDetailsBean.edit}">
+
+					<p:column headerText="#{i18n['common.node.id']} ">
+						<h:outputText value="#{node.nodeId}" />
+					</p:column>
+
+					<p:column headerText="#{i18n['admin.node.name']}">
+						<h:outputText value="#{node.name}" />
+					</p:column>
+
+					<p:column headerText="#{i18n['admin.node.baseURL']}">
+						<h:outputText value="#{node.baseUrl}" />
+					</p:column>
+
+				</p:dataTable>
+				
+				<div class="buttonCenter">
+					<p:commandButton value="#{i18n['admin.registryDetails.synchronize']}"
+						actionListener="#{registryDetailsBean.synchronize}"
+						update="messages" ajax="false" rendered="#{!registryDetailsBean.edit}"/>
+					<p:commandButton value="#{i18n['admin.registryDetails.save']}"
+						action="#{registryDetailsBean.save}"
+						update="messages" ajax="false" rendered="#{registryDetailsBean.edit}"/>
+				</div>
+				
+			</h:form>
+			<ui:include src="/messages.xhtml" />
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
+

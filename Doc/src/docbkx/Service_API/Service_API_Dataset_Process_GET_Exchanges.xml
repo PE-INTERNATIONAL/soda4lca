@@ -1,0 +1,104 @@
+<sect1 xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>GET Exchanges of a Process Dataset</title>
+    <para>GET operation to retrieve the list of exchanges for a specific process dataset.</para>
+    <sect2>
+        <title>Requests</title>
+
+        <sect3>
+            <title>Syntax</title>
+            <para>
+                <programlisting>GET /processes/{uuid}/exchanges</programlisting>
+            </para>
+        </sect3>
+        <sect3>
+            <title>Request Parameters</title>
+            <para>
+                <table>
+                    <title/>
+                    <tgroup cols="2">
+                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="2" colname="col2" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Name</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry><emphasis>direction</emphasis></entry>
+                                <entry><para>The direction of the exchanges to be retrieved.</para>
+                                    <para>Optional</para>
+                                    <para>Values: in, out</para>
+                                    <para>Default: None</para>
+                                </entry>
+                            </row>
+                            <row>
+                                <entry><emphasis>type</emphasis></entry>
+                                <entry><para>The type of the exchanges to be retrieved.</para>
+                                    <para>Optional</para>
+                                    <para>Values: Elementary flow, Product flow, Waste flow, Other flow</para>
+                                    <para>Default: None</para>
+                                </entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </para>
+        </sect3>
+    </sect2>
+
+    <sect2>
+        <title>Responses</title>
+        <sect3>
+            <title>Response Elements</title>
+            <para>A datasetList object containing flow objects is returned as response. See the sections <link linkend="Response_Elements_DatasetList">"DatasetList
+                    Response Elements"</link> and <link linkend="Response_Elements_Flow">"Flow Response Elements"</link> for a detailed description.</para>
+        </sect3>
+    </sect2>
+    <sect2>
+        <title>Examples</title>
+
+        <sect3>
+            <title>Sample Request</title>
+            <para>
+                <programlisting>GET /processes/0cbf76cc-0192-4617-acd3-0fdb3cecf6c7/exchanges?direction=in</programlisting>
+            </para>
+        </sect3>
+        <sect3>
+            <title>Sample Response</title>
+            <para>
+                <programlisting>HTTP/1.1 200 OK
+Content-Type: application/xml</programlisting>
+                <programlisting language="myxml"><?db-font-size 75% ?><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<serviceapi:dataSetList xmlns:serviceapi="http://www.ilcd-network.org/ILCD/ServiceAPI" xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:flow="http://www.ilcd-network.org/ILCD/ServiceAPI/Flow" serviceapi:totalSize="60" serviceapi:startIndex="0" serviceapi:pageSize="60">
+    <flow:flow serviceapi:sourceId="ACME" xlink:href="http://localhost:8091/Node/flows/fe0acd60-3ddc-11dd-ae5d-0050c2490048">
+        <serviceapi:uuid>fe0acd60-3ddc-11dd-ae5d-0050c2490048</serviceapi:uuid>
+        <serviceapi:permanentUri>http://lca.jrc.ec.europa.eu/lcainfohub/datasets/ilcd/flows/fe0acd60-3ddc-11dd-ae5d-0050c2490048_02.00.000.xml</serviceapi:permanentUri>
+        <serviceapi:dataSetVersion>02.00.000</serviceapi:dataSetVersion>
+        <serviceapi:name xml:lang="en">lead</serviceapi:name>
+        <flow:flowCategorization name="ilcd">
+            <serviceapi:category level="0">Resources</serviceapi:category>
+            <serviceapi:category level="1">Resources from ground</serviceapi:category>
+            <serviceapi:category level="2">Non-renewable element resources from ground</serviceapi:category>
+        </flow:flowCategorization>
+        <flow:type>Elementary flow</flow:type>
+        <flow:referenceFlowProperty xlink:href="">
+            <flow:name xml:lang="de">Formaldehyd</flow:name>
+            <flow:defaultUnit>kg</flow:defaultUnit>
+            <serviceapi:reference type="flow property data set" version="02.00.000" uri="../flowproperties/93a60a56-a3c8-11da-a746-0800200b9a66_02.00.000.xml"/>
+        </flow:referenceFlowProperty>
+    </flow:flow>
+    <flow:flow serviceapi:sourceId="ACME" xlink:href="http://localhost:8091/Node/flows/1729ef88-6556-11dd-ad8b-0800200c9a66">
+        <serviceapi:uuid>1729ef88-6556-11dd-ad8b-0800200c9a66</serviceapi:uuid>
+        <serviceapi:permanentUri>http://lca.jrc.ec.europa.eu/lcainfohub/datasets/ilcd/flows/1729ef88-6556-11dd-ad8b-0800200c9a66_02.00.000.xml</serviceapi:permanentUri>
+        <serviceapi:dataSetVersion>02.00.000</serviceapi:dataSetVersion>
+        ...
+    </flow:flow>
+</serviceapi:dataSetList>]]></programlisting>
+            </para>
+        </sect3>
+
+    </sect2>
+</sect1>

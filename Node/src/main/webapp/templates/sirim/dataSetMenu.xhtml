@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <h:panelGroup rendered="#{not empty activeMenu and activeMenu != 'home' and activeMenu != 'processsearch'}">
+        <tr>
+            <td style="padding-top: 10px;padding-bottom:2px;margin:0px;border-bottom:1px solid black">
+                <div class="lmenuBar">
+                    <h:panelGroup rendered="#{feature.browseProcesses}"><span class="#{fn:startsWith(activeMenu,'process')?'chosenLMenu':'lmenu'}"><h:outputLink value="#{conf.contextPath}/processList.xhtml"><h:outputText value="#{i18n['common.processes']}" /></h:outputLink></span> </h:panelGroup>
+                   <!-- <h:panelGroup rendered="#{feature.browseLCIAMethods}"><span class="#{fn:startsWith(activeMenu,'lciamethod')?'chosenLMenu':'lmenu'}"><h:outputLink value="#{conf.contextPath}/LCIAMethodList.xhtml"><h:outputText value="#{i18n['common.lciaMethods']}" /></h:outputLink></span></h:panelGroup> -->
+                    <h:panelGroup rendered="#{feature.browseFlows}"><span class="#{fn:endsWith(activeMenu,'flow')?'chosenLMenu':'lmenu'}"><h:outputLink value="#{conf.contextPath}/flowList.xhtml"><h:outputText value="#{i18n['common.flows']}" /></h:outputLink></span></h:panelGroup>
+                    <h:panelGroup rendered="#{feature.browseFlowProperties}"><span class="#{fn:startsWith(activeMenu,'flowproperty')?'chosenLMenu':'lmenu'}"><h:outputLink value="#{conf.contextPath}/flowpropertyList.xhtml"><h:outputText value="#{i18n['common.flowProperties']}" /></h:outputLink></span></h:panelGroup>
+                    <h:panelGroup rendered="#{feature.browseUnitGroups}"><span class="#{fn:startsWith(activeMenu,'unitgroup')?'chosenLMenu':'lmenu'}"><h:outputLink value="#{conf.contextPath}/unitgroupList.xhtml"><h:outputText value="#{i18n['common.unitGroups']}" /></h:outputLink></span></h:panelGroup>
+                    <h:panelGroup rendered="#{feature.browseSources}"><span class="#{fn:startsWith(activeMenu,'source')?'chosenLMenu':'lmenu'}"><h:outputLink value="#{conf.contextPath}/sourceList.xhtml"><h:outputText value="#{i18n['common.sources']}" /></h:outputLink></span></h:panelGroup>
+                    <h:panelGroup rendered="#{feature.browseContacts}"><span class="#{fn:startsWith(activeMenu,'contact')?'chosenLMenu':'lmenu'}"><h:outputLink value="#{conf.contextPath}/contactList.xhtml"><h:outputText value="#{i18n['common.contacts']}" /></h:outputLink></span></h:panelGroup>
+                </div>
+            </td>
+        </tr> 
+    </h:panelGroup>
+
+</ui:composition>

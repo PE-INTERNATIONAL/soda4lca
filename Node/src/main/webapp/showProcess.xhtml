@@ -1,0 +1,308 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+Copyright (c) 2011 Karlsruhe Institute of Technology (KIT) - Institute for 
+Applied Computer Science (IAI). 
+
+This file is part of soda4LCA - the Service-Oriented Life Cycle Data Store.
+
+soda4LCA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by the 
+Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+soda4LCA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with soda4LCA.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <f:metadata>
+        <f:viewParam name="id" value="#{processHandler.dataSetIdString}"></f:viewParam>
+        <f:viewParam name="sourceNode" value="#{processHandler.sourceNodeIdString}"></f:viewParam>
+        <f:viewParam name="uuid" value="#{processHandler.dataSetUuidString}"></f:viewParam>
+        <f:viewParam name="version" value="#{processHandler.dataSetVersionString}"></f:viewParam>
+        <f:viewParam name="registryId" value="#{processHandler.registryId}"></f:viewParam>
+        <f:viewParam name="registryUUID" value="#{processHandler.registryUUID}"></f:viewParam>
+        <f:event type="javax.faces.event.PreRenderViewEvent" listener="#{processHandler.postViewParamInit}"></f:event>
+    </f:metadata>
+
+    <h:body>
+        <ui:composition template="#{conf.templatePath}/frontend.xhtml">
+            <ui:param name="pageTitle"
+                      value="#{i18n['common.proc']}#{i18n['delimiter']}#{i18n['public.dataset.datasetOverviewPage']}" />
+            <ui:param name="pageSubTitle"
+                      value="#{i18n['public.dataset']}: #{processHandler.process.baseName.value} (#{processHandler.process.version})" />
+			<ui:param name="activeMenu" value="#{Constants.MENU_PROCESS}" />
+            <ui:define name="content">
+                <h:panelGroup rendered="#{processHandler.otherVersionPresent}">
+					<h:outputText value="#{i18n['public.dataset.otherVersions']}:" />
+					<ui:repeat value="#{processHandler.otherVersions}" var="ov">
+						&nbsp;
+						<h:link value="#{ov.version}" outcome="#{url.process.getDetail(ov)}" />
+                    </ui:repeat>
+                </h:panelGroup>
+                <h:form id="datasetDetails">
+                <div id="datasetPage">
+                    <div class="floatRight">
+                            <h:panelGrid columns="3" columnClasses="datasetBlock ui-widget-content, datasetBlock ui-widget-content,datasetBlock ui-widget-content">
+                                <h:panelGroup rendered="#{processHandler.registryUUID!=null}">
+                                    <h:outputText value="#{i18n[processHandler.datasetValidationResult]}"
+                                        styleClass="#{processHandler.datasetValidationResult=='VALID' ? '' : 'redText'}"></h:outputText>
+                                </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLink rendered="#{processHandler.foreignDataSet}" value="#{processHandler.foreignHTMLResourceURL}" target="_blank">
+                                    <h:outputText rendered="#{processHandler.process.accessRestricted}"
+                                        value="#{i18n['public.proc.viewForeignDataset']} #{i18n['public.proc.restrictedToMetadata']}"></h:outputText>
+                                    <h:outputText rendered="#{not processHandler.process.accessRestricted}" value="#{i18n['public.proc.viewForeignDataset']}"></h:outputText>
+                                </h:outputLink>
+                                <h:outputLink rendered="#{not processHandler.foreignDataSet}" value="#{processHandler.localHTMLResourceURL}" target="_blank">
+                                    <h:outputText rendered="#{user.hasFullViewRights(processHandler.process)}" value="#{i18n['public.proc.viewFullDataset']}"></h:outputText>
+                                    <h:outputText rendered="#{not user.hasFullViewRights(processHandler.process)}" value="#{i18n['public.proc.viewMetadataDataset']}"
+                                    ></h:outputText>
+                                </h:outputLink>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputText rendered="#{processHandler.foreignDataSet}">
+                                    <h:outputText rendered="#{processHandler.process.accessRestricted}" value="#{i18n['public.proc.downloadForeignDatasetRestricted']}"
+                                        styleClass="redText"></h:outputText>
+                                    <h:outputLink rendered="#{not processHandler.process.accessRestricted}" value="#{processHandler.foreignXMLResourceURL}">
+                                        #{i18n['public.proc.downloadDataset']} </h:outputLink>
+                                </h:outputText>
+                                <h:outputText rendered="#{not processHandler.foreignDataSet}">
+                                    <h:outputLink rendered="#{user.hasFullViewRights(processHandler.process)}" value="#{processHandler.localXMLResourceURL}">
+                                        #{i18n['public.dataset.downloadDatasetXML']} </h:outputLink>
+                                    <h:outputText rendered="#{not user.hasFullViewRights(processHandler.process)}" value="#{i18n['public.proc.downloadDatasetRestricted']}"
+                                        styleClass="redText"></h:outputText>
+                                </h:outputText>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </div>
+                    <div class="clearRight">
+                        <h:panelGrid columns="4"
+                            columnClasses="datasetBlock ui-widget-content,datasetBlock ui-widget-content,datasetBlock ui-widget-content,datasetBlock ui-widget-content">
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.proc.fullName']}</div>
+                                <h:outputText value="#{processHandler.process.name.value}" styleClass="boldText"></h:outputText>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['common.proc.loc']}</div>
+                                <h:outputText value="#{processHandler.process.location}" styleClass="boldText"></h:outputText>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['common.dataset.refYear']}</div>
+                                <h:outputText value="#{processHandler.process.timeInformation.referenceYear}" styleClass="boldText"></h:outputText>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['common.proc.validUntilYear']}</div>
+                                <h:outputText value="#{processHandler.process.timeInformation.validUntil}" styleClass="boldText"></h:outputText>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                        <h:panelGrid columns="4"
+                            columnClasses="datasetBlock ui-widget-content,datasetBlock ui-widget-content,datasetBlock ui-widget-content,datasetBlock ui-widget-content">
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.proc.refFlows']}</div>
+                                <p:dataList value="#{processHandler.process.quantitativeReference.referenceFlows}" var="refExchange" styleClass="ourDataList">
+                                    <h:outputText rendered="#{empty refExchange.flow}" value="#{refExchange.flowName.value}"></h:outputText>
+                                    <h:link rendered="#{not empty refExchange.flow}" value="#{refExchange.flowName.value}" outcome="#{url.flow.getDetail(refExchange.flow)}" />
+                                    <h:outputText rendered="#{not empty refExchange.unit}"
+                                        value=" - #{refExchange.meanValue} #{refExchange.unit} (#{refExchange.flowPropertyName.value})"></h:outputText>
+                                </p:dataList>
+                                <h:outputText rendered="#{not empty processHandler.process.quantitativeReference.functionalUnit.value}"
+                                    value="#{processHandler.process.quantitativeReference.functionalUnit.value}"></h:outputText>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['common.type']}</div>
+                                <h:outputText value="#{processHandler.process.type.value}"></h:outputText>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.proc.parameterized']}?</div>
+                                <h:outputText rendered="#{processHandler.process.parameterized}" value="#{i18n['public.proc.yes']}"></h:outputText>
+                                <h:outputText rendered="#{not processHandler.process.parameterized}" value="#{i18n['public.proc.no']}"></h:outputText>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.proc.resultsIncluded']}?</div>
+                                <h:outputText rendered="#{processHandler.process.hasResults}" value="#{i18n['public.proc.yes']}"></h:outputText>
+                                <h:outputText rendered="#{not processHandler.process.hasResults}" value="#{i18n['public.proc.no']}"></h:outputText>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                        <h:panelGrid columns="2" columnClasses="datasetBlock ui-widget-content,datasetBlock ui-widget-content">
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.dataset.cat']}</div>
+                                <h:outputText value="#{processHandler.process.classification.classHierarchyAsString}"></h:outputText>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.dataset.synonyms']}</div>
+                                <h:outputText value="#{processHandler.process.synonyms.value}"></h:outputText>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                        <h:panelGrid columns="2" columnClasses="datasetBlock ui-widget-content highlighted,datasetBlock ui-widget-content">
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.proc.useAdvice']}</div>
+                                <h:outputText value="#{processHandler.process.useAdvice.value}"></h:outputText>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.proc.datasetUse']}</div>
+                                <h:outputText value="#{processHandler.process.approvedBy.shortDescription.value}"></h:outputText>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" columnClasses="datasetBlock ui-widget-content">
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.dataset.comment']}</div>
+                                <h:outputText value="#{processHandler.process.description.value}"></h:outputText>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                        <h:panelGrid columns="3" columnClasses="datasetBlock ui-widget-content,datasetBlock ui-widget-content,datasetBlock ui-widget-content">
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.proc.methodPrinciple']}</div>
+                                <h:outputText value="#{processHandler.process.LCIMethodInformation.methodPrinciple.value}"></h:outputText>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.proc.methodApproaches']}</div>
+                                <p:dataList value="#{processHandler.approaches}" var="approach" styleClass="ourDataList">
+                                    <h:outputText value="#{approach.value}"></h:outputText>
+                                </p:dataList>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.proc.completeness']}</div>
+                                <h:outputText value="#{processHandler.process.completenessProductModel.value}"></h:outputText>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" columnClasses="datasetBlock ui-widget-content">
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.proc.reviews']}</div>
+                                <p:dataList value="#{processHandler.process.reviews}" var="review" styleClass="ourDataListNoBullet">
+                                    <h:outputText value="#{review.type.value} by"></h:outputText>
+                                    <p:dataList value="#{review.referencesToReviewers}" var="reviewer" styleClass="ourDataList">
+                                        <h:outputLink rendered="#{not empty reviewer.refObjectId}" value="resource/contacts/#{reviewer.refObjectId}" target="_blank">
+                                            <h:outputText value="#{reviewer.shortDescription.value}"></h:outputText>
+                                        </h:outputLink>
+                                        <h:outputLink rendered="#{empty reviewer.refObjectId}" value="#{reviewer.uri}" target="_blank">
+                                            <h:outputText value="#{reviewer.shortDescription.value}"></h:outputText>
+                                        </h:outputLink>
+                                    </p:dataList>
+                                    <h:panelGroup rendered="#{not empty review.dataQualityIndicators}">
+                                        <div class="datasetLabel">#{i18n['public.proc.indicators']}</div>
+                                        <p:dataList value="#{review.dataQualityIndicatorsAsList}" var="indicator" styleClass="ourDataList">
+                                            <h:outputText value="#{indicator.name.value}: #{indicator.value.value}"></h:outputText>
+                                        </p:dataList>
+                                    </h:panelGroup>
+                                </p:dataList>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" columnClasses="datasetBlock ui-widget-content">
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.proc.conditions']}</div>
+                                <div class="datasetLabel">#{i18n['public.proc.copyright']}</div>
+                                <h:outputText rendered="#{processHandler.process.accessInformation.copyright}" value="#{i18n['public.proc.yes']}"></h:outputText>
+                                <h:outputText rendered="#{not processHandler.process.accessInformation.copyright}" value="#{i18n['public.proc.no']}"></h:outputText>
+                                <h:panelGroup rendered="#{not empty processHandler.process.accessInformation.licenseType}">
+                                    <div class="datasetLabel">#{i18n['public.proc.licenseType']}</div>
+                                    <h:outputText value="#{processHandler.process.accessInformation.licenseType.value}"></h:outputText>
+                                </h:panelGroup>
+                                <h:panelGroup rendered="#{not empty processHandler.process.accessInformation.useRestrictions.value}">
+                                    <div class="datasetLabel">#{i18n['public.proc.accessInfo']}</div>
+                                    <h:outputText value="#{processHandler.process.accessInformation.useRestrictions.value}"></h:outputText>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                        <h:panelGrid columns="2" columnClasses="datasetBlock ui-widget-content,datasetBlock ui-widget-content">
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.proc.owner']}</div>
+                                <h:outputText value="#{processHandler.process.ownerReference.shortDescription.value}"></h:outputText>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.proc.technicalPurpose']}</div>
+                                <h:outputText value="#{processHandler.process.technicalPurpose.value}"></h:outputText>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                            <h:panelGrid columns="2" columnClasses="datasetBlock ui-widget-content,datasetBlock ui-widget-content,datasetBlock ui-widget-content">
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.proc.exchange.inputProducts']}</div>
+                                <p:dataList value="#{processHandler.inputProducts}" var="ex" styleClass="ourDataList">
+                                    <h:link value="#{ex.name.defaultValue}" outcome="#{url.flow.getDetail(ex)}" />
+                                </p:dataList>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.proc.exchange.coProducts']}</div>
+                                <p:dataList value="#{processHandler.coProducts}" var="ex" styleClass="ourDataList">
+                                    <h:link value="#{ex.name.defaultValue}" outcome="#{url.flow.getDetail(ex)}" />
+                                </p:dataList>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                        <h:panelGrid columns="#{processHandler.otherVersionPresent ? 4 : 3}"
+                            columnClasses="datasetBlock ui-widget-content,datasetBlock ui-widget-content,datasetBlock ui-widget-content,datasetBlock ui-widget-content">
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.proc.datasetFormat']}</div>
+                                <h:outputText value="#{processHandler.process.format}"></h:outputText>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.proc.datasetVersion']}</div>
+                                <h:outputText value="#{processHandler.process.dataSetVersion}"></h:outputText>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{processHandler.otherVersionPresent}">
+                                <div class="datasetLabel">#{i18n['public.dataset.otherVersions']}</div>
+                                <p:dataList value="#{processHandler.otherVersions}" var="ov" styleClass="ourDataList">
+                                    <h:link value="#{ov.version}" outcome="#{url.process.getDetail(ov)}" />
+                                </p:dataList>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.proc.complianceSystems']}</div>
+                                <p:dataList value="#{processHandler.complianceSystems}" var="compliance" styleClass="ourDataList">
+                                    <h:outputText value="#{compliance.name} (#{i18n['public.proc.overallCompliance']}: #{compliance.overallCompliance.value})"></h:outputText>
+                                </p:dataList>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                            <p:panel id="registriesPanel" header="#{i18n['admin.registerDataSets.registeredIn']}" rendered="#{applicationInfoBean.registryBasedNetworking}">
+                                <p:dataTable id="registriesTable" var="regData" value="#{processHandler.registrations}" paginator="true" rows="15" lazy="false"
+                                    rowsPerPageTemplate="5,10,15,50"
+                                    paginatorTemplate="{CurrentPageReport} {FirstPageLink}
+					                     {PreviousPageLink} {PageLinks} {NextPageLink}
+					                     {LastPageLink} {RowsPerPageDropdown} #{i18n['common.dataset.list.entriesPerPage']}"
+                                    rendered="#{not empty processHandler.registrations}">
+                                    <p:column headerText="#{i18n['admin.registry.name']}">
+                                        <h:link value="#{regData.registry.name}" outcome="admin/registryDetails?id=#{regData.registry.id}" />
+                                    </p:column>
+                                    <p:column headerText="#{i18n['admin.registry.baseUrl']}">
+                                        <h:outputText value="#{regData.registry.baseUrl}"></h:outputText>
+                                    </p:column>
+                                    <p:column headerText="#{i18n['admin.registerDataSets.status']}">
+                                        <h:outputText value="#{i18n[regData.status]}"></h:outputText>
+                                    </p:column>
+                                    <p:column headerText="#{i18n['admin.registerDataSets.action']}" rendered="#{user.hasAdminAreaAccessRight()}">
+                                        <p:commandLink action="#{processHandler.setSelectedDataSetRegistrationData(regData)}" oncomplete="deregistration.show();"
+                                            rendered="#{regData.status=='ACCEPTED'}">
+                                            <h:outputText value="#{i18n['admin.registerDataSets.deregisterProcess']}"></h:outputText>
+                                        </p:commandLink>
+                                    </p:column>
+                                </p:dataTable>
+                                <h:outputText rendered="#{empty processHandler.registrations}" value="#{i18n['admin.registerDataSets.process_not_registered']}"></h:outputText>
+                            </p:panel>
+                    </div>
+                </div>
+
+                    <p:dialog header="#{i18n['admin.deregisterDataSet.deregistrationHeader']}" widgetVar="deregistration" resizable="false" severity="alert" modal="true"
+                        width="340" onHide="document.getElementById('datasetDetails:deregistrationreason').value=''">
+                        <h:panelGrid columns="1">
+                            <h:outputText for="deregistrationreason" value="#{i18n['admin.deregisterDataSet.areYouSureDeregister']}"></h:outputText>
+                            <h:outputText for="deregistrationreason" value="#{i18n['admin.deregisterDataSets.enterDeregistrationReason']}"></h:outputText>
+                            <p:inputTextarea id="deregistrationreason" value="#{processHandler.reason}" style="width:300px;height:100px;"></p:inputTextarea>
+                        </h:panelGrid>
+                        <p:commandButton value="#{i18n['common.button.yes']}" oncomplete="deregistration.hide()" actionListener="#{processHandler.deregisterSelected}"
+                            update="datasetDetails"></p:commandButton>
+                        <p:commandButton value="#{i18n['common.button.no']}" onclick="deregistration.hide()" type="button"></p:commandButton>
+                    </p:dialog>
+
+                </h:form>
+
+                <ui:include src="/messages.xhtml"/>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

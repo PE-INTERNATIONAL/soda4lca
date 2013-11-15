@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:body>
+        <ui:composition template="#{conf.templatePath}/design.xhtml">
+            <ui:define name="contentBody">
+                <div id="container">
+                    <div id="leftColumn" style="float:left; width: 210px">
+                        <ui:include src="#{conf.templatePath}/leftMenu.xhtml" />
+                    </div>
+                    <div id="rightColumn" style="margin-left: 220px;margin-right: 2%">
+                        <div id="content">
+                            <div id="fontSize">
+                                <a href="/cgi-bin/etal.pl"><img src="#{conf.contextPath}#{conf.templatePath}/images/print.gif" alt="Print version" title="Print version" /></a>
+                                <a href="javascript:ts(-1)" id="decreaseText"><img src="#{conf.contextPath}#{conf.templatePath}/images/decrease_text.gif" alt="Decrease text" title="Decrease text" /></a>
+                                <a href="javascript:ts(1)" id="increaseText"><img src="#{conf.contextPath}#{conf.templatePath}/images/increase_text.gif" alt="Increase text" title="Increase text" /></a>
+                                <script type="text/javascript">initFontSize();</script>
+                            </div>
+                            <h:panelGroup rendered="#{user.hasAdminAreaAccessRight()}" style="display:inline-block;">
+                                <ui:include src="#{conf.templatePath}/adminMenu.xhtml" />
+                            </h:panelGroup>    
+                            <h2>#{pageTitle}</h2>
+                            <div align="justify"></div>
+                            <div class="story">
+                                <h:panelGroup rendered="#{not empty pageSubTitle}">
+                                	<h3 align="justify">#{pageSubTitle}</h3>
+                                </h:panelGroup>
+                                <p align="justify">
+                                    <ui:insert name="content">
+                                        <h1>Hier kommt der Inhalt hin</h1>
+                                    </ui:insert>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

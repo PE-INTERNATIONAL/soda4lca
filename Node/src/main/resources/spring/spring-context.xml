@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	http://www.springframework.org/schema/task  http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+
+	<import resource="spring-jsf.xml" />
+
+	<context:annotation-config />
+
+	<context:component-scan base-package="de.iai.ilcd" />
+	<context:component-scan base-package="eu.europa.ec.jrc.lca.commons" />
+
+	<bean id="applicationContextHolder"
+		class="eu.europa.ec.jrc.lca.commons.util.ApplicationContextHolder" />
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:app.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<task:annotation-driven executor="myExecutor"
+		scheduler="myScheduler" />
+
+	<task:executor id="myExecutor" pool-size="5" />
+
+	<task:scheduler id="myScheduler" pool-size="10" />
+
+
+	<task:scheduled-tasks scheduler="myScheduler">
+		<task:scheduled ref="synchronizator" method="synchronizeAll"
+			fixed-rate="${synchronizator.synchronizeAll.interval}" />
+		<task:scheduled ref="dataSetAcceptanceChecker" method="checkAcceptance"
+			fixed-rate="${dataSet.acceptanceChecker.interval}" />
+		<task:scheduled ref="acceptanceChecker" method="checkAcceptance"
+			fixed-rate="${node.acceptanceChecker.interval}" />
+		<task:scheduled ref="dataSetDeregistrationPropagator" method="propagateDeregistration"
+			fixed-rate="${dataSet.deregistrationPropagator.interval}" />
+	</task:scheduled-tasks>
+
+</beans>

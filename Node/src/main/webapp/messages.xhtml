@@ -1,0 +1,35 @@
+<!--
+Copyright (c) 2011 Karlsruhe Institute of Technology (KIT) - Institute for 
+Applied Computer Science (IAI). 
+
+This file is part of soda4LCA - the Service-Oriented Life Cycle Data Store.
+
+soda4LCA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by the 
+Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+soda4LCA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with soda4LCA.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<!-- CG/01.06.2011 remember: keep surrounding dummy div (=display block) around messagesBox
+     because it's needed for correct positioning of succeeding inline-block-divs -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <div style="margin-bottom:-1em;">
+        <div id="messagesBox">
+            <p:messages id="messages" autoUpdate="true" closable="true" />
+        </div>
+    </div>
+
+</ui:composition>

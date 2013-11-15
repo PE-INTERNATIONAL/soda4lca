@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:h="http://java.sun.com/jsf/html">
+
+    <h:panelGroup rendered="#{not user.loggedIn}">
+        <h:panelGroup rendered="#{conf.registrationActivated}">
+            <a class="footlink" rel="nofollow" href="#{conf.contextPath}/registration.xhtml">User registration</a><span class="foottxt"> | </span>
+        </h:panelGroup>
+        <a class="footlink" rel="nofollow" href="#{conf.contextPath}/login.xhtml">Login</a><span class="foottxt"> </span>
+    </h:panelGroup>
+    <h:panelGroup rendered="#{user.loggedIn}">
+        <span class="foottxt">User: <h:outputText value="#{user.userName}" /> | </span>
+        <h:panelGroup rendered="#{not user.hasSuperAdminPermission()}">
+           <a class="footlink" rel="nofollow" href="#{conf.contextPath}/profile.xhtml">My profile</a><span class="foottxt"> | </span>
+        </h:panelGroup>
+        <a class="footlink" rel="nofollow" href="#{conf.contextPath}/login.xhtml">Logout</a><span class="foottxt"> </span>
+    </h:panelGroup>
+
+</ui:composition>

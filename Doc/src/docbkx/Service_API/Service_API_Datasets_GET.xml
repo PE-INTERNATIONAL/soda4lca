@@ -1,0 +1,147 @@
+<sect1 xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>GET Datasets</title>
+    <para>Basic GET operations that return a list of datasets. Applies to all dataset types.</para>
+    <sect2>
+        <title>Requests</title>
+
+        <sect3>
+            <title>Syntax</title>
+            <para>
+                <programlisting>GET /processes
+GET /flows
+GET /flowproperties
+GET /unitgroups
+GET /sources
+GET /contacts
+GET /lciamethods</programlisting>
+            </para>
+        </sect3>
+        <sect3 xml:id="GET_Datasets_Request_Parameters">
+            <title>Request Parameters</title>
+            <para>
+                <table>
+                    <title/>
+                    <tgroup cols="2">
+                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="2" colname="col2" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Name</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry><emphasis>startIndex</emphasis></entry>
+                                <entry><para>As all result sets are paged, this specifies the index of the first item of the entire result set of the operation that shall be
+                                        included in the response.</para>
+                                    <para>Type: Integer</para>
+                                    <para>Default: 0</para>
+                                </entry>
+                            </row>
+                            <row>
+                                <entry><emphasis>pageSize</emphasis></entry>
+                                <entry><para>The page size (number of items) for the response.</para>
+                                    <para>Type: Integer</para>
+                                    <para>Default: 500</para>
+                                </entry>
+                            </row>
+                            <row>
+                                <entry><emphasis>search</emphasis></entry>
+                                <entry><para>Perform a search query that will return results matching the given query parameters.</para>
+                                    <para>Type: Boolean</para>
+                                    <para>Default: false</para>
+                                </entry>
+                            </row>
+                            <row>
+                                <entry><emphasis>distributed</emphasis></entry>
+                                <entry><para>Perform a distributed search across all registered network nodes.</para>
+                                    <para>Type: Boolean</para>
+                                    <para>Default: false</para>
+                                </entry>
+                            </row>
+                            <row>
+                                <entry><emphasis>name</emphasis></entry>
+                                <entry><para>search parameter</para>
+                                    <para>Type: String</para>
+                                    <para>Default: None</para>
+                                </entry>
+                            </row>
+                            <row>
+                                <entry><emphasis>description</emphasis></entry>
+                                <entry><para>search parameter</para>
+                                    <para>Type: String</para>
+                                    <para>Default: None</para>
+                                </entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </para>
+        </sect3>
+    </sect2>
+
+    <sect2>
+        <title>Responses</title>
+        <sect3>
+            <title>Response Elements</title>
+            <para>The response returned is a list of dataset overview objects, wrapped in a dataSetList object. See the section <link linkend="Response_Elements_DatasetList">"DataSetList Response Elements"</link> for a detailed description.</para>
+        </sect3>
+    </sect2>
+
+    <sect2>
+        <title>Examples</title>
+
+        <sect3>
+            <title>Sample Request</title>
+            <para>
+                <programlisting>GET /processes</programlisting>
+            </para>
+        </sect3>
+        <sect3>
+            <title>Sample Response</title>
+            <para>
+                <programlisting>HTTP/1.1 200 OK
+Content-Type: application/xml</programlisting>
+                <programlisting language="myxml"><?db-font-size 75% ?><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<serviceapi:dataSetList xmlns:serviceapi="http://www.ilcd-network.org/ILCD/ServiceAPI" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:process="http://www.ilcd-network.org/ILCD/ServiceAPI/Process" serviceapi:totalSize="4" serviceapi:startIndex="0" serviceapi:pageSize="500">
+    <process:process serviceapi:sourceId="ACME" xlink:href="http://lci.acme.com/DB/processes/0a1b40db-5645-4db8-a887-eb09300b7b74">
+        <serviceapi:uuid>0a1b40db-5645-4db8-a887-eb09300b7b74</serviceapi:uuid>
+        <serviceapi:permanentUri>http://lca.jrc.ec.europa.eu/lcainfohub/datasets/elcd/processes/0a1b40db-5645-4db8-a887-eb09300b7b74.xml</serviceapi:permanentUri>
+        <serviceapi:dataSetVersion>03.00.000</serviceapi:dataSetVersion>
+        <serviceapi:name xml:lang="en">Electricity Mix;AC;consumption mix, at consumer;1kV - 60kV</serviceapi:name>
+        <serviceapi:classification name="ilcd">
+            <serviceapi:class level="0">Energy carriers and technologies</serviceapi:class>
+            <serviceapi:class level="1">Electricity</serviceapi:class>
+        </serviceapi:classification>
+        <process:type>LCI result</process:type>
+        <process:location>EU-27</process:location>
+        <process:time>
+            <process:referenceYear>2002</process:referenceYear>
+            <process:validUntil>2010</process:validUntil>
+        </process:time>
+        <process:parameterized>false</process:parameterized>
+        <process:hasResults>false</process:hasResults>
+        <process:lciMethodInformation>
+            <process:methodPrinciple>Attributional</process:methodPrinciple>
+            <process:approach>Allocation - mass</process:approach>
+            <process:approach>Allocation - market value</process:approach>
+            <process:approach>Allocation - exergetic content</process:approach>
+            <process:approach>Allocation - net calorific value</process:approach>
+        </process:lciMethodInformation>
+        <process:complianceSystem name="ILCD Data Network - Entry-level">
+            <serviceapi:reference type="source data set" version="00.00.000" uri="../sources/d92a1a12-2545-49e2-a585-55c259997756.xml"/>
+            <process:overallCompliance>Not compliant</process:overallCompliance>
+            <process:nomenclatureCompliance>Fully compliant</process:nomenclatureCompliance>
+            <process:methodologicalCompliance>Fully compliant</process:methodologicalCompliance>
+            <process:reviewCompliance>Not compliant</process:reviewCompliance>
+            <process:documentationCompliance>Not compliant</process:documentationCompliance>
+            <process:qualityCompliance>Not defined</process:qualityCompliance>
+        </process:complianceSystem>
+        <process:accessInformation/>
+   </process:process>
+</serviceapi:dataSetList>]]></programlisting>
+            </para>
+        </sect3>
+    </sect2>
+</sect1>

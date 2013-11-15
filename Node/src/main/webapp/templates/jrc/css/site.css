@@ -1,0 +1,253 @@
+* {
+    font-family: Arial, Helvetica, Verdana, Geneva, sans-serif !important;
+}
+
+body {
+    background-color: #ffffff;
+}
+
+#leftColumn {
+    margin-left: 10px;
+}
+
+#container {
+    font-size: 0.8em !important;
+    /* background-color: #fefaec; */
+}
+
+#content form {
+    text-align: left;
+}
+
+#content {
+    /* color: #039; */
+    color: #111111;
+}
+
+#content h1, #content h2, #content h3, #content h4  { color: #039; }
+/* original value 039 */
+
+#content select {
+    color: #039;
+}
+
+h2, h3 {font-size: 1.2em; }
+
+.ui-picklist-item {
+    font-size: 0.95em;
+    font-weight: normal !important;
+    color: #039 !important;
+}
+
+.ui-state-highlight {
+    color: #fff !important;
+}
+
+.ui-picklist-button {
+    font-size: 0.9em !important;
+    color: #039 !important;
+}
+
+div#datasetPage table {
+    border-spacing: 1px;
+    width: 100%;
+}
+
+div#messagesBox {
+    display: inline-block;
+    margin: 1em 0;
+}
+
+div.ui-panel {
+     margin-bottom: 1em; 
+}
+
+td.datasetBlock {
+    vertical-align: top;
+    padding: 5px;
+}
+
+div.datasetLabel {
+    font-size: 0.7em
+}
+
+.highlighted {
+    border: 2px solid !important;
+}
+
+div#leftColumn {
+    float: left;
+    width: 200px;
+    margin-bottom: 1em;
+}
+
+div.header {
+    padding: 1em;
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+div.header a {
+    padding: 0.5em;
+    text-decoration: none;
+}
+
+div.footer {
+    clear: both;
+    height: 20px;
+    margin-top: 3em;
+    padding: 0.5em;
+    font-size: 0.9em;
+}
+
+div#leftFooter {
+    float: left;
+    width: 30%;
+    margin-left: 10px;
+}
+
+div#rightFooter {
+    float: right;
+    width: 30%;
+    text-align: right;
+    margin-right: 10px;
+}
+
+#processSearchForm {
+    display: inline-block;
+    margin: 10px;
+}
+
+#processSearchForm input, #processSearchForm select {
+    padding: 2px;
+    margin: 4px;
+    vertical-align: middle;
+}
+
+#processSearchForm .tdVAlignTop td {
+	vertical-align: top;
+}
+
+#generalForm {
+    display: inline-block;
+}
+
+#generalForm textarea {
+    width: 250px;
+    height: 100px;
+}
+
+#generalForm input, #generalForm select {
+    padding: 2px;
+    margin: 4px;
+    vertical-align: middle;
+}
+
+.loginForm {
+    display: inline-block;
+}
+
+div.buttonRight {
+    margin-top: 1em;
+    margin-right: 1em;
+    text-align: right;
+}
+
+div.buttonLeft {
+    margin-top: 1em;
+}
+
+div.buttonCenter {
+    margin-top: 1em;
+    text-align: center;
+}
+
+#filterForm #filterPanel {
+	min-width: 180px;
+}
+
+#tableForm {
+}
+
+#tableForm button {
+    margin-bottom: 1em;
+    margin-right: 1em;
+}
+
+#tableForm .ui-paginator-rpp-options {
+    margin-right: 0.5em !important;
+}
+
+iframe#console {
+    display: block;
+    margin-bottom: 2em;
+    width: 100%;
+    height: 300px;
+}
+
+span.redText {
+    color: red;
+}
+
+.boldText {
+    font-weight: bold;
+}
+
+div.floatRight {
+    float: right;
+}
+
+div.clearRight {
+    clear: right;
+}
+
+div.ourDataList ul, div.ourDataListNoBullet ul {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+div.ourDataList > .ui-widget-content, div.ourDataListNoBullet > .ui-widget-content {
+    border: none;
+}
+
+div.ourDataListNoBullet li {
+    list-style-type: none;
+}
+
+div.ourDataList li {
+    list-style-type: circle;
+    margin-left: 1.2em;
+}
+
+.ui-datatable {
+    text-align: left;
+}
+
+.ui-datatable th {
+    white-space: normal;
+}
+
+#leftColumn li.ui-widget-header {
+    margin-top: 1em !important;
+}
+
+.ui-tooltip .headline {
+	display: block;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+.ui-tooltip .legendHeader {
+	display: block;
+	font-weight: bold;
+	font-size: smaller;
+	decoration: underline;
+}
+.ui-tooltip .listItem {
+	display: block;
+	font-weight: normal;
+	margin-top: 5px;
+}
+.ui-sortable-column-icon + span {
+	margin-left: 2px;
+}

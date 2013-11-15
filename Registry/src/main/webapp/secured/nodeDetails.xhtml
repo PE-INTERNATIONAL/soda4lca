@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:body>
+	<ui:composition template="/templates/restrictedLayout.xhtml">
+		<ui:param name="contentTitle" value="#{msg.nodeDetailsPage_header}" />
+		<ui:define name="content">
+
+			<ui:include src="/messages.xhtml" />
+			<h:panelGroup id="nodeDetailsGroup">
+				<h:form id="nodeDetailsMainForm">
+					<p:panel header="#{msg.nodeDetailsPage_nodeDetails}">
+						<h:panelGrid columns="4"
+							columnClasses="column1of4,column2of4,column1of4,column2of4"
+							styleClass="fullWidth">
+							<h:outputLabel value="#{msg.node_nodeId}:" for="nodeId" />
+							<h:outputText id="nodeId" value="#{nodeDetailsBean.node.nodeId}" />
+
+							<h:outputLabel value="#{msg.node_name}:" for="nodeName" />
+							<h:outputText id="nodeName" value="#{nodeDetailsBean.node.name}" />
+
+							<h:outputLabel value="#{msg.node_baseUrl}:" for="nodeBaseUrl" />
+							<h:outputText id="nodeBaseUrl"
+								value="#{nodeDetailsBean.node.baseUrl}" />
+
+							<h:outputLabel value="#{msg.node_status}:" for="nodeStatus" />
+							<h:outputText id="nodeStatus"
+								value="#{nodeDetailsBean.node.status}" />
+
+							<h:outputLabel value="#{msg.node_description}:"
+								for="nodeDescription" />
+							<h:outputText id="nodeDescription"
+								value="#{nodeDetailsBean.node.description}" />
+						</h:panelGrid>
+					</p:panel>
+
+					<p:panel header="#{msg.nodeDetailsPage_nodeAdminDetails}">
+						<h:panelGrid columns="4"
+							columnClasses="column1of4,column2of4,column1of4,column2of4"
+							styleClass="fullWidth">
+							<h:outputLabel value="#{msg.node_adminName}:" for="nodeAdminName" />
+							<h:outputText id="nodeAdminName"
+								value="#{nodeDetailsBean.node.adminName}" />
+
+							<h:outputLabel value="#{msg.node_adminEmailAddress}:"
+								for="nodeAdminEmail" />
+							<h:outputText id="nodeAdminEmail"
+								value="#{nodeDetailsBean.node.adminEmailAddress}" />
+
+							<h:outputLabel value="#{msg.node_adminPhone}:"
+								for="nodeAdminPhone" />
+							<h:outputText id="nodeAdminPhone"
+								value="#{nodeDetailsBean.node.adminPhone}" />
+
+							<h:outputLabel value="#{msg.node_adminWebAddress}:"
+								for="nodeAdminWeb" />
+							<h:outputText id="nodeAdminWeb"
+								value="#{nodeDetailsBean.node.adminWebAddress}" />
+						</h:panelGrid>
+					</p:panel>
+
+					<p:panel header="#{msg.nodeDetailsPage_nodeHistory}">
+						<p:dataTable var="nodeOperation"
+							value="#{nodeDetailsBean.nodeHistory}" paginator="true" rows="10"
+							lazy="true"
+							paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+							rowsPerPageTemplate="5,10,15" onRowSelectUpdate="display">
+
+							<p:column headerText="#{msg.nodeDetailsPage_nodeHistory_action}">
+								<h:outputText value="#{msg[nodeOperation.operationType]}" />
+							</p:column>
+
+							<p:column headerText="#{msg.nodeDetailsPage_nodeHistory_date}">
+								<h:outputText value="#{nodeOperation.operationDate}">
+									<f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss" />
+								</h:outputText>
+							</p:column>
+
+							<p:column headerText="#{msg.nodeDetailsPage_nodeHistory_details}">
+								<p:commandLink
+									rendered="#{nodeOperation.operationType.affectsDataset}"
+									value="#{msg.nodeDetailsPage_nodeHistory_viewDetails}"
+									action="#{nodeDetailsBean.setSelectedOperation(nodeOperation)}"
+									oncomplete="historyDetails.show();" update="detailsHistoryForm:historyDetailsTable" />
+							</p:column>
+
+						</p:dataTable>
+					</p:panel>
+
+					<p:commandButton value="#{msg.nodeDetailsPage_acceptRegistration}"
+						onclick="confirmation.show()" type="button"
+						rendered="#{nodeDetailsBean.node.status=='NOT_APPROVED'}" />
+					<p:commandButton value="#{msg.nodeDetailsPage_rejectRegistration}"
+						onclick="rejection.show()" type="button"
+						rendered="#{nodeDetailsBean.node.status=='NOT_APPROVED'}" />
+				</h:form>
+			</h:panelGroup>
+
+			<p:confirmDialog message="#{msg.nodeDetailsPage_areYouSureAccept}"
+				header="#{msg.nodeDetailsPage_acceptance}" severity="alert"
+				widgetVar="confirmation" modal="true">
+				<h:form id="nodeDetailsAcceptanceForm">
+					<p:commandButton value="#{msg.button_yes}"
+						oncomplete="confirmation.hide();"
+						actionListener="#{nodeDetailsBean.acceptRegistration}"
+						update="nodeDetailsGroup,messages" />
+					<p:commandButton value="#{msg.button_no}"
+						onclick="confirmation.hide()" type="button" />
+				</h:form>
+			</p:confirmDialog>
+
+			<p:dialog header="#{msg.nodeDetailsPage_rejection}"
+				widgetVar="rejection" resizable="false" severity="alert"
+				modal="true" width="340"
+				onHide="document.getElementById('nodeDetailsRejectionForm:reason').value=''">
+				<h:form id="nodeDetailsRejectionForm">
+					<h:panelGrid columns="1">
+						<h:outputText for="reason"
+							value="#{msg.nodeDetailsPage_areYouSureReject}" />
+						<h:outputText for="reason"
+							value="#{msg.nodeDetailsPage_enterReason}" />
+						<p:inputTextarea required="true" id="reason"
+							requiredMessage="#{msg.nodeDetailsPage_rejectionreason_required}"
+							value="#{nodeDetailsBean.reason}"
+							style="width:300px;height:100px;" />
+					</h:panelGrid>
+					<p:commandButton value="#{msg.button_yes}"
+						oncomplete="rejection.hide();"
+						actionListener="#{nodeDetailsBean.rejectRegistration}"
+						update="nodeDetailsGroup,messages" />
+					<p:commandButton value="#{msg.button_no}"
+						onclick="rejection.hide()" type="button" />
+				</h:form>
+			</p:dialog>
+
+			<p:dialog header="#{msg.nodeDetailsPage_nodeHistory_details}"
+				widgetVar="historyDetails" resizable="true" severity="alert"
+				modal="true" width="540">
+				<h:form id="detailsHistoryForm">
+					<p:dataTable var="datasetOperation" id="historyDetailsTable"
+						value="#{nodeDetailsBean.selectedOperation.datasetLog}"
+						paginator="true" rows="10" lazy="false"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+						rowsPerPageTemplate="5,10,15">
+
+						<p:column headerText="#{msg.dataset_uuid}">
+							<h:outputText value="#{datasetOperation.uuid}" />
+						</p:column>
+
+						<p:column headerText="#{msg.dataset_version}">
+							<h:outputText value="#{datasetOperation.version}" />
+						</p:column>
+
+					</p:dataTable>
+				</h:form>
+			</p:dialog>
+
+
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

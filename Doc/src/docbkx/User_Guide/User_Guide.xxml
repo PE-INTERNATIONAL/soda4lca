@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://www.oasis-open.org/docbook/xml/5.0/rng/docbook.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<book xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+   <info>
+      <title>soda4LCA release 1.2.0 User Guide</title>
+      <subtitle>
+         <inlinemediaobject>
+            <imageobject>
+               <imagedata fileref="images/soda4LCA_logo.png" width="200px" align="center"/>
+            </imageobject>
+         </inlinemediaobject>
+      </subtitle>
+   </info>
+   <chapter>
+      <title>General Information</title>
+      <section>
+         <title>Intended audiences</title>
+         <para>This guide gives detailed step-by-step instructions on how to set up a soda4LCA database node.
+            It is intended for network and website managers.</para>
+      </section>
+   </chapter>
+   
+   <chapter>
+      <title> </title>
+      <section>
+         <title> </title>
+         <para> </para>
+      </section>
+   </chapter>
+   
+   
+   <chapter>
+      <title> </title>
+      <section>
+         <title> </title>
+         <para> </para>
+      </section>
+   </chapter>
+   
+   
+   <chapter>
+      <title> </title>
+      <section>
+         <title> </title>
+         <para> </para>
+      </section>
+   </chapter>
+   
+   
+   <chapter>
+      <title> </title>
+      <section>
+         <title> </title>
+         <para> </para>
+      </section>
+   </chapter>
+   
+   
+</book>

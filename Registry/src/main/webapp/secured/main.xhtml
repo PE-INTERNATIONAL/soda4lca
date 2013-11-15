@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:body>
+	<ui:composition template="/templates/restrictedLayout.xhtml">
+		<ui:param name="contentTitle" value="#{msg.registryDetailsPage_header}" />
+		<ui:define name="content">
+			<p:panel header="#{msg.registryDetailsPage_registryDetails}">
+				<h:panelGrid columns="2"
+					columnClasses="column1of4,column2of4"
+					styleClass="fullWidth">
+					<h:outputLabel value="#{msg.registryDetailsPage_registryName}:" for="registryName" />
+					<h:outputText id="registryName" value="#{registryDetailsBean.registryName}" />
+					<h:outputLabel value="#{msg.registryDetailsPage_registryDescription}:" for="registryDescription" />
+					<h:outputText id="registryDescription" value="#{registryDetailsBean.registryDescription}" />
+					<h:outputLabel value="#{msg.registryDetailsPage_registryUrl}:" for="registryURL" />
+					<h:outputText id="registryURL" value="#{registryDetailsBean.registryUrl}" />
+				</h:panelGrid>
+			</p:panel>
+			<p:panel header="#{msg.registryDetailsPage_detailsNodes}">
+				<h:panelGrid columns="2"
+					columnClasses="column1of4,column2of4"
+					styleClass="fullWidth">
+					<h:outputLabel value="#{msg.registryDetailsPage_numberOfRegisteredNodes}:" for="numberOfRegistered" />
+					<h:outputText id="numberOfRegistered" value="#{registryDetailsBean.numberOfRegistered}" />
+					<h:outputLabel value="#{msg.registryDetailsPage_numberOfPendingRequests}:" for="numberOfPending" />
+					<h:outputText id="numberOfPending"
+						value="#{registryDetailsBean.numberOfPending}" />
+				</h:panelGrid>
+			</p:panel>
+			
+			<p:panel header="#{msg.registryDetailsPage_detailsDS}">
+				<h:panelGrid columns="2"
+					columnClasses="column1of4,column2of4"
+					styleClass="fullWidth">
+					<h:outputLabel value="#{msg.registryDetailsPage_numberOfRegisteredDS}:" for="numberOfRegisteredDS" />
+					<h:outputText id="numberOfRegisteredDS" value="#{registryDetailsBean.numberOfRegisteredDS}" />
+					<h:outputLabel value="#{msg.registryDetailsPage_numberOfPendingDSRequests}:" for="numberOfPendingDS" />
+					<h:outputText id="numberOfPendingDS"
+						value="#{registryDetailsBean.numberOfPendingDS}" />
+				</h:panelGrid>
+			</p:panel>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

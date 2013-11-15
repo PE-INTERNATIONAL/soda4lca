@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:body>
+	<ui:composition template="/templates/masterTemplate.xhtml">
+		<ui:define name="pageContent">
+			<div id="container">
+				<div id="leftColumn">
+					<ui:include src="/templates/leftMenu.xhtml" />
+				</div>
+				<div id="rightColumn" style="margin-left: 220px; margin-right: 2%">
+					<h1>#{contentTitle}</h1>
+					<ui:insert name="content" />
+				</div>
+			</div>
+			
+			<div class="footer ui-widget-header ui-corner-all">
+            	<div id="rightFooter"><h:outputText value="#{applicationInfoBean.version}"/></div>
+            </div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,133 @@
+#
+# hostname and port to use for service URLs
+# the hostname will be automatically detected, this is only 
+# necessary if your host is behind a proxy 
+# port defaults to 80 if not set
+#
+#service.url.hostname = localhost
+service.url.port = 8080
+
+#
+# node information
+# NOTE: service.nodeid may not contain spaces!
+#
+service.node.id = NODEID
+service.node.name = name of this node
+service.node.description = description of this node
+service.node.operator = name of the organization operating this node
+#
+# only enable the service.node.baseURL setting if you explicitly need to override the auto-detected URL
+#
+#service.node.baseURL = the base URL for this node's service interface, in the form http://host.domain.com/path/resource/ (don't forget the trailing slash)
+
+#
+# administrative contact for this node
+#
+service.admin.name = name of administrative contact 
+service.admin.phone = +49
+service.admin.email = admin@foo.org
+service.admin.www = http://www.foo.org/
+
+#
+# specify the folder for the website template 
+#
+template = default
+
+#
+# specify the folder for the jQueryUI theme
+#
+theme = ui-lightness
+
+#
+# template-specific welcome page
+#
+#welcomePage = jumppage.xhtml
+
+#
+# title of the database instance
+#
+title = @APP-TITLE@
+
+#
+# logo of the database instance shown in header
+# use "false" to disable. If you put it relative
+# to this application's context path you may use
+# the expression %contextPath% as replacement:
+# logo = %contextPath%/my/path/to/image.png
+#
+logo = false
+
+#
+# the preferred languages used for display of datasets.
+# if no information is present in one language, the application
+# will use the next one in the list as a fallback
+# default is en,de,fr
+#
+#preferredlanguages=en,de,fr
+
+#
+# security settings
+# metadata only true is the default
+# if you set this to false, then full data sets will be publicly available
+#
+security.guest.metadataOnly = false
+
+#
+# settings for user management system
+#
+#user.registration.activated = false
+#user.registration.selfActivation = false
+#user.registration.activationEmail = true
+#user.registration.spam.protection = true
+
+#
+# if email is set; send admin email about new user
+#
+#user.registration.registrationAddress = admin@acme.org
+#user.registration.admin.email = root@localhost
+
+#
+# mail settings
+#
+mail.sender = root@localhost
+mail.hostname = 127.0.0.1
+mail.port = 25
+mail.sitename = @APP-TITLE@
+
+#
+# data and temp directories
+#
+# data files is where external files attached to source datasets will be stored, defaults to WEB-INF/var/files
+# uploads is where uploaded files are temporarily stored, defaults to WEB-INF/var/uploads
+# zips is where zip files are temporarily stored, defaults to WEB-INF/var/zips
+#
+# IMPORTANT: files.location.datafiles should point to somewhere outside the 
+# directory containing web application, otherwise you will lose your data files
+# on re- or undeploy! 
+#
+#files.location.datafiles = /usr/local/soda4LCA/datafiles
+#files.location.uploads = /tmp/uploads
+#files.location.zipfiles = /tmp/zips
+
+
+#
+# enable (true) or disable (false) a feature
+# if an entry is omitted, true is the default value
+#
+feature.browse.processes = true
+feature.browse.lciamethods = true
+feature.browse.flows = true
+feature.browse.flowproperties = true
+feature.browse.unitgroups = true
+feature.browse.sources = true
+feature.browse.contacts = true
+
+feature.search.processes = true
+
+#
+# configure networking mode (optional) 
+# value may be either nodes or registries
+# in registries mode, nodes will have to be registered with a registry
+# before being available for distributed search
+#
+feature.networking = registries

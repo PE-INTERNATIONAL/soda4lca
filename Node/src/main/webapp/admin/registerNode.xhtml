@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:body>
+	<ui:composition template="/admin/layout/adminDesign.xhtml">
+		<ui:param name="pageTitle" value="#{i18n['admin.registerNode.title']}" />
+		<ui:define name="content">
+			<p>#{i18n['common.mandatoryFields']}</p>
+			<h:form id="generalForm" prependId="false">
+				<p:panel header="#{i18n['admin.registryDetails.details']}">
+					<h:panelGrid columns="4"
+						columnClasses="column1of4,column2of4,column1of4,column2of4"
+						styleClass="detailsWidth" >
+						
+						<h:outputLabel value="#{i18n['admin.registry.name']}:" for="registryName" />
+						<h:outputText id="registryName"
+							value="#{nodeRegistrationBean.registry.name}" />
+
+						<h:outputLabel value="#{i18n['admin.registry.baseUrl']}:"
+							for="registryBaseUrl" />
+						<h:outputText id="registryBaseUrl"
+							value="#{nodeRegistrationBean.registry.baseUrl}" />
+
+						<h:outputLabel value="#{i18n['admin.registry.status']}:"
+							for="registryStatus" />
+						<h:outputText id="registryStatus"
+							value="#{nodeRegistrationBean.registry.status.toString()}" />
+
+						<h:outputLabel value="#{i18n['admin.registry.description']}:"
+							for="registryDecrition" />
+						<h:outputText id="registryDecrition"
+							value="#{nodeRegistrationBean.registry.description}" />
+							
+					</h:panelGrid>
+				</p:panel>
+				<p:panel header="#{i18n['admin.registerNode.registrationDetails']}">
+					<h:panelGrid columns="2">
+						<h:outputLabel value="#{i18n['common.node.id']}  #{i18n['common.markMandatory']}"
+							for="nodeId" />
+						<p:inputText id="nodeId"
+							value="#{nodeRegistrationBean.node.nodeId}" required="true"
+							requiredMessage="#{i18n['admin.registerNode.requiredMessage_nodeId']}"
+							maxlength="255" size="80" />
+							
+						<h:outputLabel value="#{i18n['admin.node.baseURL']}  #{i18n['common.markMandatory']}"
+							for="baseURL" />
+						<p:inputText id="baseURL"
+							value="#{nodeRegistrationBean.node.baseUrl}" required="true"
+							requiredMessage="#{i18n['admin.registerNode.requiredMessage_baseURL']}"
+							maxlength="255" size="80">
+							<f:validator validatorId="de.iai.ilcd.webgui.validators.NodeBaseUrlValidator"/>
+						</p:inputText>
+					</h:panelGrid>
+				</p:panel>
+				<p:panel header="#{i18n['admin.registerNode.authentication']}">
+					<h:panelGrid columns="2">
+						<h:outputLabel value="#{i18n['admin.registerNode.acccessAccount']}  #{i18n['common.markMandatory']}"
+							for="accessAccount" />
+						<p:inputText id="accessAccount"
+							value="#{nodeRegistrationBean.node.nodeCredentials.accessAccount}" required="true"
+							requiredMessage="#{i18n['admin.registerNode.requiredMessage_acccessAccount']}"
+							maxlength="40" size="40" />
+							
+						<h:outputLabel value="#{i18n['admin.registerNode.accessPassword']}  #{i18n['common.markMandatory']}"
+							for="accessPassword" />
+						<p:password id="accessPassword"
+							value="#{nodeRegistrationBean.node.nodeCredentials.accessPassword}" required="true"
+							requiredMessage="#{i18n['admin.registerNode.requiredMessage_accessPassword']}"
+							maxlength="40" size="40" autocomplete="off"/>
+					</h:panelGrid>
+				</p:panel>
+				<div class="buttonCenter">
+					<p:commandButton value="#{i18n['admin.registerNode.registerButton']}"
+						action="#{nodeRegistrationBean.register}"
+						update="messages" ajax="false" />
+				</div>
+			</h:form>
+
+			<ui:include src="/messages.xhtml" />
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
+

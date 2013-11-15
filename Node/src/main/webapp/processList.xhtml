@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+Copyright (c) 2011 Karlsruhe Institute of Technology (KIT) - Institute for 
+Applied Computer Science (IAI). 
+
+This file is part of soda4LCA - the Service-Oriented Life Cycle Data Store.
+
+soda4LCA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by the 
+Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+soda4LCA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with soda4LCA.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:body>
+        <ui:composition template="#{conf.templatePath}/frontend.xhtml">
+            <ui:param name="pageTitle" value="#{i18n['common.proc']}#{i18n['delimiter']}#{i18n['public.datasets']}" />
+            <ui:param name="activeMenu" value="#{Constants.MENU_PROCESS}" />
+            <ui:define name="content">
+
+                <div class="floatRight">
+                    <h:form id="filterForm" prependId="false">
+                        <p:panel id="filterPanel" header="#{i18n['public.proc.list.filter']}" toggleable="true" closable="false" toggleSpeed="500" widgetVar="panel" collapsed="true">
+                            <p:panel>
+                                <h:panelGrid columns="2">
+                                    <p:outputLabel value="#{i18n['public.proc.list.search.nameDesc']}:" for="nameFilter" />
+                                    <p:inputText value="#{processesHandler.nameFilter}" id="nameFilter" />
+                                    <p:outputLabel value="#{i18n['public.proc.list.search.classes']}:" for="classesFilter" />
+                                    <c:if test="#{processesHandler.all2ndLevelClasses.size() > 4}">
+                                        <c:set var="menuStyle" value="width:250px;height:80px;" />
+                                    </c:if>
+                                    <p:selectManyMenu value="#{processesHandler.selectedClasses}" id="classesFilter" style="#{menuStyle}">
+                                        <f:selectItems value="#{processesHandler.all2ndLevelClasses}" />
+                                    </p:selectManyMenu>
+                                    <p:tooltip for="classesFilter" value="#{i18n['public.proc.hint.select']}">
+                                        <h:outputText value="#{i18n['public.proc.hint.select1']}" /><br />
+                                        <h:outputText value="#{i18n['public.proc.hint.select2']}" />
+                                    </p:tooltip>
+                                </h:panelGrid>
+                            </p:panel>
+                            <div class="buttonCenter">
+                                <p:commandButton ajax="false" action="#{processesHandler.doFilter}" update="processTable" value="Filter" />
+                            </div>
+                        </p:panel>
+                    </h:form>
+                </div>
+
+                <div class="clearRight">
+                    <ui:include src="processListDisplay.xhtml">
+                        <ui:param name="lazyDataModelRef" value="#{processesHandler.lazyDataModel}" />
+                    </ui:include>
+                </div>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:body>
+	<ui:composition template="/templates/restrictedLayout.xhtml">
+		<ui:param name="contentTitle" value="#{msg.updateDatasets_header}" />
+		<ui:define name="content">
+			<h:form id="listDS">
+				<p:dataTable var="ds" value="#{updateDatasetsBean.datasets}"
+					paginator="true" rows="10" lazy="false"
+					selection="#{updateDatasetsBean.selectedDataSet}"
+					paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+					rowsPerPageTemplate="5,10,15" onRowSelectUpdate="display"
+					binding="#{updateDatasetsBean.data}">
+
+ 					<p:column selectionMode="single"/>
+					
+					<p:column headerText="#{msg.dataset_uuid}">
+						<h:outputLink value="#{ds.node.baseUrl}#{'/resource/processes/'}#{ds.uuid}#{'?format=html'}">
+							<h:outputText value="#{ds.uuid}"/>
+						</h:outputLink>
+					</p:column>
+					
+					<p:column headerText="#{msg.dataset_name}">
+						<h:outputText value="#{ds.name}" />
+					</p:column>
+					
+					<p:column headerText="#{msg.dataset_version}">
+						<h:outputText value="#{ds.version}" />
+					</p:column>
+					
+					<p:column headerText="#{msg.dataset_owner}">
+						<h:outputText value="#{ds.owner}" />
+					</p:column>
+					
+					<p:column headerText="#{msg.dataset_user}">
+						<h:outputText value="#{ds.userEmail}" />
+					</p:column>
+					
+					<p:column headerText="#{msg.dataset_compliances}">
+						<h:panelGrid column="1" styleClass="noBorder">
+							<ui:repeat value="#{updateDatasetsBean.supportedCompliances}" var="comp">
+								<h:outputText value="#{comp}" />
+							</ui:repeat>
+						</h:panelGrid>
+					</p:column>
+					
+					<p:column headerText="#{msg.node_nodeId}">
+						<h:outputText value="#{ds.node.nodeId}" />
+					</p:column>
+
+				</p:dataTable>
+				
+				<p:button value="#{msg.updateDatasets_cancel}"
+					outcome="datasets.xhtml?approved=false"
+                    ajax="false"/>
+                    
+                <p:commandButton value="#{msg.updateDatasets_save}"
+					onclick="confirmation.show()" type="button"/>
+					
+				<p:commandButton value="#{msg.updateDatasets_rejectAll}"
+					onclick="rejection.show()" type="button"/>
+                    
+				<p:confirmDialog message="#{msg.updateDatasets_areYouSure}"
+					header="#{msg.updateDatasets_acceptance}" severity="alert"
+					widgetVar="confirmation" modal="true">
+					<p:commandButton value="#{msg.button_yes}"
+						oncomplete="confirmation.hide()"
+						actionListener="#{updateDatasetsBean.acceptRegistration}"
+						update="nodeDetails" />
+					<p:commandButton value="#{msg.button_no}"
+						onclick="confirmation.hide()" type="button" />
+				</p:confirmDialog>
+				
+				<p:confirmDialog message="#{msg.updateDatasets_areYouSure_rejection}"
+					header="#{msg.updateDatasets_rejection}" severity="alert"
+					widgetVar="rejection" modal="true">
+					<p:commandButton value="#{msg.button_yes}"
+						oncomplete="rejection.hide()"
+						actionListener="#{updateDatasetsBean.rejectRegistration}"
+						update="nodeDetails" />
+					<p:commandButton value="#{msg.button_no}"
+						onclick="rejection.hide()" type="button" />
+				</p:confirmDialog>
+				
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

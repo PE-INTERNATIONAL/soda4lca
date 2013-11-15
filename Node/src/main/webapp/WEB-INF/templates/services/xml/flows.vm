@@ -1,0 +1,44 @@
+#*
+Copyright (c) 2011 Karlsruhe Institute of Technology (KIT) - Institute for 
+Applied Computer Science (IAI). 
+
+This file is part of soda4LCA - the Service-Oriented Life Cycle Data Store.
+
+soda4LCA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by the 
+Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+soda4LCA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with soda4LCA.  If not, see <http://www.gnu.org/licenses/>.
+*#<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<common:dataSetList xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:common="http://www.ilcd-network.org/ILCD/ServiceAPI" xmlns="http://www.ilcd-network.org/ILCD/ServiceAPI/Flow" common:sourceId="$context.getNodeId()" common:totalSize="$datasetsTotalCount" common:startIndex="$startIndex" common:pageSize="$pageSize">
+    #foreach ($flow in $datasets)
+	<flow xlink:href="$context.getBaseUri()flows/$flow.getUuidAsString()" common:sourceId="$flow.getSourceId()">
+            #set($dataset=$flow)
+            #parse("/xml/common.vm")
+            #if($flow.getCategorization())
+            <flowCategorization>
+                #foreach ($flowCategory in $flow.getCategorization().getClasses())
+                    <common:category level="$flowCategory.getLevel()">$flowCategory.getName()</common:category>
+                #end
+            </flowCategorization>
+            #end
+            <type>$flow.getType().getValue()</type>
+            #set($propertyDescription=$flow.getReferenceProperty())
+            <referenceFlowProperty xlink:href="$context.getBaseUri()flowproperties/$propertyDescription.getFlowPropertyRef().getUuid().getUuid()">
+                <name>$escape.xml($propertyDescription.getFlowPropertyName().getValue())</name>
+                #if($propertyDescription.getFlowPropertyUnit())<defaultUnit>$propertyDescription.getFlowPropertyUnit()</defaultUnit>#end
+                #set($propertyRef=$propertyDescription.getFlowPropertyRef())
+                <common:reference refObjectId="$propertyRef.getUuid().getUuid()" type="flow property data set">
+                    <common:shortDescription>$escape.xml($propertyRef.getShortDescription().getValue())</common:shortDescription>
+                </common:reference>
+            </referenceFlowProperty>
+        </flow>
+    #end
+</common:dataSetList>

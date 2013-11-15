@@ -1,0 +1,172 @@
+<!--
+Copyright (c) 2011 Karlsruhe Institute of Technology (KIT) - Institute for 
+Applied Computer Science (IAI). 
+
+This file is part of soda4LCA - the Service-Oriented Life Cycle Data Store.
+
+soda4LCA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by the 
+Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+soda4LCA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with soda4LCA.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<style type="text/css">
+    table.top {
+            border: 1px solid #AB845D;
+            background-color: #FFFBF3;
+    }
+    tr {
+            background-color:#FFFFFF;
+    }
+    a {
+            color:#0A4755;
+    }
+    a:active, a:visited {
+            color:#894C0F;
+    }
+
+    /* tooltip styles */
+    a.info {
+        position:relative;
+        z-index:24;
+        color:#000000;
+        text-decoration:none
+    }
+
+    a.info:hover {
+            z-index:25;
+            background-color:#FFE8B7;
+    }
+
+    a.info span {
+            display: none
+    }
+
+    a.info:hover span {
+        display:block;
+        position:absolute;
+        top:2em; left:2em; width:25em;
+        border:1px solid #7BCBDE;
+        background-color:#B9EDF7;
+            color:#000000;
+        text-align: left
+    }
+
+    /*   general styles  */
+    .title 		{
+            font-family: Helvetica,Arial;
+            font-size: 14px;
+            font-weight: bold;
+            vertical-align: top;
+            background-color: #fc9336 ;
+            color: #000000;
+    }
+    .toc 		{
+            font-family: Helvetica,Arial;
+            font-size: 12px;
+            font-weight: normal;
+            vertical-align: top;
+            background-color: #FFD783 ;
+            color: #000000;
+    }
+    .section {
+    font-family: Helvetica,Arial;
+    font-size: 14px;
+    font-weight: bold;
+    vertical-align: top;
+    background-color: #ffb951  ;
+    color: #000000;
+    }
+    .root {
+    font-family: Helvetica,Arial;
+    font-size: 14px;
+    font-weight: bold;
+    vertical-align: top;
+    background-color: #ffb951  ;
+    color: #000000;
+    }
+    .subsection {
+            font-family: Helvetica,Arial;
+            font-size: 12px;
+            font-weight: bold;
+            vertical-align: top;
+            background-color: #ffd783  ;
+            color: #000000;
+    }
+    .fieldname {
+            font-family: Helvetica,Arial;
+            font-size: 12px;
+            font-weight: normal;
+            vertical-align: top;
+            background-color: #FFF3D9;
+            color: #002277  ;
+    }
+    .data          {
+            font-family: Helvetica,Arial;
+            font-size: 12px;
+            background-color: #FFFFFF;
+            color: #000000;
+            font-weight: normal;
+    }
+    .data_neutral     {
+            font-weight: normal;
+    }
+    .data_enum     {
+            font-weight: normal;
+            font-style: italic;
+    }
+    .referencename   {
+            font-family: Helvetica,Arial;
+            font-size: 12px;
+            font-weight: bold;
+            background-color: #FFFFFF ;
+            color: #002277  ;
+    }
+    .referencedata   {
+            font-family: Helvetica,Arial;
+            font-size: 12px;
+            color: red;
+            background-color: #FFFFFF ;
+            color: #000000;
+    }
+    .table_header   {
+            font-family: Helvetica,Arial;
+            font-size: 11px;
+            font-weight: normal;
+            background-color: #ffeece  ;
+            color: #002277  ;
+    }
+    .exchanges_section   {
+            font-family: Helvetica,Arial;
+            font-size: 9px;
+            background-color: #ffeece ;
+            color: #000000;
+    }
+    .exchanges_data   {
+            font-family: Helvetica,Arial;
+            font-size: 9px;
+            font-weight: bold;
+            background-color: #FFFFFF ;
+            color: #000000;
+    }
+    tr.highlight td.data {
+            border-width: 2px;
+            border-style: solid;
+            border-color: #A2D3DE;
+    }
+    .lang {
+            font-weight: normal;
+            color: grey;
+    }
+    .warning {
+            font-weight: bold;
+            color: red;
+    }
+</style>

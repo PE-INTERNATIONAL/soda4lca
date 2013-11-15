@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="registryDB"
+		transaction-type="RESOURCE_LOCAL">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<non-jta-data-source>java:comp/env/jdbc/registryDS</non-jta-data-source>
+		<class>eu.europa.ec.jrc.lca.registry.domain.User</class>
+		<class>eu.europa.ec.jrc.lca.registry.domain.Node</class>
+		<class>eu.europa.ec.jrc.lca.registry.domain.NodeChangeLog</class>
+		<class>eu.europa.ec.jrc.lca.registry.domain.DataSet</class>
+		<class>eu.europa.ec.jrc.lca.registry.domain.Compliance</class>
+		<class>eu.europa.ec.jrc.lca.registry.domain.NodeAuditLog</class>
+		<class>eu.europa.ec.jrc.lca.registry.domain.DataSetAuditLog</class>
+		<class>eu.europa.ec.jrc.lca.commons.domain.NodeCredentials</class>
+		<class>eu.europa.ec.jrc.lca.commons.domain.RegistryCredentials</class>
+		<class>eu.europa.ec.jrc.lca.commons.domain.Nonce</class>
+		<properties>
+			<property name="eclipselink.cache.type.default" value="SoftWeak" />
+			<property name="eclipselink.target-database" value="MySQL" />
+			<property name="eclipselink.weaving" value="static" />
+		</properties>
+	</persistence-unit>
+</persistence>

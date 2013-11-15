@@ -1,0 +1,53 @@
+#*
+Copyright (c) 2011 Karlsruhe Institute of Technology (KIT) - Institute for 
+Applied Computer Science (IAI). 
+
+This file is part of soda4LCA - the Service-Oriented Life Cycle Data Store.
+
+soda4LCA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by the 
+Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+soda4LCA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with soda4LCA.  If not, see <http://www.gnu.org/licenses/>.
+*#<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<common:dataSetList xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:common="http://www.ilcd-network.org/ILCD/ServiceAPI" xmlns="http://www.ilcd-network.org/ILCD/ServiceAPI/Process" common:sourceId="$context.getNodeId()" common:totalSize="$datasetsTotalCount" common:startIndex="$startIndex" common:pageSize="$pageSize">
+    #foreach ($process in $datasets)
+	<process xlink:href="$context.getBaseUri()processes/$process.getUuidAsString()" common:sourceId="$process.getSourceId()" #if($conf.isAccessRestricted())common:accessRestricted="true"#end>
+            #set($dataset=$process)
+            #parse("/xml/common.vm")
+            #if($process.getType().getValue())<type>$process.getType().getValue()</type>#end
+            #if($process.getLocation())<location>$process.getLocation()</location>>#end
+            <time>
+                #if($process.getTimeInformation().getReferenceYear())<referenceYear>$process.getTimeInformation().getReferenceYear()</referenceYear>#end
+                #if($process.getTimeInformation().getValidUntil())<validUntil>$process.getTimeInformation().getValidUntil()</validUntil>#end
+            </time>
+            #if($process.getParameterized())<parameterized>true</parameterized>#end
+            #if($process.getHasResults())<hasResults>true</hasResults>#end
+            #set($methodInformation=$process.getLCIMethodInformation())
+            #if($methodInformation)
+            <lciMethodInformation>
+                #if($methodInformation.getMethodPrinciple().getValue())<methodPrinciple>$methodInformation.getMethodPrinciple().getValue()</methodPrinciple>#end
+                #foreach($allocationApproach in $methodInformation.getApproaches())
+                    <approach>$allocationApproach.getValue()</approach>
+                #end
+            </lciMethodInformation>
+            #end
+            #if ($process.getOverallQuality())<overallQuality>$process.getOverallQuality()</overallQuality>#end
+            #set($accessInformation=$process.getAccessInformation())
+            #if($accessInformation)
+                <accessInformation>
+                    #if($accessInformation.isCopyright())<copyright>true</copyright>#else<copyright>false</copyright>#end
+                    #if($accessInformation.getLicenseType().getValue())<licenseType>$accessInformation.getLicenseType().getValue()</licenseType>#end
+                    #if($accessInformation.getUseRestrictions().getValue())<useRestrictions>$escape.xml($accessInformation.getUseRestrictions().getValue())</useRestrictions>#end
+                </accessInformation>
+            #end
+        </process>
+    #end
+</common:dataSetList>

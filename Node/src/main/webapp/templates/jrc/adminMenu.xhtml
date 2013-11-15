@@ -1,0 +1,33 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <p:menubar id="adminMenu">
+            <p:submenu label="Data Import">
+                <p:menuitem value="Import" url="/admin/importUpload.xhtml" />
+            </p:submenu>
+            <p:submenu label="Manage Data Sets">
+                <p:menuitem value="Manage Processes" url="/admin/showProcesses.xhtml" />
+                <p:menuitem value="Manage Flows" url="/admin/showProductFlows.xhtml" />
+                <p:menuitem value="Manage Flow Properties" url="/admin/showFlowProperties.xhtml" />
+                <p:menuitem value="Manage Unit Groups" url="/admin/showUnitGroups.xhtml" />
+                <p:menuitem value="Manage Sources" url="/admin/showSources.xhtml" />
+                <p:menuitem value="Manage Contacts" url="/admin/showContacts.xhtml" />
+            </p:submenu>
+            <p:submenu label="Manage Stocks">
+                <p:menuitem value="Create Stock" url="/admin/newStock.xhtml" />
+                <p:menuitem value="Manage Stocks" url="/admin/showStocks.xhtml" />
+            </p:submenu>
+            <p:submenu label="User">
+                <p:menuitem value="Create User" url="/admin/newUser.xhtml" />
+                <p:menuitem value="Manage User" url="/admin/showUsers.xhtml" />
+                <p:menuitem value="Create Group" url="/admin/newGroup.xhtml" />
+                <p:menuitem value="Manage Groups" url="/admin/showGroups.xhtml" />
+            </p:submenu>
+            <p:submenu label="Network">
+                <p:menuitem value="New Node" url="/admin/newNode.xhtml" />
+                <p:menuitem value="Manage Nodes" url="/admin/showNodes.xhtml" />
+                <p:menuitem value="Show Node Info" url="/admin/showNodeInfo.xhtml" />
+            </p:submenu>
+        </p:menubar>
+</ui:composition>

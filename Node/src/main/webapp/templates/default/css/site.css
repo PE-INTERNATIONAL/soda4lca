@@ -1,0 +1,306 @@
+* {
+    font-family: Arial, Helvetica, sans-serif !important;
+}
+
+body {
+    font-size: 12px;
+}
+
+div.minMax {
+    min-width: 800px;
+    max-width: 1400px;
+    margin: 0px auto;
+}
+
+div#messagesBox {
+    display: inline-block;
+    margin: 1em 0;
+}
+
+div.ui-panel {
+    margin-bottom: 1em;
+}
+
+h1 {
+    font-size: 1.5em;
+    padding-top: 1.5em;
+}
+
+h2 {
+    font-size: 1.2em;
+    padding-top: 1.2em;
+}
+
+table {
+    font-size: 12px;
+}
+
+div#datasetPage table {
+    border-spacing: 1px;
+    width: 100%;
+}
+
+td.datasetBlock {
+    vertical-align: top;
+    padding: 5px;
+}
+
+div.datasetLabel {
+    font-size: 10px;
+}
+
+.highlighted {
+    border: 2px solid !important;
+}
+
+div#leftColumn {
+    float: left;
+    width: 200px;
+    margin-bottom: 1em;
+}
+
+div.header {
+    padding: 1em;
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+div.header a {
+    padding: 0.5em;
+    text-decoration: none;
+}
+
+div.footer {
+    clear: both;
+    height: 20px;
+    margin-top: 3em;
+    padding: 0.5em;
+    font-size: 0.9em;
+}
+
+div#leftFooter {
+    float: left;
+    width: 50%;
+    margin-left: 10px;
+}
+
+div#rightFooter {
+    float: right;
+    width: 30%;
+    text-align: right;
+    margin-right: 10px;
+}
+
+#processSearchForm, #generalForm {
+    display: inline-block;
+    /* margin: 10px; */
+}
+
+#processSearchForm .tdVAlignTop td {
+	vertical-align: top;
+}
+
+#processSearchForm input, #processSearchForm select, #generalForm input, #generalForm select {
+    vertical-align: middle;
+}
+
+#processSearchForm input, #generalForm input {
+    margin: 2px;
+}
+
+.ui-selectonemenu {
+	margin: 2px;
+}
+
+.loginForm {
+    display: inline-block;
+}
+
+div.buttonRight {
+    margin-top: 1em;
+    margin-right: 1em;
+    text-align: right;
+}
+
+div.buttonLeft {
+    margin-top: 1em;
+}
+
+div.buttonCenter {
+    margin-top: 1em;
+    text-align: center;
+}
+
+#filterForm #filterPanel {
+	min-width: 180px;	/* needed for IE */
+}
+
+#filterForm #filterPanel td {
+	vertical-align: top;
+}
+
+/* CG/2012-09-13: not necessary?!
+#tableForm button {
+    margin-bottom: 1em;
+    margin-right: 1em;
+} */
+
+#tableForm .ui-paginator-rpp-options {
+    margin-right: 0.5em !important;
+}
+
+iframe#console {
+    display: block;
+    margin-bottom: 2em;
+    width: 100%;
+    height: 300px;
+}
+
+span.redText {
+    color: red;
+}
+
+.boldText {
+    font-weight: bold;
+}
+
+div.confirmDlgButtons {
+	float: right;
+}
+
+div.confirmDlgButtons button {
+	margin: 0.5em !important;
+}
+
+div.floatRight {
+    float: right;
+}
+
+div.clearRight {
+    clear: right;
+}
+
+div.ourDataList ul, div.ourDataListNoBullet ul {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+div.ourDataList > .ui-widget-content, div.ourDataListNoBullet > .ui-widget-content {
+    border: none;
+}
+
+div.ourDataListNoBullet li {
+    list-style-type: none;
+}
+
+div.ourDataList li {
+    list-style-type: circle;
+    margin-left: 1.2em;
+}
+
+div.ourDataList .ui-widget-content {
+    background: none;
+}
+
+.ui-datatable {
+    text-align: left;
+    margin-top: 1em;
+}
+
+.ui-datatable th {
+    white-space: normal;
+}
+
+#leftColumn li.ui-widget-header {
+    margin-top: 1em !important;
+}
+
+.ui-tooltip .headline {
+	display: block;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+.ui-tooltip .legendHeader {
+	display: block;
+	font-weight: bold;
+	font-size: smaller;
+	text-decoration: underline;
+}
+.ui-tooltip .listItem {
+	display: block;
+	font-weight: normal;
+	margin-top: 5px;
+}
+.ui-sortable-column-icon + span {
+	margin-left: 2px;
+}
+
+div.selectedDataStock {
+   padding-top: 15px;
+   padding-left: 10px;
+   font-size: 10pt;
+	font-style: italic;
+}
+
+.unselectable td.ui-selection-column div.ui-chkbox-box {
+	display: none;
+}
+
+.unselectable.ui-state-highlight {
+	background: inherit;
+	border: inherit;
+}
+
+.unselectable td.ui-selection-column {
+	cursor: default;
+}
+
+/* default: eng */
+#landingPageTable button {
+	width: 120px;
+	height: 60px;
+}
+
+#landingPageTable.deu button {
+	width: 135px;
+	height: 70px;
+}
+
+#landingPageTable td {
+	padding: 15px;
+}
+
+#landingPageTable, #landingPageTable td, #landingPageTable tr {
+	border: none;
+	background: none;
+}
+
+.menuBar {
+	background: none;
+	border: none;
+}
+
+/* currently not used due to workaround */
+.menuBar button {
+	height: 40px;
+	vertical-align: top;
+	margin: 0 0.2em;
+}
+
+/* !! only a workaround !! */
+.menuBarFake a {
+	height: 27px;
+	margin: 0 0.2em;
+	vertical-align: top;
+	padding: 12px 11px 0;
+}
+
+.radioLabelPadding td label {
+	padding-right: 2em !important;
+}
+
+.notDeletableInfo {
+	font-style: italic;
+	color: gray;
+}

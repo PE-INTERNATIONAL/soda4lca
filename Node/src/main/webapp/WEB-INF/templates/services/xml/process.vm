@@ -1,0 +1,124 @@
+#*
+Copyright (c) 2011 Karlsruhe Institute of Technology (KIT) - Institute for 
+Applied Computer Science (IAI). 
+
+This file is part of soda4LCA - the Service-Oriented Life Cycle Data Store.
+
+soda4LCA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by the 
+Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+soda4LCA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with soda4LCA.  If not, see <http://www.gnu.org/licenses/>.
+*#<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+#set($process=$dataset) ## common implementation is now sending dataset in context, not the other way around
+<process  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:common="http://www.ilcd-network.org/ILCD/ServiceAPI" xmlns="http://www.ilcd-network.org/ILCD/ServiceAPI/Process" xlink:href="$context.getBaseUri()processes/$process.getUuidAsString()" common:sourceId="$process.getSourceId()" #if($conf.isAccessRestricted())common:accessRestricted="true"#end>
+    #parse("/xml/common.vm")
+    #if($process.getDescription().getValue())<common:generalComment>$escape.xml($process.getDescription().getValue())</common:generalComment>#end
+    #if($process.getSynonyms().getValue())<common:synonyms>$escape.xml($process.getSynonyms().getValue())</common:synonyms>#end
+    #if($process.getType())<type>$process.getType().getValue()</type>#end
+    #set($quantitativeReference=$process.getQuantitativeReference())
+    #if($quantitativeReference)
+        <quantitativeReference type="$quantitativeReference.getType().getValue()">
+            #foreach($exchange in $process.getReferenceExchanges())
+                #set($flowRef=$exchange.getFlowReference())
+                <referenceFlow internalId="$exchange.getInternalId()">
+                    #if($exchange.getFlowName().getValue())<name>$escape.xml($exchange.getFlowName().getValue())</name>#end
+                    #if($exchange.getReferenceFlowPropertyName().getValue())<flowProperty>$escape.xml($exchange.getReferenceFlowPropertyName().getValue())</flowProperty>#end
+                    #if($exchange.getReferenceUnit())<unit>$escape.xml($exchange.getReferenceUnit())</unit>#end
+                    #if($exchange.getMeanAmount())<meanValue>$exchange.getMeanAmount()</meanValue>#end
+                    <common:reference refObjectId="$flowRef.getRefObjectId()" uri="$flowRef.getUri()" type="flow data set" xlink:href="$context.getBaseUri()flow/$flowRef.getRefObjectId()">
+                        <common:shortDescription>$escape.xml($flowRef.getShortDescription().getValue())</common:shortDescription>
+                    </common:reference>
+                </referenceFlow>
+            #end
+            #if($quantitativeReference.getOtherReference().getValue())<otherReference>$escape.xml($quantitativeReference.getOtherReference().getValue())</otherReference>#end
+        </quantitativeReference>
+    #end
+    #if($process.getLocation())<location>$process.getLocation()</location>#end
+    <time>
+        #if($process.getTimeInformation().getReferenceYear())<referenceYear>$process.getTimeInformation().getReferenceYear()</referenceYear>#end
+         #if($process.getTimeInformation().getValidUntil())<validUntil>$process.getTimeInformation().getValidUntil()</validUntil>#end
+    </time>
+    #if($process.getParameterized())<parameterized>$process.getParameterized()</parameterized>#end
+    #if($process.getHasResults())<hasResults>true</hasResults>#end
+    #set($methodInformation=$process.getLCIMethodInformation())
+    #if($methodInformation)
+    <lciMethodInformation>
+        <methodPrinciple>$methodInformation.getMethodPrinciple().getValue()</methodPrinciple>
+        #foreach($allocationApproach in $methodInformation.getApproaches())
+            <approach>$allocationApproach.getValue()</approach>
+        #end
+    </lciMethodInformation>
+    #end
+    #if($process.getCompleteness())<completenessProductModel>$process.getCompleteness().getValue()</completenessProductModel>#end
+    #foreach($compliance in $process.getComplianceSystems())
+    #set($complianceRef=$compliance.getReference())
+    <complianceSystem name="$compliance.getName()">
+        <common:reference type="source data set" refObjectId="$complianceRef.getRefObjectId()" uri="$complianceRef.getUri()" xlink:href="$context.getBaseUri()source/$complianceRef.getRefObjectId()">
+            <common:shortDescription>$complianceRef.getShortDescription().getValue()</common:shortDescription>
+        </common:reference>
+        #if($compliance.getOverallCompliance())<overallCompliance>$compliance.getOverallCompliance().value()</overallCompliance>#end
+        #if($compliance.getNomenclatureCompliance())<nomenclatureCompliance>$compliance.getNomenclatureCompliance().value()</nomenclatureCompliance>#end
+        #if($compliance.getMethodologicalCompliance())<methodologicalCompliance>$compliance.getMethodologicalCompliance().value()</methodologicalCompliance>#end
+        #if($compliance.getReviewCompliance())<reviewCompliance>$compliance.getReviewCompliance().value()</reviewCompliance>#end
+        #if($compliance.getDocumentationCompliance())<documentationCompliance>$compliance.getDocumentationCompliance().value()</documentationCompliance>#end
+        #if($compliance.getQualityCompliance())<qualityCompliance>$compliance.getQualityCompliance().value()</qualityCompliance>#end
+    </complianceSystem>
+    #end
+    #foreach($review in $process.getReviews())
+        <review type="$review.getType().getValue()">
+            #foreach($reviewScope in $review.getScopes())
+                <scope name="$reviewScope.getName().getValue()">
+                    #foreach($scopeMethod in $reviewScope.getMethods())
+                        <method name="$scopeMethod.getValue()"/>
+                    #end
+                </scope>
+            #end
+            #if ($review.getQualityIndicators().size() > 0)
+            <dataQualityIndicators>
+            #foreach($qualityIndicator in $review.getQualityIndicators())
+                <dataQualityIndicator name="$qualityIndicator.getName().getValue()" value="$qualityIndicator.getValue().getValue()"/>
+            #end
+            </dataQualityIndicators>
+            #end
+            #if($review.getReviewDetails().getValue())<reviewDetails>$escape.xml($review.getReviewDetails().getValue())</reviewDetails>#end
+            #if($review.getOtherReviewDetails().getValue())<otherReviewDetails>$escape.xml($review.getOtherReviewDetails().getValue())</otherReviewDetails>#end
+            #foreach($reviewerRef in $review.getReferencesToReviewers())
+                <reviewer type="contact data set" refObjectId="$reviewerRef.getRefObjectId()" uri="$reviewerRef.getUri()" xlink:href="$context.getBaseUri()contact/$reviewerRef.getRefObjectId()">
+                    <common:shortDescription>$escape.xml($reviewerRef.getShortDescription().getDefaultValue())</common:shortDescription>
+                </reviewer>
+            #end
+        </review>
+    #end
+    #if ($process.getOverallQuality())<overallQuality>$process.getOverallQuality()</overallQuality>#end
+    #if($process.getUseAdvice().getValue())<useAdvice>$escape.xml($process.getUseAdvice().getValue())</useAdvice>#end
+    #if($process.getTechnicalPurpose().getValue())<technicalPurpose>$escape.xml($process.getTechnicalPurpose().getValue())</technicalPurpose>#end
+    #set($accessInformation=$process.getAccessInformation())
+    #if($accessInformation)
+        <accessInformation>
+            #if($accessInformation.isCopyright())<copyright>true</copyright>#else<copyright>false</copyright>#end
+            #if($accessInformation.getLicenseType().getValue())<licenseType>$accessInformation.getLicenseType().getValue()</licenseType>#end
+            #if($accessInformation.getUseRestrictions().getValue())<useRestrictions>$escape.xml($accessInformation.getUseRestrictions().getValue()))</useRestrictions>#end
+        </accessInformation>
+    #end
+    <format>$process.getFormat()</format>
+    #set($ownerRef=$process.getOwnerReference())
+    #if($ownerRef && $ownerRef.getRefObjectId())
+    <ownership type="contact data set" refObjectId="$ownerRef.getRefObjectId()" uri="$ownerRef.getUri()" xlink:href="$context.getBaseUri()contact/$ownerRef.getRefObjectId()">
+        <common:shortDescription>$escape.xml($ownerRef.getShortDescription().getValue())</common:shortDescription>
+    </ownership>
+    #end
+    #set($approvedByRef=$process.getApprovedBy())
+    #if($approveByRef && $approvedByRef.getRefObjectId())
+    <approvedBy type="contact data set" refObjectId="$approvedByRef.getRefObjectId()" uri="$approvedByRef.getUri()" xlink:href="$context.getBaseUri()contact/$approvedByRef.getRefObjectId()">
+        <common:shortDescription>$escape.xml($approvedByRef.getShortDescription().getValue())</common:shortDescription>
+    </approvedBy>
+    #end
+</process>

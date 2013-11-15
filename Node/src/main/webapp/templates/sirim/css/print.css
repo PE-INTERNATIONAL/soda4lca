@@ -1,0 +1,54 @@
+.leftmenue {
+    display: none;
+    width: 0px;
+}
+
+#outerTable {    
+    width: 100%;
+    height: auto;
+}
+
+#leftColumn {
+    width: 0px;
+    height: auto;
+    padding:0px;
+    margin: 0px;
+}
+
+#mainColumn {
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    height: auto;
+}
+
+.content {
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+}
+
+.CategoryIndex {
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+}
+
+.CategoryIndexSub td {
+    margin-top: 10px;
+    padding: 10px;
+    border-top: 1px solid blue;
+}
+
+.datasetPage {
+    width: 100%;
+    height: auto;
+}
+
+.datasetBlock {
+    overflow: visible;
+}
+
+.footer {
+ 
+}

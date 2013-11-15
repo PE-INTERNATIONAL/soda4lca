@@ -1,0 +1,123 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+Copyright (c) 2011 Karlsruhe Institute of Technology (KIT) - Institute for 
+Applied Computer Science (IAI). 
+
+This file is part of soda4LCA - the Service-Oriented Life Cycle Data Store.
+
+soda4LCA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by the 
+Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+soda4LCA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with soda4LCA.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!-- 
+ui:params:
+	- nameEditable: name field editable?
+	- pwShown: show password field
+	- handler: handler to use (must have getUser method)
+ -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:shiro="http://shiro.apache.org/tags">
+    <ui:composition>
+        <p:panel header="#{i18n['admin.user.loginInfo']}">
+            <h:panelGrid columns="4">
+                <p:outputLabel value="#{i18n['common.user.loginName']}:" for="nameOut" rendered="#{not nameEditable}" />
+                <h:outputText id="nameOut" value="#{handler.user.userName}" rendered="#{not nameEditable}" style="padding-left:0.5em;" />
+                
+                <p:outputLabel value="#{i18n['common.user.loginName']}:" for="nameIn" rendered="#{nameEditable}" />
+                <p:inputText id="nameIn" value="#{handler.user.userName}" required="true" requiredMessage="#{i18n['admin.user.requiredMsg.loginName']}" maxlength="40" size="20" rendered="#{nameEditable}" />
+                
+                <p:outputLabel value="#{i18n['common.email']}:" for="email" />
+                <p:inputText id="email" value="#{handler.user.email}" required="true" requiredMessage="#{i18n['admin.user.requiredMsg.email']}" validatorMessage="#{i18n['admin.user.validatorMsg.email']}" maxlength="80" size="40">
+                    <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                </p:inputText>
+                
+                <p:outputLabel value="#{i18n['common.user.passw']}:" for="passw" rendered="#{pwShown}" />
+                <p:password id="passw" value="#{handler.plainPassword}" rendered="#{pwShown}" required="#{handler.createView}" requiredMessage="#{i18n['admin.user.requiredMsg.passw']}" feedback="false" minLength="" maxlength="20" size="20" />
+                
+                <p:outputLabel value="#{i18n['admin.user.repeatPassw']}:" for="repeatPassw" rendered="#{pwShown}" />
+                <p:password id="repeatPassw" rendered="#{pwShown}" value="#{handler.verifyPassword}" feedback="false" minLength="" maxlength="20" size="20" />
+            </h:panelGrid>
+            <h:outputText style="font-size: smaller;" value="#{i18n['admin.user.passwInfo']}." rendered="#{pwShown}" />
+        </p:panel>
+        <p:panel header="#{i18n['admin.user.personalInfo']}">
+            <h:panelGrid columns="6">
+                    <p:outputLabel value="#{i18n['admin.title']}:" for="title" />
+                    <p:inputText id="title" value="#{handler.user.title}" maxlength="40" size="5" />
+                    
+                    <p:outputLabel value="#{i18n['admin.user.firstName']}:" for="firstName" />
+                    <p:inputText id="firstName" value="#{handler.user.firstName}" required="false" requiredMessage="#{i18n['admin.user.requiredMsg.firstName']}" maxlength="40" size="15" />
+                    
+                    <p:outputLabel value="#{i18n['admin.user.lastName']}:" for="lastName" />
+                    <p:inputText id="lastName" value="#{handler.user.lastName}" required="false" requiredMessage="#{i18n['admin.user.requiredMsg.lastName']}" maxlength="40" size="20" />
+            </h:panelGrid>
+            <h:panelGrid columns="2">
+                <h:outputLabel value="#{i18n['common.user.jobposition']}:" for="jobposition" />
+                <p:inputText id="jobposition"
+                	    value="#{handler.user.jobPosition}"
+                              required="false"
+                              requiredMessage="#{i18n['common.user.requiredMsg.jobposition']}"
+                              maxlength="80"
+                              size="40" />
+            </h:panelGrid>
+            <h:panelGrid columns="2">
+                <p:outputLabel value="#{i18n['admin.user.gender']}:" for="gender" style="margin-right:1em;" />
+                <p:selectOneRadio id="gender" value="#{handler.user.gender}" styleClass="radioLabelPadding">
+                    <f:selectItem itemLabel="#{i18n['admin.user.gender.female']}" itemValue="f" />
+                    <f:selectItem itemLabel="#{i18n['admin.user.gender.male']}" itemValue="m" />
+                </p:selectOneRadio>
+            </h:panelGrid>
+        </p:panel>
+        <p:panel header="#{i18n['common.user.comments']}">
+        <h:panelGrid>
+                <h:outputLabel value="#{i18n['common.user.dspurpose']}:" for="dspurpose" />
+                <p:inputTextarea id="dspurpose"
+                                 value="#{handler.user.dsPurpose}"
+                                 cols="72"
+                                 rows="10" />
+            </h:panelGrid>
+        </p:panel>
+        <p:panel header="#{i18n['admin.user.accessRight']}" rendered="#{user.hasSuperAdminPermission()}">
+            <p:selectBooleanCheckbox value="#{handler.entry.superAdminPermission}" itemLabel="#{i18n['admin.user.accessRight.superadmin']}" disabled="#{handler.entry.id == Constants.ADMIN_ID}" />
+        </p:panel>
+        <p:panel header="#{i18n['admin.org.info']}">
+            <ui:fragment rendered="#{empty userHandler.allOrganizations}">
+                <h:panelGrid columns="2">
+                    <p:outputLabel for="org" value="#{i18n['admin.org']}:" />
+                    <h:outputText id="org" value="#{handler.user.organization.name}" />
+                </h:panelGrid>
+            </ui:fragment>
+            <ui:fragment rendered="#{not empty userHandler.allOrganizations}">
+                <h:panelGrid columns="2">
+                    <p:outputLabel for="orgSelect" value="#{i18n['admin.org']}:" />
+                    <p:selectOneMenu id="orgSelect" value="#{handler.user.organization}" converter="orgConverter">
+                        <f:selectItem itemLabel="#{i18n['common.select.hint']}" noSelectionValue="true" />
+                        <f:selectItems value="#{userHandler.allOrganizations}" var="o" itemLabel="#{o.name}" itemValue="#{o}" />
+                        <p:ajax event="change" process="@this" update="orgChangeHint" />
+                    </p:selectOneMenu>
+                </h:panelGrid>
+                <h:outputText id="orgChangeHint" value="#{i18n['admin.user.hint.orgChange']}" styleClass="#{userHandler.organizationChangeRequiresGroupRemovals?'':'ui-helper-hidden'}" />
+            </ui:fragment>
+        </p:panel>
+		<ui:include src="addressInfoPanel.xhtml">
+			<ui:param name="countries" value="#{handler.countries}" />
+			<ui:param name="chosenCountry" value="#{handler.chosenCountry}" />
+			<ui:param name="address" value="#{handler.user.address}" />
+		</ui:include>
+    </ui:composition>
+</html>
+

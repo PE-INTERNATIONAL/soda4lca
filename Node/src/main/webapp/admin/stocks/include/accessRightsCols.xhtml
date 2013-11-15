@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+Copyright (c) 2011 Karlsruhe Institute of Technology (KIT) - Institute for 
+Applied Computer Science (IAI). 
+
+This file is part of soda4LCA - the Service-Oriented Life Cycle Data Store.
+
+soda4LCA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by the 
+Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+soda4LCA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with soda4LCA.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<!--
+Parameters for this composition:
+	via ui:param:
+		sar: the stock access right wrapper instance
+-->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:p="http://primefaces.org/ui">
+
+		<p:column headerText="READ">
+			<p:selectBooleanCheckbox value="#{sar.read.value}" />
+		</p:column>
+		<p:column headerText="WRITE">
+			<p:selectBooleanCheckbox value="#{sar.write.value}" />
+		</p:column>
+		<p:column headerText="IMPORT">
+			<p:selectBooleanCheckbox value="#{sar.import.value}" />
+		</p:column>
+		<p:column headerText="EXPORT">
+			<p:selectBooleanCheckbox value="#{sar.export.value}" />
+		</p:column>
+		<p:column headerText="CHECKIN">
+			<p:selectBooleanCheckbox value="#{sar.checkin.value}" />
+		</p:column>
+		<p:column headerText="CHECKOUT">
+			<p:selectBooleanCheckbox value="#{sar.checkout.value}" />
+		</p:column>
+		<p:column headerText="RELEASE">
+			<p:selectBooleanCheckbox value="#{sar.release.value}" />
+		</p:column>
+		<p:column headerText="CREATE">
+			<p:selectBooleanCheckbox value="#{sar.create.value}" />
+		</p:column>
+		<p:column headerText="DELETE">
+			<p:selectBooleanCheckbox value="#{sar.delete.value}" />
+		</p:column>
+</ui:composition>

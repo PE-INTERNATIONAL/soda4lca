@@ -1,0 +1,35 @@
+#*
+Copyright (c) 2011 Karlsruhe Institute of Technology (KIT) - Institute for 
+Applied Computer Science (IAI). 
+
+This file is part of soda4LCA - the Service-Oriented Life Cycle Data Store.
+
+soda4LCA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by the 
+Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+soda4LCA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with soda4LCA.  If not, see <http://www.gnu.org/licenses/>.
+*#<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<LCIAMethod xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:common="http://www.ilcd-network.org/ILCD/ServiceAPI" xmlns="http://www.ilcd-network.org/ILCD/ServiceAPI/LCIAMethod" xlink:href="$context.getBaseUri()lciamethods/$dataset.getUuidAsString()" common:sourceId="$dataset.getSourceId()">
+    #parse("/xml/common.vm")
+    #if( $dataset.getType() )<type>$escape.xml($dataset.getType().value())</type>#end
+    #foreach( $tmp in $dataset.getMethodology() )<methodology>$escape.xml($tmp)</methodology>#end
+    #foreach( $tmp in $dataset.getImpactCategory() )<impactCategory>$escape.xml($tmp)</impactCategory>#end
+    #foreach( $tmp in $dataset.getAreaOfProtection() )<areaOfProtection>$escape.xml($tmp.value())</areaOfProtection>#end
+    #foreach( $tmp in $dataset.getAreaOfProtection() )<areaOfProtection>$escape.xml($tmp.value())</areaOfProtection>#end
+    #if( $dataset.getImpactIndicator() )<impactIndicator>$escape.xml($dataset.getImpactIndicator())</impactIndicator>#end
+    #if( $dataset.getTimeInformation() )
+    #set( $ti = $dataset.getTimeInformation() ) 
+    <time>
+    	<referenceYear>$escape.xml( $ti.getReferenceYear().getValue() )</referenceYear>
+    	<duration>$escape.xml( $ti.getDuration().getValue() )</duration>
+    </time>
+    #end
+</LCIAMethod>

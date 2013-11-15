@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+Copyright (c) 2011 Karlsruhe Institute of Technology (KIT) - Institute for 
+Applied Computer Science (IAI). 
+
+This file is part of soda4LCA - the Service-Oriented Life Cycle Data Store.
+
+soda4LCA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by the 
+Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+soda4LCA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with soda4LCA.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<!--
+Parameters for this composition:
+	via ui:param:
+		org: Organization instance
+		chosenCountry: Property to write chosen country to
+		countries: list of all countries
+		sectors: list of sectors
+		userAssignmentDualList: dual list of users for picklist
+		groupAssignmentDualList: dual list of groups for picklist
+		tabId: active tab index
+-->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:soda="http://java.sun.com/jsf/composite/sodacomp"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<ui:include src="sodaMenuBarOrg.xhtml">
+		<ui:param name="spacerHeight_afterToolbar" value="50" />
+	</ui:include>
+	
+	<!-- dynamic=false due to problems with selectOneMenus in third tab (see comment there)  -->
+	<p:tabView id="orgTabs" dynamic="false" activeIndex="#{orgHandler.activeTabIndex}">
+		<p:tab id="mainInfoTab" title="#{i18n['admin.tab.mainInfo']}">
+			<p:panel header="#{i18n['admin.org.info']}">
+				<h:panelGrid columns="2">
+					<p:outputLabel value="#{i18n['common.name']}: " for="name" />
+					<p:inputText id="name" value="#{org.name}" required="true" requiredMessage="#{i18n['admin.org.requiredMsg.name']}">
+						<p:ajax event="change" update="orgTabs" />
+					</p:inputText>
+					
+					<p:outputLabel value="#{i18n['admin.org.unit']}:" for="orgUnit" />
+					<p:inputText id="orgUnit" value="#{org.organisationUnit}" maxlength="50" size="40" />
+					
+					<p:outputLabel value="#{i18n['admin.org.industrSector']}:" for="industrSector" />
+					
+					<!-- Fix with 150px due to problems with tabs: 
+							dynamic=true for tabs ==> null value set for selectOneMenu
+							dynamic=false ==> selectOneMenu styling bug, set manually -->
+					<p:selectOneMenu style="width:150px" id="industrSector" value="#{org.sector}" converter="sectorConverter">
+						<f:selectItem itemLabel="#{i18n['common.select.hint']}" itemValue="0" />
+						<f:selectItems value="#{sectors}" var="sector" itemLabel="#{sector.sector}" itemValue="#{sector}" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+			</p:panel>
+			<ui:include src="addressInfoPanel.xhtml">
+				<ui:param name="countries" value="#{countries}" />
+				<ui:param name="chosenCountry" value="#{chosenCountry}" />
+				<ui:param name="address" value="#{org.address}" />
+			</ui:include>
+		</p:tab>
+		<p:tab id="assignUsrGrpTab" title="#{i18n['admin.manageUsrGrp']}" disabled="#{orgHandler.createView}">
+			<p:fieldset legend="#{i18n['admin.assigningUsers']} #{i18n['admin.toThisOrg']}">
+				<p:pickList styleClass="userPickList"
+					value="#{userAssignmentDualList}"
+					var="u" converter="userConverter"
+					itemValue="#{u}"
+					itemLabel="#{u.userName}#{orgHandler.adminUserHint(u)}"
+					addLabel="#{i18n['common.picklist.add']}"
+					addAllLabel="#{i18n['common.picklist.addAll']}"
+					removeLabel="#{i18n['common.picklist.remove']}"
+					removeAllLabel="#{i18n['common.picklist.removeAll']}"
+					itemDisabled="#{u == org.adminUser}">
+					
+					<f:facet name="sourceCaption">#{i18n['admin.picklist.sourceUsers']}</f:facet>
+					<f:facet name="targetCaption">#{i18n['admin.picklist.targetUsers']}</f:facet>
+					<p:ajax event="transfer" listener="#{orgHandler.handleUserGroupTransfer}" update="orgTabs" />
+					
+					<p:column rendered="#{u == org.adminUser}">
+						<h:outputText id="usrName" value="#{u.userName}#{orgHandler.adminUserHint(u)}" />
+						<pe:tooltip for="orgTabs:usrName" value="#{i18n['admin.org.hint.admUsr']}" />
+					</p:column>
+					<p:column rendered="#{u != org.adminUser}">
+						<h:outputText value="#{u.userName}#{orgHandler.adminUserHint(u)}" />
+					</p:column>
+				</p:pickList>
+			</p:fieldset>
+			<p:spacer height="20" />
+			<p:fieldset legend="#{i18n['admin.assigningGroups']} #{i18n['admin.toThisOrg']}">
+				<p:pickList styleClass="groupPickList"
+					value="#{groupAssignmentDualList}"
+					var="g" converter="userGroupConverter"
+					itemValue="#{g}"
+					addLabel="#{i18n['common.picklist.add']}"
+					itemLabel="#{g.groupName}#{orgHandler.noUsersHint(g)}#{orgHandler.adminGroupHint(g)}"
+					addAllLabel="#{i18n['common.picklist.addAll']}"
+					removeLabel="#{i18n['common.picklist.remove']}"
+					removeAllLabel="#{i18n['common.picklist.removeAll']}"
+					itemDisabled="#{g == org.adminGroup}">
+				
+					<f:facet name="sourceCaption">#{i18n['admin.picklist.sourceGroups']}</f:facet>
+					<f:facet name="targetCaption">#{i18n['admin.picklist.targetGroups']}</f:facet>
+					<p:ajax event="transfer" listener="#{orgHandler.handleUserGroupTransfer}" update="orgTabs" />
+					
+					<p:column rendered="#{g == org.adminGroup}">
+						<h:outputText id="grpName" value="#{g.groupName}#{orgHandler.noUsersHint(g)}#{orgHandler.adminGroupHint(g)}" />
+						<pe:tooltip for="orgTabs:grpName" value="#{i18n['admin.org.hint.admGrp']}" />
+					</p:column>
+					<p:column rendered="#{g != org.adminGroup}">
+						<h:outputText value="#{g.groupName}#{orgHandler.noUsersHint(g)}#{orgHandler.adminGroupHint(g)}" />
+					</p:column>
+				</p:pickList>
+			</p:fieldset>
+		</p:tab>
+		<p:tab id="assignAdmUsrGrpTab" title="#{i18n['admin.manageAdmUsrGrp']}" disabled="#{orgHandler.assignAdmUsrGrpTabDisabled}">
+			<p:panel header="#{i18n['admin.assignAdmUsrGrp']}">
+				<h:panelGrid columns="4">
+					<p:outputLabel value="#{i18n['admin.org.adminUser']}:" for="selectAdminUser" />
+					<!-- Fix with 150px due to problems with tabs: 
+							dynamic=true for tabs ==> null value set for selectOneMenu
+							dynamic=false ==> selectOneMenu styling bug, set manually -->
+							
+					<p:selectOneMenu style="width:150px" id="selectAdminUser" value="#{org.adminUser}" converter="userConverter" disabled="#{empty userAssignmentDualList.target}">
+						<f:selectItem itemLabel="#{i18n['common.select.hint']}" noSelectionValue="true" />
+						<f:selectItems value="#{userAssignmentDualList.target}" var="adminUser" itemLabel="#{adminUser.userName}" itemValue="#{adminUser}" />
+						<p:ajax event="change" update="@(.userPickList)" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="#{i18n['admin.org.adminGroup']}:" for="selectAdminGroup" style="margin-left:1em;" />
+					<p:selectOneMenu style="width:150px" id="selectAdminGroup" value="#{org.adminGroup}" converter="userGroupConverter" disabled="#{empty groupAssignmentDualList.target}">
+						<f:selectItem itemLabel="#{i18n['common.select.hint']}" noSelectionValue="true" />
+						<f:selectItems value="#{groupAssignmentDualList.target}" var="adminGroup" itemLabel="#{adminGroup.groupName}#{orgHandler.noUsersHint(adminGroup)}" itemValue="#{adminGroup}" />
+						<p:ajax event="change" update="@(.groupPickList)" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+				<h:outputText value="#{i18n['admin.org.hint.assignAdmUsrGrp']}." />
+			</p:panel>
+		</p:tab>
+	</p:tabView>
+
+	<ui:include src="sodaMenuBarOrg.xhtml">
+		<ui:param name="spacerHeight_beforeToolbar" value="50" />
+	</ui:include>
+
+</ui:composition>

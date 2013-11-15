@@ -1,0 +1,54 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:shiro="http://shiro.apache.org/tags">
+    <h:form id="adminMenuForm">
+    <p:menubar id="adminMenu">
+            <p:submenu label="#{i18n['admin.dataImport']}">
+                <p:menuitem value="#{i18n['admin.import']}" url="#{url.data.importUpload}" />
+                <p:menuitem value="#{i18n['admin.export']}" url="#{url.data.export}" />
+        </p:submenu>
+            <p:submenu label="#{i18n['common.stock']}">
+            <p:menuitem value="#{i18n['admin.rootStock.new']}" url="#{url.rootStock.new}" />
+            <p:menuitem value="#{i18n['admin.stock.new']}" url="#{url.stock.new}" />
+            <p:separator />
+            <p:menuitem value="#{i18n['admin.stock.manageList']}" url="#{url.stock.manageList}" />
+        </p:submenu>
+            <p:submenu label="#{i18n['admin.dataset.manageList']}">
+                <p:menuitem value="#{i18n['admin.process.manageList']}" url="#{url.process.manageList}" />
+                <p:menuitem value="#{i18n['admin.lciaMethod.manageList']}" url="#{url.lciaMethod.manageList}" />
+                <p:menuitem value="#{i18n['admin.flow.manageList']}" url="#{url.flow.manageList}" />
+                <p:menuitem value="#{i18n['admin.flowProperty.manageList']}" url="#{url.flowProperty.manageList}" />
+                <p:menuitem value="#{i18n['admin.unitGroup.manageList']}" url="#{url.unitGroup.manageList}" />
+                <p:menuitem value="#{i18n['admin.source.manageList']}" url="#{url.source.manageList}" />
+                <p:menuitem value="#{i18n['admin.contact.manageList']}" url="#{url.contact.manageList}" />
+        </p:submenu>
+        <shiro:hasPermission name="ADMIN_AREA">
+                <p:submenu label="#{i18n['admin.user']}">
+                <p:menuitem value="#{i18n['admin.user.new']}" url="#{url.user.new}" />
+                <p:menuitem value="#{i18n['admin.user.manageList']}" url="#{url.user.showList}" />
+                <p:separator />
+                <p:menuitem value="#{i18n['admin.group.new']}" url="#{url.group.new}" />
+                <p:menuitem value="#{i18n['admin.group.manageList']}" url="#{url.group.showList}" />
+            </p:submenu>
+        </shiro:hasPermission>
+            <p:submenu label="#{i18n['admin.network']}">
+                <p:menuitem value="#{i18n['admin.node.new']}" url="#{url.node.new}" />
+                <p:menuitem value="#{i18n['admin.node.manageList']}" url="#{url.node.showList}" />
+    	        <!-- //TODO: use property for path here as well -->
+	            <p:menuitem value="#{i18n['common.adminMenu.registries']}" url="/admin/listRegistries.xhtml" rendered="#{applicationInfoBean.registryBasedNetworking}"/>
+                <p:menuitem value="#{i18n['admin.node.info']}" url="#{url.node.nodeInfo}" />
+        </p:submenu>
+        <shiro:hasPermission name="*:*:*">
+            <p:submenu label="#{i18n['admin.globalConfig']}">
+                <p:menuitem value="#{i18n['admin.config']}" url="#{url.config}" />
+                    <p:submenu label="#{i18n['admin.orgs']}">
+                    <p:menuitem value="#{i18n['admin.org.new']}" url="#{url.org.new}" />
+                    <p:menuitem value="#{i18n['admin.org.manageList']}" url="#{url.org.manageList}" />
+                </p:submenu>
+            </p:submenu>
+        </shiro:hasPermission>
+    </p:menubar>
+    </h:form>
+</ui:composition>

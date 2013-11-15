@@ -1,0 +1,163 @@
+<!--
+Copyright (c) 2011 Karlsruhe Institute of Technology (KIT) - Institute for 
+Applied Computer Science (IAI). 
+
+This file is part of soda4LCA - the Service-Oriented Life Cycle Data Store.
+
+soda4LCA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by the 
+Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+soda4LCA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with soda4LCA.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+#set( $contact = $dataset )
+#set ($xmlContact = $xmlDataset)
+<html>
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+ <title>Contact data set: $!contact.getName().getDefaultValue() (en)</title>
+
+#include("/html/style.vm")
+
+</head>
+<body>
+      <table class="top" cellpadding="3px">
+         <tr>
+            <td class="title" colspan="2">Contact data set: $!contact.getName().getDefaultValue() (en)</td>
+         </tr>
+
+         <tr>
+            <td class="section" colspan="2" style="padding-left: 10px;"><a name="contactInformation"></a>Contact information
+            </td>
+         </tr>
+
+         <tr>
+            <td class="subsection" colspan="2" style="padding-left: 20px;">Data set information</td>
+         </tr>
+
+
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Short name for contact<span>Short name for the contact, that is used for display e.g. of links to this data set (especially in case the full name of the
+                     contact is rather long, e.g. "FAO" for "Food and Agriculture Organization").</span></a></td>
+            <td class="data"><span class="data_neutral">$!contact.getShortName().getDefaultValue()</span></td>
+         </tr>
+
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Name of contact<span>Name of the person, working group, organisation, or database network, which is represented by this contact data set.</span></a></td>
+            <td class="data"><span class="data_neutral">$!contact.getName().getDefaultValue()</span></td>
+         </tr>
+
+
+         <tr>
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Classification<span>Optional statistical or other classification of the data set. Typically also used for structuring LCA databases.</span></a></td>
+            <td class="data">
+               <table class="data">
+                  <tr>
+                     <td class="fieldname"><a class="info" href="javascript:void(0);">Class name<span>Name of the class.</span></a></td>
+                  </tr>
+                  <tr>
+                     <td class="data">$!contact.getClassification().getClassHierarchyAsString()</td>
+                  </tr>
+               </table>
+            </td>
+         </tr>
+
+
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Contact address<span>Mail address of the contact; specific for the person, working group, or department. [Note: A general contact point to the
+                     organisation is to be given in "General contact point".]</span></a></td>
+            <td class="data"><span class="data_neutral">$!contact.getContactAddress()</span></td>
+         </tr>
+
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Telephone<span>Contact's phone number(s) including country and regional codes.</span></a></td>
+            <td class="data"><span class="data_neutral">$!contact.getPhone()</span></td>
+         </tr>
+
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Telefax<span>Contact's fax number(s) including country and regional codes.</span></a></td>
+            <td class="data"><span class="data_neutral">$!contact.getFax()</span></td>
+         </tr>
+
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">E-mail<span>Contact's e-mail address.</span></a></td>
+            <td class="data"><span class="data_neutral"><a href="mailto:$!contact.getEmail()">$!contact.getEmail()</a></span></td>
+         </tr>
+
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">WWW-Address<span>Web-address of the person, working group, organisation or database network.</span></a></td>
+            <td class="data"><span class="data_neutral"><a href="$!contact.getWww()" target="_blank">$!contact.getWww()</a></span></td>
+         </tr>
+
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Central contact point<span>Alternative address / contact details for the contact. Provides contact information in case e.g. the person or group represented
+                     by this contact has left the organisation or changed office/telephone. This alternative contact point can hence contain also
+                     a central telephone number, e-mail, www-address etc. of the organisation.</span></a></td>
+            <td class="data"><span class="data_neutral">$!contact.getCentralContactPoint()</span></td>
+         </tr>
+
+
+
+         <tr>
+            <td class="section" colspan="2" style="padding-left: 10px;"><a name="administrativeInformation"></a>Administrative information
+            </td>
+         </tr>
+
+         <tr>
+            <td class="subsection" colspan="2" style="padding-left: 20px;">Data entry by</td>
+         </tr>
+
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Time stamp (last saved)<span>Date and time stamp of data set generation, typically an automated entry ("last saved").</span></a></td>
+            <td class="data"><span class="data_neutral">$!xmlContact.getAdministrativeInformation().getDataEntryBy().getTimeStamp().toString()</span></td>
+         </tr>
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Data set format(s) (source data set)<span>"Source data set" of the used version of the ILCD format. If additional data format fields have been integrated into the data
+                     set file, using the "namespace" option, the used format namespace(s) are to be given. This is the case if the data sets carries
+                     additional information as specified by other, particular LCA formats, e.g. of other database networks or LCA softwares.</span></a></td>
+            <td class="data"><span class="data_neutral">
+              #foreach($formatRef in $xmlContact.getAdministrativeInformation().getDataEntryBy().getReferenceToDataSetFormat())
+                <a href="$!formatRef.getUri()" title="source data set" class="">$!formatRef.getShortDescription().get(0).getValue()</a><br/>
+              #end
+            </span></td>
+         </tr>
+
+         <tr>
+            <td class="subsection" colspan="2" style="padding-left: 20px;">Publication and ownership</td>
+         </tr>
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">UUID of Contact data set<span>Automatically generated Universally Unique Identifier of this data set. Together with the "Data set version", the UUID uniquely
+                     identifies each data set.</span></a></td>
+            <td class="data"><span class="data_neutral">$!contact.getUuid().getUuid()</span></td>
+         </tr>
+
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Data set version<span>Version number of data set. First two digits refer to major updates, the second two digits to minor revisions and error corrections
+                     etc. The third three digits are intended for automatic and internal counting of versions during data set development. Together
+                     with the data set's UUID, the "Data set version" uniquely identifies each data set.</span></a></td>
+            <td class="data"><span class="data_neutral">$!contact.getDataSetVersion()</span></td>
+         </tr>
+
+         <tr class="">
+            <td class="fieldname" style="padding-left: 30px;"><a class="info" href="javascript:void(0);">Permanent data set URI<span>URI (i.e. an internet address) of the original of this data set. [Note: This equally globally unique identifier supports users
+                     and software tools to identify and retrieve the original version of a data set via the internet or to check for available
+                     updates. The URI must not represent an existing WWW address, but it should be unique and point to the data access point, e.g.
+                     by combining the data owner's www path with the data set's UUID, e.g. http://www.mycompany.com/lca/processes/50f12420-8855-12db-b606-0900210c9a66.]</span></a></td>
+            <td class="data"><span class="data_neutral"><a href="$!contact.getPermanentUri()">$!contact.getPermanentUri()</a></span></td>
+         </tr>
+
+
+
+      </table>
+   </body>
+</html>

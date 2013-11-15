@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:body>
+	<ui:composition template="/admin/layout/adminDesign.xhtml">
+		<ui:param name="pageTitle" value="#{i18n['admin.listRegistries.title']}" />
+		<ui:define name="content">
+			<h:form>
+				
+				
+				
+<!--				<p:dataTable id="#{dataTableId}"
+					var="dataset" rowKey="#{dataset.id}"
+					value="#{lazyDataModel}"
+					selection="#{selectionProperty}"
+					paginator="true" rows="#{empty initialRows ? 15 : initialRows}" rowsPerPageTemplate="5,10,15,50,100"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink}
+					{PreviousPageLink} {PageLinks} {NextPageLink}
+					{LastPageLink} {RowsPerPageDropdown} #{i18n['common.list.entriesPerPage']}
+					(#{lazyDataModel.rowCount} #{i18n['common.list.total']})"
+					emptyMessage="#{i18n['common.list.noneFound']}">
+					
+					<p:ajax event="rowSelectCheckbox" process="@this" update="@(##{dataTableId}btn)" />
+					<p:ajax event="rowUnselectCheckbox" process="@this" update="@(##{dataTableId}btn)" />
+					<p:ajax event="toggleSelect" process="@this" update="@(##{dataTableId}btn)" />
+					
+					<p:column style="text-align: center;" selectionMode="multiple" rendered="#{includeActions}"/>
+					
+					<p:column headerText="#{i18n['common.name']}">
+						<h:link outcome="/#{publicShowFacelet}.xhtml" value="#{empty nameProperty ? dataset.name.defaultValue : dataset[nameProperty][namePropertyField]}" title="#{dataset.uuidAsString}   #{dataset.version}">
+							<f:param name="uuid" value="#{dataset.uuid.uuid}" />
+							<f:param name="version" value="#{dataset.version}" />
+						</h:link>
+						<div style="margin: 2px 0; font-size: smaller;">UUID: <h:outputText value="#{dataset.uuid.uuid}" /></div>
+					</p:column>	
+					
+					<ui:insert name="columns">columns</ui:insert>
+				</p:dataTable>
+	-->			
+				
+				
+				<p:dataTable var="reg" id="registriesTable" value="#{listRegistriesBean.registries}"
+					paginator="true" rows="10" lazy="true"
+					paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+					rowsPerPageTemplate="5,10,15" onRowSelectUpdate="display">
+
+					<p:column headerText="#{i18n['admin.registry.name']}">
+						<h:link value="#{reg.name}" outcome="registryDetails?id=#{reg.id}"/>
+					</p:column>
+
+					<p:column headerText="#{i18n['admin.registry.baseUrl']}">
+						<h:outputText value="#{reg.baseUrl}" />
+					</p:column>
+
+					<p:column headerText="#{i18n['admin.registry.status']}">
+						<h:outputText value="#{reg.status.toString()}"  />
+					</p:column>
+
+					<p:column headerText="#{i18n['admin.listRegistries.action']}">
+						<h:commandLink value="#{i18n['admin.listRegistries.actionRegister']}"
+							rendered="#{reg.status=='NOT_REGISTERED'}"
+							action="#{listRegistriesBean.registerNodeInRegistry}">
+							<f:setPropertyActionListener value="#{reg}"
+								target="#{listRegistriesBean.selectedRegistry}" />
+						</h:commandLink>
+						<h:commandLink value="#{i18n['admin.listRegistries.actionDeregister']}"
+							rendered="#{reg.status=='REGISTERED'}"
+							action="#{listRegistriesBean.deregisterNodeFromRegistry}">
+							<f:setPropertyActionListener value="#{reg}"
+								target="#{listRegistriesBean.selectedRegistry}" />
+						</h:commandLink>
+						<h:outputText value="&nbsp;&nbsp;"/>
+						<p:commandLink value="#{i18n['admin.listRegistries.deleteRegistry']}"
+							rendered="#{reg.status=='NOT_REGISTERED'}"
+							oncomplete="confirmation.show()" 
+							action="#{listRegistriesBean.setSelectedRegistry(reg)}" >
+						</p:commandLink>
+						<h:outputText value="&nbsp;&nbsp;"/>
+						<h:link value="#{i18n['admin.listRegistries.editRegistry']}" outcome="registryDetails?id=#{reg.id}&amp;edit=true"/>
+					</p:column>
+
+				</p:dataTable>
+				
+				<p:button value="#{i18n['admin.listRegistries.addRegistry']}" ajax="false"  outcome="registryDetails" />
+				
+				<p:confirmDialog message="#{i18n['admin.deleteRegistry.confirmationQuestion']}"
+					header="#{i18n['admin.deleteRegistry.confirm']}" severity="alert"
+					widgetVar="confirmation" modal="true">
+					<p:commandButton value="#{i18n['common.button.yes']}"
+						oncomplete="confirmation.hide()"
+						actionListener="#{listRegistriesBean.deleteRegistry}"
+						update="registriesTable" />
+					<p:commandButton value="#{i18n['common.button.no']}"
+						onclick="confirmation.hide()" type="button" />
+				</p:confirmDialog>
+				
+			</h:form>
+			<ui:include src="/messages.xhtml" />
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
+

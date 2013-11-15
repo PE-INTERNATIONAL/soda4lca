@@ -1,0 +1,33 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <p:menubar id="adminMenu">
+        <p:submenu label="#{i18n['admin.dataImport']}">
+            <p:menuitem value="#{i18n['admin.import']}" url="/admin/importUpload.xhtml" />
+        </p:submenu>
+        <p:submenu label="#{i18n['admin.dataset.manageList']}">
+            <p:menuitem value="#{i18n['admin.process.manageList']}" url="/admin/showProcesses.xhtml" />
+            <!-- <p:menuitem value="#{i18n['admin.lciaMethod.manageList']}" url="/admin/showLCIAMethods.xhtml" /> -->
+            <p:menuitem value="#{i18n['admin.flow.manageList']}" url="/admin/showProductFlows.xhtml" />
+            <p:menuitem value="#{i18n['admin.flowProperty.manageList']}" url="/admin/showFlowProperties.xhtml" />
+            <p:menuitem value="#{i18n['admin.unitGroup.manageList']}" url="/admin/showUnitGroups.xhtml" />
+            <p:menuitem value="#{i18n['admin.source.manageList']}" url="/admin/showSources.xhtml" />
+            <p:menuitem value="#{i18n['admin.contact.manageList']}" url="/admin/showContacts.xhtml" />
+        </p:submenu>
+        <!--p:submenu label="#{i18n['common.stock']}">
+            <p:menuitem value="#{i18n['admin.stock.new']}" url="/admin/newStock.xhtml" />
+            <p:menuitem value="#{i18n['admin.stock.manageList']}" url="/admin/showStocks.xhtml" />
+        </p:submenu-->
+        <p:submenu label="#{i18n['admin.user']}">
+            <p:menuitem value="#{i18n['admin.user.createUser']}" url="/admin/newUser.xhtml" />
+            <p:menuitem value="#{i18n['admin.user.manageList']}" url="/admin/showUsers.xhtml" />
+            <p:menuitem value="#{i18n['admin.group.createGroup']}" url="/admin/newGroup.xhtml" />
+            <p:menuitem value="#{i18n['admin.group.manageList']}" url="/admin/showGroups.xhtml" />
+        </p:submenu>
+        <p:submenu label="#{i18n['admin.network']}">
+            <p:menuitem value="#{i18n['admin.node.new']}" url="/admin/newNode.xhtml" />
+            <p:menuitem value="#{i18n['admin.node.manageList']}" url="/admin/showNodes.xhtml" />
+            <p:menuitem value="#{i18n['admin.node.info']}" url="/admin/showNodeInfo.xhtml" />
+        </p:submenu>
+    </p:menubar>
+</ui:composition>

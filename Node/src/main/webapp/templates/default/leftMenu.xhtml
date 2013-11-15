@@ -1,0 +1,26 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <h:form>
+		<p:menu id="mainmenu_container">
+ 			<p:menuitem value="#{i18n['public.home']}" styleClass="#{activeMenu == Constants.MENU_HOME ? 'ui-state-active' : ''}" url="#{url.index}" />
+			<p:menuitem rendered="#{user.hasAdminAreaAccessRight()}" value="#{i18n['admin.adminArea']}" url="#{url.adminIndex}" />
+	        <p:submenu label="#{i18n['public.browseDatasets']}">
+	            <p:menuitem value="#{i18n['common.processes']}" rendered="#{feature.browseProcesses}" styleClass="#{activeMenu == Constants.MENU_PROCESS ? 'ui-state-active' : ''}" url="#{url.process.list}" />
+	            <p:menuitem value="#{i18n['common.lciaMethods']}" rendered="#{feature.browseLCIAMethods}" styleClass="#{activeMenu == Constants.MENU_LCIAMETHOD ? 'ui-state-active' : ''}" url="#{url.lciaMethod.list}" />
+	            <p:menuitem value="#{i18n['common.flows']}" rendered="#{feature.browseFlows}" styleClass="#{activeMenu == Constants.MENU_FLOW ? 'ui-state-active' : ''}" url="#{url.flow.list}" />
+	            <p:menuitem value="#{i18n['common.flowProperties']}" rendered="#{feature.browseFlowProperties}" styleClass="#{activeMenu == Constants.MENU_FLOWPROPERTY ? 'ui-state-active' : ''}" url="#{url.flowProperty.list}" />
+	            <p:menuitem value="#{i18n['common.unitGroups']}" rendered="#{feature.browseUnitGroups}" styleClass="#{activeMenu == Constants.MENU_UNITGROUP ? 'ui-state-active' : ''}" url="#{url.unitGroup.list}" />
+	            <p:menuitem value="#{i18n['common.sources']}" rendered="#{feature.browseSources}" styleClass="#{activeMenu == Constants.MENU_SOURCE ? 'ui-state-active' : ''}" url="#{url.source.list}" />
+	            <p:menuitem value="#{i18n['common.contacts']}" rendered="#{feature.browseContacts}" styleClass="#{activeMenu == Constants.MENU_CONTACT ? 'ui-state-active' : ''}" url="#{url.contact.list}" /> 
+	        </p:submenu>
+	        <p:submenu label="#{i18n['public.searchDatasets']}">
+	            <p:menuitem value="#{i18n['public.search']} #{i18n['common.processes']}" styleClass="#{activeMenu == Constants.MENU_SEARCHPROCESS ? 'ui-state-active' : ''}" rendered="#{feature.searchProcesses}" url="#{url.process.searchForm}" />
+	        </p:submenu>
+	    </p:menu>
+    </h:form>
+     
+</ui:composition>

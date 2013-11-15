@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+Copyright (c) 2011 Karlsruhe Institute of Technology (KIT) - Institute for 
+Applied Computer Science (IAI). 
+
+This file is part of soda4LCA - the Service-Oriented Life Cycle Data Store.
+
+soda4LCA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by the 
+Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+soda4LCA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with soda4LCA.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:body>
+        <ui:composition template="/admin/layout/adminDesign.xhtml">
+            <ui:param name="pageTitle" value="#{i18n['admin.stock.manageList']}" />
+            <ui:define name="content">
+                <h:form id="tableForm" prependId="false">
+                    <div class="floatRight">
+                        <p:button id="newRootStockBtn" value="#{i18n['admin.rootStock.new']}" outcome="#{url.rootStock.new}" style="margin-right:1em;">
+                            <f:param name="stockType" value="rds" />
+                        </p:button>
+                        <p:button id="newStockBtn" value="#{i18n['admin.stock.new']}" outcome="#{url.stock.new}">
+                            <f:param name="stockType" value="ds" />
+                        </p:button>
+                    </div>
+                    <p:commandButton id="deleteBtn" value="#{i18n['admin.deleteSelected']}" onclick="confirmDelete.show()" type="button"
+                        disabled="#{stockListHandler.nothingSelected}"></p:commandButton>
+                    <p:confirmDialog message="#{i18n['admin.confirmMsg.deleteSelected']}?" header="#{i18n['admin.confirmDlg.delete']}" severity="alert" widgetVar="confirmDelete">
+                        <div class="confirmDlgButtons">
+                            <p:commandButton value="#{i18n['admin.cancel']}" type="button" onclick="confirmDelete.hide()"></p:commandButton>
+                            <p:commandButton value="#{i18n['admin.ok']}" action="#{stockListHandler.deleteSelected}" oncomplete="confirmDelete.hide()" ajax="false"
+                                update="messages stockTable"></p:commandButton>
+                        </div>
+                    </p:confirmDialog>
+
+                    <ui:include src="/messages.xhtml"></ui:include>
+
+                    <p:dataTable id="stockTable" var="stock" rowKey="#{stock.id}" value="#{stockListHandler.lazyModel}" lazy="true" paginator="true" rows="15"
+                        rowsPerPageTemplate="5,10,15,50" selection="#{stockListHandler.selectedStocks}"
+                        paginatorTemplate="{CurrentPageReport} {FirstPageLink}
+                                 {PreviousPageLink} {PageLinks} {NextPageLink}
+                                 {LastPageLink} {RowsPerPageDropdown} #{i18n['common.list.entriesPerPage']}
+                                 (#{stockListHandler.lazyModel.rowCount} #{i18n['common.list.total']})"
+                        rowStyleClass="#{Constants.DEFAULT_ROOTSTOCK_ID == stock.id ? 'unselectable':''}" emptyMessage="#{i18n['common.list.noneFound']}">
+
+                        <p:ajax event="rowSelectCheckbox" process="@this" update="@(#deleteBtn)"></p:ajax>
+                        <p:ajax event="rowUnselectCheckbox" process="@this" update="@(#deleteBtn)"></p:ajax>
+                        <p:ajax event="toggleSelect" process="@this" update="@(#deleteBtn)"></p:ajax>
+
+                        <p:column style="text-align: center;" selectionMode="multiple"></p:column>
+
+                        <p:column headerText="#{i18n['common.type']}">
+                            <h:outputText value="#{stock.root ? i18n['admin.stock.type.rds'] : i18n['admin.stock.type.ds']}"></h:outputText>
+                        </p:column>
+
+                        <p:column headerText="#{i18n['common.name']}">
+                            <h:link outcome="#{url.stock.edit}" value="#{stock.name}">
+                                <f:param name="stockId" value="#{stock.id}" />
+                            </h:link>
+                            <h:outputText rendered="#{Constants.DEFAULT_ROOTSTOCK_ID == stock.id}" value=" (#{i18n['admin.notDeletable']})" styleClass="notDeletableInfo"
+                            ></h:outputText>
+                        </p:column>
+
+                        <p:column headerText="#{i18n['admin.title']}">
+                            <h:outputText value="#{stock.longTitle.defaultValue}"></h:outputText>
+                        </p:column>
+
+                        <p:column headerText="#{i18n['admin.org']}">
+                            <h:outputText value="#{stock.ownerOrganization.name}"></h:outputText>
+                        </p:column>
+
+                        <p:column headerText="#{i18n['admin.stock.accessRights.user']}" style="text-align:center;">
+                            <p:button icon="ui-icon-search" title="#{i18n['admin.stock.accessRights.user']} #{i18n['admin.forEntry']} '#{stock.name}'"
+                                outcome="#{url.rootStock.edit}">
+                                <f:param name="stockId" value="#{stock.id}" />
+                                <f:param name="tabId" value="1" />
+                            </p:button>
+                        </p:column>
+
+                        <p:column headerText="#{i18n['admin.stock.accessRights.group']}" style="text-align:center;">
+                            <p:button icon="ui-icon-search" title="#{i18n['admin.stock.accessRights.group']} #{i18n['admin.forEntry']} '#{stock.name}'"
+                                outcome="#{url.rootStock.edit}">
+                                <f:param name="stockId" value="#{stock.id}" />
+                                <f:param name="tabId" value="2" />
+                            </p:button>
+                        </p:column>
+
+                        <p:column headerText="#{i18n['admin.stock.assignedDataSets']}" style="text-align:center;">
+                            <p:button icon="ui-icon-search" title="#{i18n['admin.stock.assignedDataSets']} #{i18n['admin.forEntry']} '#{stock.name}'"
+                                outcome="#{url.rootStock.edit}">
+                                <f:param name="stockId" value="#{stock.id}" />
+                                <f:param name="tabId" value="3" />
+                            </p:button>
+                        </p:column>
+
+                        <p:column style="text-align:center;">
+                            <p:commandButton value="#{i18n['admin.export.stock']}" actionListener="#{dataExportController.setStock(stock)}" icon="ui-icon-arrowthichk-s"
+                                ajax="false">
+                                <p:fileDownload value="#{dataExportController.file}"></p:fileDownload>
+                            </p:commandButton>
+                        </p:column>
+
+                    </p:dataTable>
+
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

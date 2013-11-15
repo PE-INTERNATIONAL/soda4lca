@@ -1,0 +1,126 @@
+<sect1 xmlns="http://docbook.org/ns/docbook" version="5.0">
+    <title>GET Datastocks</title>
+    <para>GET operation that returns a list of all datastocks.</para>
+    <sect2>
+        <title>Requests</title>
+
+        <sect3>
+            <title>Syntax</title>
+            <para>
+                <programlisting>GET /datastocks</programlisting>
+            </para>
+        </sect3>
+        <sect3>
+            <title>Request Parameters</title>
+            <para>None.</para>
+        </sect3>
+    </sect2>
+
+    <sect2>
+        <title>Responses</title>
+        <sect3>
+            <title>Response Elements</title>
+            <para>
+                <table>
+                    <title/>
+                    <tgroup cols="2">
+                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="2" colname="col2" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Name</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry><para><emphasis>dataStockList</emphasis></para>
+                                    <para>(datastock)</para></entry>
+                                <entry><para>The container element for the list of data stock objects.</para>
+                                    <para>Type: Container</para>
+                                    <para>Ancestors: none.</para>
+                                </entry>
+                            </row>
+                            <row>
+                                <entry><para><emphasis>dataStock</emphasis></para>
+                                    <para>(datastock)</para></entry>
+                                <entry><para>The container element for the data stock object.</para>
+                                    <para>Type: Container</para>
+                                    <para>may occur multiple times</para>
+                                    <para>Ancestors: dataStockList</para>
+                                </entry>
+                            </row>
+                            <row>
+                                <entry><para><emphasis>@root</emphasis></para>
+                                    <para>(datastock)</para></entry>
+                                <entry><para>Indicates whether the data stock is a root data stock.</para>
+                                    <para>Type: Boolean</para>
+                                    <para>Ancestors: dataStock</para>
+                                </entry>
+                            </row>
+                            <row>
+                                <entry><emphasis>shortName</emphasis></entry>
+                                <entry><para>The short name (handle) of the data stock.</para>
+                                    <para>Type: String</para>
+                                    <para>Ancestors: dataStock</para>
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>
+                                    <emphasis>name</emphasis></entry>
+                                <entry><para>The name of the data stock.</para>
+                                    <para>Type: String Multilang</para>
+                                    <para>may occur multiple times</para>
+                                    <para>Ancestors: dataStock</para>
+                                </entry>
+                            </row>
+                            <row>
+                                <entry><para><emphasis>description</emphasis></para>
+                                    <para>(datastock)</para></entry>
+                                <entry><para>A description for the data stock.</para>
+                                    <para>Type: String Multilang</para>
+                                    <para>may occur multiple times</para>
+                                    <para>Ancestors: dataStock</para>
+                                </entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </para>
+        </sect3>
+    </sect2>
+
+    <sect2>
+        <title>Examples</title>
+
+        <sect3>
+            <title>Sample Request</title>
+            <para>
+                <programlisting>GET /datastocks</programlisting>
+            </para>
+        </sect3>
+        <sect3>
+            <title>Sample Response</title>
+            <para>
+                <programlisting>HTTP/1.1 200 OK
+Content-Type: application/xml</programlisting>
+                <programlisting language="myxml"><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<dataStockList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ilcd-network.org/ILCD/ServiceAPI/DataStock ../schemas/ILCD_Service_API_DataStocks.xsd"
+    xmlns="http://www.ilcd-network.org/ILCD/ServiceAPI/DataStock" xmlns:ds="http://www.ilcd-network.org/ILCD/ServiceAPI/DataStock" xmlns:serviceapi="http://www.ilcd-network.org/ILCD/ServiceAPI">
+    <dataStock ds:root="true">
+        <serviceapi:shortName>default</serviceapi:shortName>
+        <serviceapi:name xml:lang="en">Default Root Data Stock</serviceapi:name>
+            <serviceapi:name xml:lang="de">deutscher Name</serviceapi:name>
+        <description xml:lang="en">description</description>
+        <description xml:lang="de">deutsche Beschreibung</description>
+    </dataStock>
+    <dataStock>
+        <serviceapi:shortName>other</serviceapi:shortName>
+        <serviceapi:name xml:lang="en">Other, Non-Root Data Stock</serviceapi:name>
+        <description xml:lang="en">other data</description>
+    </dataStock>
+</dataStockList>]]></programlisting>
+            </para>
+        </sect3>
+    </sect2>
+</sect1>

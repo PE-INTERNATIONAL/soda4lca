@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+Copyright (c) 2011 Karlsruhe Institute of Technology (KIT) - Institute for 
+Applied Computer Science (IAI). 
+
+This file is part of soda4LCA - the Service-Oriented Life Cycle Data Store.
+
+soda4LCA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by the 
+Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+soda4LCA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with soda4LCA.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <f:metadata>
+        <f:viewParam name="id" value="#{sourceHandler.dataSetIdString}" />
+        <f:viewParam name="sourceNode" value="#{sourceHandler.sourceNodeIdString}" />
+        <f:viewParam name="uuid" value="#{sourceHandler.dataSetUuidString}" />
+        <f:viewParam name="version" value="#{sourceHandler.dataSetVersionString}" />
+        <f:event type="javax.faces.event.PreRenderViewEvent" listener="#{sourceHandler.postViewParamInit}" />
+    </f:metadata>
+
+    <h:body>
+        <ui:composition template="#{conf.templatePath}/frontend.xhtml">
+            <ui:param name="pageTitle"
+                      value="#{i18n['common.source.inflected']}#{i18n['delimiter']}#{i18n['public.dataset.datasetOverviewPage']}" />
+            <ui:param name="pageSubTitle"
+                      value="#{i18n['public.dataset']}: #{sourceHandler.source.name.defaultValue} (#{sourceHandler.source.version})" />
+            <ui:param name="activeMenu" value="#{Constants.MENU_SOURCE}" />
+            <ui:define name="content">
+				<h:panelGroup rendered="#{sourceHandler.otherVersionPresent}">
+					<h:outputText value="#{i18n['public.dataset.otherVersions']}:" />
+					<ui:repeat value="#{sourceHandler.otherVersions}" var="ov">
+						&nbsp;
+						<h:link value="#{ov.version}" outcome="#{url.source.getDetail(ov)}" />
+					</ui:repeat>
+				</h:panelGroup>
+                <div id="datasetPage">
+                    <div class="floatRight"><h:panelGrid columns="2"
+                                                         columnClasses="datasetBlock ui-widget-content,datasetBlock ui-widget-content">
+                            <h:outputLink
+                                value="#{sourceHandler.localHTMLResourceURL}"
+                                target="_blank">#{i18n['public.dataset.viewDataset']}</h:outputLink>
+                            <h:outputLink
+                                value="#{sourceHandler.localXMLResourceURL}">#{i18n['public.dataset.downloadDatasetXML']}</h:outputLink>
+                        </h:panelGrid></div>
+                    <div class="clearRight"><h:panelGrid columns="1"
+                                                         columnClasses="datasetBlock ui-widget-content">
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['common.name']}</div>
+                                <h:outputText value="#{sourceHandler.source.name.value}"
+                                              styleClass="boldText" />
+                            </h:panelGroup>
+                        </h:panelGrid> <h:panelGrid columns="2" columnClasses="datasetBlock ui-widget-content,datasetBlock ui-widget-content">
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.dataset.shortName']}</div>
+                                <h:outputText
+                                    value="#{sourceHandler.source.shortName.defaultValue}"
+                                    styleClass="boldText" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.source.citation']}</div>
+                                <h:outputText value="#{sourceHandler.source.citation.defaultValue}"
+                                              styleClass="boldText" />
+                            </h:panelGroup>
+                        </h:panelGrid> <h:panelGrid columns="3"
+                                                    columnClasses="datasetBlock ui-widget-content,datasetBlock ui-widget-content,datasetBlock ui-widget-content">
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['common.dataset.classif']}</div>
+                                <h:outputText
+                                    value="#{sourceHandler.source.classification.classHierarchyAsString}" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.source.publicationType']}</div>
+                                <h:outputText value="#{sourceHandler.source.publicationType.value}" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.source.belongsTo']}</div>
+                                <p:dataList value="#{sourceHandler.source.contactsAsList}" var="contactRef" styleClass="ourDataList">
+                                    <h:outputText value="#{contactRef.shortDescription.defaultValue}" />
+                                </p:dataList>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" columnClasses="datasetBlock ui-widget-content">
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.dataset.comment']}</div>
+                                <h:outputText
+                                    value="#{sourceHandler.source.description.defaultValue}" />
+                            </h:panelGroup>
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" columnClasses="datasetBlock ui-widget-content">
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.source.digitalFiles']}</div>
+                                <p:dataList value="#{sourceHandler.source.filesAsList}" var="digital" styleClass="ourDataListNoBullet">
+                                    <p><a href="#{conf.contextPath}/resource/sources/#{sourceHandler.source.uuid.uuid}/#{digital.fileName}"><img width="100%"
+                                            src="#{conf.contextPath}/resource/sources/#{sourceHandler.source.uuid.uuid}/#{digital.fileName}"
+                                            alt="#{digital.fileName}" /></a></p>
+                                </p:dataList>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                        </div>
+                </div>
+
+                <ui:include src="/messages.xhtml" />
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

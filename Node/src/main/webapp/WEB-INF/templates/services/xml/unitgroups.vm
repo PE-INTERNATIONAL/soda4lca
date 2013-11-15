@@ -1,0 +1,28 @@
+#*
+Copyright (c) 2011 Karlsruhe Institute of Technology (KIT) - Institute for 
+Applied Computer Science (IAI). 
+
+This file is part of soda4LCA - the Service-Oriented Life Cycle Data Store.
+
+soda4LCA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by the 
+Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+soda4LCA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with soda4LCA.  If not, see <http://www.gnu.org/licenses/>.
+*#<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<common:dataSetList xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:common="http://www.ilcd-network.org/ILCD/ServiceAPI" xmlns="http://www.ilcd-network.org/ILCD/ServiceAPI/UnitGroup" common:sourceId="$context.getNodeId()" common:totalSize="$datasetsTotalCount" common:startIndex="$startIndex" common:pageSize="$pageSize">
+    #foreach ($unitgroup in $datasets)
+	<unitGroup xlink:href="$context.getBaseUri()unitgroups/$unitgroup.getUuidAsString()" common:sourceId="$unitgroup.getSourceId()">
+            #set($dataset=$unitgroup)
+            #parse("/xml/common.vm")
+            <referenceUnit>$unitgroup.getDefaultUnit()</referenceUnit>
+        </unitGroup>
+    #end
+</common:dataSetList>

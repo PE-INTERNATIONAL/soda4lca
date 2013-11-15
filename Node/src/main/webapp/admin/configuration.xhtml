@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+Copyright (c) 2011 Karlsruhe Institute of Technology (KIT) - Institute for 
+Applied Computer Science (IAI). 
+
+This file is part of soda4LCA - the Service-Oriented Life Cycle Data Store.
+
+soda4LCA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by the 
+Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+soda4LCA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with soda4LCA.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:body>
+        <ui:composition template="/admin/layout/adminDesign.xhtml">
+            <ui:param name="pageTitle" value="#{i18n['admin.globalConfig']}" />
+            <ui:define name="content">
+                <h:form id="generalForm" prependId="false">
+                
+                    <p:panel header="#{i18n['admin.config.defaultStock']}">
+						<p:selectOneMenu value="#{confAdminHandler.selectedStockMetaName}" id="selectRootDataStock">
+							<f:selectItem itemLabel="#{i18n['common.select.hint']}" noSelectionValue="true" />
+							<f:selectItems value="#{confAdminHandler.allStocksMetaNames}" var="stock" itemLabel="#{stock}" itemValue="#{stock}" />
+							<p:ajax event="change" process="@this" update="saveBtn" />
+						</p:selectOneMenu>
+                    </p:panel>
+
+                    <ui:include src="/messages.xhtml" />
+
+                    <div class="buttonCenter">
+                        <p:commandButton id="saveBtn"
+                                         value="#{i18n['admin.config.saveConfig']}"
+                                         action="#{confAdminHandler.saveConfiguration()}"
+                                         update="messages"
+                                         disabled="#{empty confAdminHandler.selectedStockMetaName}" />
+                    </div>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

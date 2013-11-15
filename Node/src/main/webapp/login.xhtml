@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+Copyright (c) 2011 Karlsruhe Institute of Technology (KIT) - Institute for 
+Applied Computer Science (IAI). 
+
+This file is part of soda4LCA - the Service-Oriented Life Cycle Data Store.
+
+soda4LCA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by the 
+Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+soda4LCA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with soda4LCA.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <f:metadata>
+        <f:viewParam name="src" value="#{loginHandler.source}" />
+    </f:metadata>
+    
+    <h:body>
+        <ui:composition template="#{conf.templatePath}/frontend.xhtml">
+            <ui:param name="pageTitle" value="#{user.loggedIn?i18n['public.user.logout']:i18n['common.user.login']}" />
+            <ui:define name="content">
+                <h:form styleClass="loginForm"
+                        prependId="false"
+                        rendered="#{not loginHandler.loggedIn}">
+                    <p:panel id="loginPanel">
+                        <p:focus context="loginPanel" />
+                        <h:panelGrid columns="2">
+                            <p:outputLabel value="#{i18n['common.user.loginName']}:" for="name" />
+                            <p:inputText id="name" value="#{loginHandler.loginName}" />
+                            <p:outputLabel value="#{i18n['common.user.passw']}:" for="passw" />
+                            <p:password id="passw"
+                                        value="#{loginHandler.password}"
+                                        feedback="false"
+                                        minLength="" />
+                        </h:panelGrid>
+                    </p:panel>
+                    <div class="buttonRight">
+                        <p:commandButton value="#{i18n['public.user.login']}"
+                                         action="#{loginHandler.login}"
+                                         ajax="false"
+                                         id="loginButton" />
+                    </div>
+                </h:form>
+
+                <h:form styleClass="loginForm"
+                        prependId="false"
+                        rendered="#{loginHandler.loggedIn}">
+                    <p>
+                        #{i18n['public.user.txt.loggedInAs']}
+                        <h:outputText value="#{loginHandler.loginName}" />.
+                        <br />#{i18n['public.user.logoffMsg']}?
+                    </p>
+                    <div class="buttonRight">
+                        <p:commandButton value="#{i18n['public.user.logout']}"
+                                         action="#{loginHandler.logout}"
+                                         ajax="false"
+                                         id="logoutButton" />
+                    </div>
+                </h:form>
+
+                <ui:include src="/messages.xhtml" />
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

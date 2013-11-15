@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:body>
+	<ui:composition template="/admin/layout/adminDesign.xhtml">
+		<ui:param name="pageTitle" value="#{i18n['admin.registerDataSets.title']}" />
+		<ui:define name="content">
+			<p>#{i18n['common.mandatoryFields']}</p>
+			<h:form id="generalForm" prependId="false" rendered="#{applicationInfoBean.registryBasedNetworking}">
+
+				<h:panelGroup id="dsPanel">
+					<p:dataTable id="processTable" var="process"
+						value="#{dataSetsRegistrationBean.processes}" paginator="true"
+						rows="15" lazy="false" rowsPerPageTemplate="5,10,15,50"
+						paginatorTemplate="{CurrentPageReport} {FirstPageLink}
+			                     {PreviousPageLink} {PageLinks} {NextPageLink}
+			                     {LastPageLink} {RowsPerPageDropdown} #{i18n['common.list.entriesPerPage']}"
+						rowStyleClass="#{dataSetsRegistrationBean.isRegistered(process) ? 'registered' : null}"
+						emptyMessage="#{i18n['common.list.noneFound']}">
+
+						<p:column headerText="#{i18n['common.uuid']}">
+							<h:outputText value="#{process.uuidAsString}" />
+						</p:column>
+						
+						<p:column headerText="#{i18n['common.name']}">
+							<h:outputText value="#{process.name.value}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['public.proc.version']}">
+							<h:outputText value="#{process.version}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['common.type']}">
+							<h:outputText value="#{process.type.value}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['common.dataset.classif']}">
+							<h:outputText
+								value="#{process.classification.classHierarchyAsString}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['common.proc.loc']}">
+							<h:outputText value="#{process.geography.location}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['common.dataset.refYear']}">
+							<h:outputText value="#{process.timeInformation.referenceYear}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['common.proc.validUntilYear']}">
+							<h:outputText value="#{process.timeInformation.validUntil}" />
+						</p:column>
+					</p:dataTable>
+				</h:panelGroup>
+
+				<p:panel id="selectRegistryPanel"
+					header="#{i18n['admin.registerDataSets.registry']}">
+					<h:panelGrid columns="2">
+						<h:outputLabel value="#{i18n['admin.registerDataSets.registerIn']} #{i18n['common.markMandatory']}:"
+							for="reg" />
+						<h:selectOneMenu id="reg"
+							value="#{dataSetsRegistrationBean.registry}">
+							<f:selectItems value="#{registriesIdsSelectItems.items}" />
+							<p:ajax event="valueChange" process="@this" update="dsPanel" />	
+						</h:selectOneMenu>
+					</h:panelGrid>
+				</p:panel>
+
+				<div class="buttonCenter">
+					<p:commandButton value="#{i18n['admin.registerDataSets.registerButton']}"
+						update="messages" action="#{dataSetsRegistrationBean.register}" ajax="false"/>
+				</div>
+
+			</h:form>
+			<ui:include src="/messages.xhtml" />
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
+

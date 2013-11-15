@@ -4,3 +4,9 @@
 *.jar
 *.war
 *.ear
+**/target
+**/rebel.xml
+rebel.xml
+
+# Temporary Word Files #
+~$A_*

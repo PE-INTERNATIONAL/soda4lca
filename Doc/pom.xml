@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>soda4LCA</artifactId>
+    <groupId>edu.kit.iai.lca.soda4LCA</groupId>
+    <version>2.0.0</version>
+  </parent>
+  <groupId>edu.kit.iai.lca.soda4LCA.doc</groupId>
+  <artifactId>Doc</artifactId>
+  <name>Documentation</name>
+  <packaging>pom</packaging>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.agilejava.docbkx</groupId>
+        <artifactId>docbkx-maven-plugin</artifactId>
+        <version>2.0.14</version>
+        <dependencies>
+          <dependency>
+            <groupId>net.sf.xslthl</groupId>
+            <artifactId>xslthl</artifactId>
+            <version>2.0.2</version>
+            <scope>runtime</scope>
+          </dependency>
+          <dependency>
+            <groupId>net.sf.offo</groupId>
+            <artifactId>fop-hyph</artifactId>
+            <version>1.2</version>
+            <scope>runtime</scope>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <id>olinkdb</id>
+            <goals>
+              <goal>generate-html</goal>
+            </goals>
+            <phase>generate-resources</phase>
+            <configuration>
+              <includes>Administration_Guide/Administration_Guide.xml</includes>
+              <collectXrefTargets>only</collectXrefTargets> 
+              <targetsFilename>${project.build.directory}/target.db/Administration_Guide.target.db</targetsFilename>
+              <postProcess>
+                <delete dir="${project.build.directory}/docbkx"/>
+              </postProcess>
+            </configuration>
+          </execution>
+          <execution>
+            <id>olinkdb2</id>
+            <goals>
+              <goal>generate-html</goal>
+            </goals>
+            <phase>generate-resources</phase>
+            <configuration>
+              <includes>Installation_Guide/Installation_Guide.xml</includes>
+              <collectXrefTargets>only</collectXrefTargets> 
+              <targetsFilename>${project.build.directory}/target.db/Installation_Guide.target.db</targetsFilename>
+              <postProcess>
+                <delete dir="${project.build.directory}/docbkx"/>
+              </postProcess>
+            </configuration>
+          </execution>
+          
+          <execution>
+            <phase>pre-site</phase>
+            <id>create-html-docs</id>
+            <goals>
+              <goal>generate-html</goal>
+            </goals>
+            <configuration>
+              <ignoreImageScaling>true</ignoreImageScaling>
+              <targetDatabaseDocument>${basedir}/src/docbkx/olinkdb-html.xml</targetDatabaseDocument>
+              <preProcess>
+                <copy todir="${project.build.directory}/docbkx/html/FAQ/images">
+                  <fileset dir="src/docbkx/FAQ/images/"/>
+                </copy>
+                <copy todir="${project.build.directory}/docbkx/html/Installation_Guide/images">
+                  <fileset dir="src/docbkx/Installation_Guide/images/"/>
+                </copy>
+                <copy todir="${project.build.directory}/docbkx/html/Installation_Guide">
+                  <fileset dir="src">
+                    <include name="soda4LCA.properties.template"/>
+                  </fileset> 
+                </copy>
+                <copy todir="${project.build.directory}/docbkx/html/">
+                  <fileset dir="src">
+                    <include name="RELEASE_NOTES.txt"/>
+                  </fileset> 
+                </copy>
+                <copy todir="${project.build.directory}/docbkx/html/Administration_Guide/images">
+                  <fileset dir="src/docbkx/Administration_Guide/images/"/>
+                </copy>
+                <copy todir="${project.build.directory}/docbkx/html/Service_API/images">
+                  <fileset dir="src/docbkx/Service_API/images/"/>
+                </copy>
+              </preProcess>
+              <postProcess>
+                <copy todir="${project.build.directory}/doc">
+                  <fileset dir="${project.build.directory}/docbkx/html">
+                    <include name="**/*.*"/>
+                  </fileset>
+                </copy>
+              </postProcess>
+            </configuration>
+          </execution>
+
+          <execution>
+            <phase>pre-site</phase>
+            <id>create-pdf-docs</id>
+            <goals>
+              <goal>generate-pdf</goal>
+            </goals>
+            <configuration>
+              <targetDatabaseDocument>${basedir}/src/docbkx/olinkdb-pdf.xml</targetDatabaseDocument>
+              <ignoreImageScaling>false</ignoreImageScaling>
+              <foCustomization>src/docbkx-stylesheet/fo/docbook_customizations.xsl</foCustomization>
+              <highlightSource>true</highlightSource>
+              <postProcess>
+                <copy todir="${project.build.directory}/doc">
+                  <fileset dir="${project.build.directory}/docbkx/pdf">
+                    <include name="*.pdf"/>
+                  </fileset>
+                </copy>
+              </postProcess>
+            </configuration>
+          </execution>
+        </executions>
+        <!-- global configuration -->
+        <configuration>
+          <includes>FAQ/*.xml, Administration_Guide/*.xml, Installation_Guide/*.xml, Service_API/Service_API.xml</includes>
+          <entities>
+            <entity>
+              <name>version</name>
+              <value>${project.version}</value>
+            </entity>
+          </entities>
+          <xincludeSupported>true</xincludeSupported>
+          <generatedSourceDirectory>${project.build.directory}/docbkx</generatedSourceDirectory>
+          <sectionAutolabel>true</sectionAutolabel>
+          <sectionLabelIncludesComponentLabel>true</sectionLabelIncludesComponentLabel>
+          <sectionAutolabelMaxDepth>1</sectionAutolabelMaxDepth>
+          <highlightSource>true</highlightSource>
+          <postProcess>
+            <delete dir="${project.build.directory}/docbkx"/>
+          </postProcess>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

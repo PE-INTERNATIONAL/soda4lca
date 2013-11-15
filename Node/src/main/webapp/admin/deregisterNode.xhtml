@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:body>
+	<ui:composition template="/admin/layout/adminDesign.xhtml">
+		<ui:param name="pageTitle" value="#{i18n['admin.deregisterNode.title']}" />
+		<ui:define name="content">
+			<p>#{i18n['common.mandatoryFields']}</p>
+			<h:form id="generalForm" prependId="false">
+				<p:panel header="#{i18n['admin.registerNode.authentication']}">
+					<h:panelGrid columns="2">
+						<h:outputLabel value="#{i18n['admin.registerNode.acccessAccount']}  #{i18n['common.markMandatory']}"
+							for="accessAccount" />
+						<p:inputText id="accessAccount"
+							value="#{nodeDeregistrationBean.nodeCredentials.accessAccount}" required="true"
+							requiredMessage="#{i18n['admin.registerNode.requiredMessage_acccessAccount']}"
+							maxlength="40" size="40" />
+							
+						<h:outputLabel value="#{i18n['admin.registerNode.accessPassword']}  #{i18n['common.markMandatory']}"
+							for="accessPassword" />
+						<p:password id="accessPassword"
+							value="#{nodeDeregistrationBean.nodeCredentials.accessPassword}" required="true"
+							requiredMessage="#{i18n['admin.registerNode.requiredMessage_accessPassword']}"
+							maxlength="40" size="40" autocomplete="off" feedback="false"/>
+					</h:panelGrid>
+				</p:panel>
+				<div class="buttonCenter">
+					<p:commandButton value="#{i18n['admin.deregisterNode.deregisterButton']}"
+						update=":messages" onclick="confirmation.show()" />
+				</div>
+				
+				<p:confirmDialog message="#{i18n['admin.deregisterNode.confirmationQuestion']}"
+					header="#{i18n['admin.deregisterNode.confirm']}" severity="alert"
+					widgetVar="confirmation" modal="true">
+					<p:commandButton value="#{i18n['common.button.yes']}"
+						oncomplete="confirmation.hide()"
+						actionListener="#{nodeDeregistrationBean.deregister}"
+						update=":messages" />
+					<p:commandButton value="#{i18n['common.button.no']}"
+						onclick="confirmation.hide()" type="button" />
+				</p:confirmDialog>
+				
+			</h:form>
+
+			<ui:include src="/messages.xhtml" />
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
+

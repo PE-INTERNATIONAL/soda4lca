@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+Copyright (c) 2011 Karlsruhe Institute of Technology (KIT) - Institute for 
+Applied Computer Science (IAI). 
+
+This file is part of soda4LCA - the Service-Oriented Life Cycle Data Store.
+
+soda4LCA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by the 
+Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+soda4LCA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with soda4LCA.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <f:metadata>
+        <f:viewParam name="id" value="#{flowHandler.dataSetIdString}" />
+        <f:viewParam name="sourceNode" value="#{flowHandler.sourceNodeIdString}" />
+        <f:viewParam name="uuid" value="#{flowHandler.dataSetUuidString}" />
+        <f:viewParam name="version" value="#{flowHandler.dataSetVersionString}" />
+        <f:event type="javax.faces.event.PreRenderViewEvent" listener="#{flowHandler.postViewParamInit}" />
+    </f:metadata>
+
+    <h:body>
+        <ui:composition template="#{conf.templatePath}/frontend.xhtml">
+            <ui:param name="pageTitle"
+                      value="#{i18n['common.flow']}#{i18n['delimiter']}#{i18n['public.dataset.datasetOverviewPage']}" />
+            <ui:param name="pageSubTitle"
+                      value="#{i18n['public.dataset']}: #{flowHandler.flow.name.defaultValue} (#{flowHandler.flow.version})" />
+            <ui:param name="activeMenu" value="#{Constants.MENU_FLOW}" />
+            <ui:define name="content">
+				<h:panelGroup rendered="#{flowHandler.otherVersionPresent}">
+					<h:outputText value="#{i18n['public.dataset.otherVersions']}:" />
+					<ui:repeat value="#{flowHandler.otherVersions}" var="ov">
+						&nbsp;
+						<h:link value="#{ov.version}" outcome="#{url.flow.getDetail(ov)}" />
+					</ui:repeat>
+				</h:panelGroup>
+                <div id="datasetPage">
+                    <div class="floatRight">
+                    	<h:panelGrid columns="3" columnClasses="datasetBlock ui-widget-content,datasetBlock ui-widget-content,datasetBlock ui-widget-content">
+                            <h:panelGroup rendered="#{flowHandler.processesWithInOrOutputFlowExist}">
+                            	<h:outputText value="#{i18n['public.flow.inOut']}&nbsp;" />
+
+								<h:outputText rendered="#{not flowHandler.processesWithInputFlowExist}" value="#{i18n['public.flow.inOut.input']}" styleClass="ui-state-disabled" />
+								<h:link rendered="#{flowHandler.processesWithInputFlowExist}" value="#{i18n['public.flow.inOut.input']}" outcome="#{url.process.getWithInputExchangeFlow(flowHandler.flow)}" />
+								
+								<h:outputText styleClass="#{flowHandler.processesWithInXorOutputFlowExist ? 'ui-state-disabled' : ''}" value="&nbsp;/&nbsp;" />
+								
+								<h:outputText rendered="#{not flowHandler.processesWithOutputFlowExist}" value="#{i18n['public.flow.inOut.output']}" styleClass="ui-state-disabled" />
+								<h:link rendered="#{flowHandler.processesWithOutputFlowExist}" value="#{i18n['public.flow.inOut.output']}" outcome="#{url.process.getWithOutputExchangeFlow(flowHandler.flow)}" />
+								
+                            </h:panelGroup>
+                            <h:outputText rendered="#{not flowHandler.processesWithInOrOutputFlowExist}" value="#{i18n['public.flow.inOut']} #{i18n['public.flow.inOut.input']} / #{i18n['public.flow.inOut.output']}" styleClass="ui-state-disabled" />
+                            <h:outputLink value="#{flowHandler.localHTMLResourceURL}" target="_blank">#{i18n['public.dataset.viewDataset']}</h:outputLink>
+                            <h:outputLink value="#{flowHandler.localXMLResourceURL}">#{i18n['public.dataset.downloadDatasetXML']}</h:outputLink>
+                        </h:panelGrid>
+                    </div>
+                    <div class="clearRight">
+                        <h:panelGrid columns="3"
+                                     columnClasses="datasetBlock ui-widget-content,datasetBlock ui-widget-content,datasetBlock ui-widget-content">
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['common.type']}</div>
+                                <h:outputText value="#{flowHandler.flow.type.value}"
+                                              styleClass="boldText" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['common.name']}</div>
+                                <h:outputText value="#{flowHandler.flow.name.defaultValue}"
+                                              styleClass="boldText" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.flow.refFlowProperty']}</div>
+                                <h:outputText
+                                    value="#{flowHandler.flow.referenceFlowProperty.flowPropertyName.defaultValue} (#{flowHandler.flow.referenceProperty.flowPropertyUnit})"
+                                    styleClass="boldText" />
+                            </h:panelGroup>
+                        </h:panelGrid>
+                        <h:panelGrid columns="2" columnClasses="datasetBlock ui-widget-content,datasetBlock ui-widget-content">
+                            <h:panelGroup rendered="#{flowHandler.elementaryFlow}">
+                                <div class="datasetLabel">#{i18n['public.flow.categorization']}</div>
+                                <h:outputText
+                                    value="#{flowHandler.flow.categorization.classHierarchyAsString}" />
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{not flowHandler.elementaryFlow}">
+                                <div class="datasetLabel">#{i18n['common.dataset.classif']}</div>
+                                <h:outputText
+                                    value="#{flowHandler.flow.classification.classHierarchyAsString}" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.dataset.synonyms']}</div>
+                                <h:outputText value="#{flowHandler.flow.synonyms.defaultValue}" />
+                            </h:panelGroup>
+                        </h:panelGrid>
+                        <h:panelGrid rendered="#{flowHandler.flow.elementaryFlow}"
+                                     columns="2" columnClasses="datasetBlock ui-widget-content,datasetBlock ui-widget-content">
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.flow.casNo']}</div>
+                                <h:outputText value="#{flowHandler.flow.casNumber}" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.flow.sumFormula']}</div>
+                                <h:outputText value="#{flowHandler.flow.sumFormula}" />
+                            </h:panelGroup>
+                        </h:panelGrid> <h:panelGrid columns="1" columnClasses="datasetBlock ui-widget-content">
+                            <h:panelGroup>
+                                <div class="datasetLabel">#{i18n['public.dataset.comment']}</div>
+                                <h:outputText value="#{flowHandler.flow.description.value}" />
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </div>
+                </div>
+                <ui:include src="/messages.xhtml" />
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

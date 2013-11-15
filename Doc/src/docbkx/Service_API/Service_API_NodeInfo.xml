@@ -1,0 +1,153 @@
+<sect1 xmlns="http://docbook.org/ns/docbook" version="5.0">
+    <title>Node Information</title>
+        <para>This GET operation retrieves information about the node.</para>
+
+        <sect2>
+            <title>Requests</title>
+
+            <sect3>
+                <title>Syntax</title>
+                <para>
+                    <programlisting>GET /nodeinfo</programlisting>
+                </para>
+            </sect3>
+            <sect3>
+                <title>Request Parameters</title>
+                <para> None. </para>
+            </sect3>
+        </sect2>
+
+        <sect2>
+            <title>Responses</title>
+            <sect3>
+                <title>Response Elements</title>
+                <para>
+                    <table>
+                        <title/>
+                        <tgroup cols="2">
+                            <colspec colnum="1" colname="col1" colwidth="1*"/>
+                            <colspec colnum="2" colname="col2" colwidth="3.5*"/>
+                            <thead>
+                                <row>
+                                    <entry>Name</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry><emphasis>nodeInfo </emphasis></entry>
+                                    <entry><para>Contains the elements with the node information.</para>
+                                        <para>Type: Container</para>
+                                        <para>Ancestors: None.</para>
+                                    </entry>
+                                </row>
+                                <row>
+                                    <entry><emphasis>nodeID </emphasis></entry>
+                                    <entry><para>The ID of the node.</para>
+                                        <para>Type: String (no spaces allowed)</para>
+                                        <para>Ancestors: nodeInfo</para>
+                                    </entry>
+                                </row>
+                                <row>
+                                    <entry><emphasis>name </emphasis></entry>
+                                    <entry><para>The full name of the node</para>
+                                        <para>Type: String</para>
+                                        <para>Ancestors: nodeInfo</para>
+                                    </entry>
+                                </row>
+                                <row>
+                                    <entry><emphasis>operator </emphasis></entry>
+                                    <entry><para>The person or entity operating this node</para>
+                                        <para>Type: String</para>
+                                        <para>Ancestors: nodeInfo</para>
+                                    </entry>
+                                </row>
+                                <row>
+                                    <entry><emphasis>description </emphasis></entry>
+                                    <entry><para>A description of the node</para>
+                                        <para>Type: String</para>
+                                        <para>Ancestors: nodeInfo</para>
+                                    </entry>
+                                </row>
+                                <row>
+                                    <entry><emphasis>baseURL </emphasis></entry>
+                                    <entry><para>The base URL of the node's service interface.</para>
+                                        <para>Type: String</para>
+                                        <para>Ancestors: nodeInfo</para>
+                                    </entry>
+                                </row>
+                                <row>
+                                    <entry><emphasis>administrativeContact </emphasis></entry>
+                                    <entry><para>The element carrying information about the administrative contact for the node.</para>
+                                        <para>Type: String</para>
+                                        <para>Ancestors: nodeInfo</para>
+                                    </entry>
+                                </row>
+                                <row>
+                                    <entry><emphasis>centralContactPoint </emphasis></entry>
+                                    <entry><para>The central contact point</para>
+                                        <para>Type: String</para>
+                                        <para>Ancestors: nodeInfo.centralContactPoint</para>
+                                    </entry>
+                                </row>
+                                <row>
+                                    <entry><emphasis>email </emphasis></entry>
+                                    <entry><para>The email address </para>
+                                        <para>Type: String</para>
+                                        <para>Ancestors: nodeInfo.centralContactPoint</para>
+                                    </entry>
+                                </row>
+                                <row>
+                                    <entry><emphasis>phone </emphasis></entry>
+                                    <entry><para>The phone number </para>
+                                        <para>Type: String</para>
+                                        <para>Ancestors: nodeInfo.centralContactPoint</para>
+                                    </entry>
+                                </row>
+                                <row>
+                                    <entry><emphasis>www </emphasis></entry>
+                                    <entry><para>The www address</para>
+                                        <para>Type: String</para>
+                                        <para>Ancestors: nodeInfo.centralContactPoint</para>
+                                    </entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                </para>
+            </sect3>
+        </sect2>
+
+        <sect2>
+            <title>Examples</title>
+
+            <sect3>
+                <title>Sample Request</title>
+                <para>
+                    <programlisting>GET /nodeinfo</programlisting>
+                </para>
+            </sect3>
+            <sect3>
+                <title>Sample Response</title>
+                <para>
+                    <programlisting>HTTP/1.1 200 OK
+Content-Type: application/xml</programlisting>
+                    <programlisting language="myxml"><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<nodeInfo xmlns="http://www.ilcd-network.org/ILCD/ServiceAPI/NodeInfo" xmlns:contact="http://www.ilcd-network.org/ILCD/ServiceAPI/Contact">
+    <nodeID>ACME</nodeID>
+    <name>ACME Public LCI Database</name>
+    <operator>ACME Inc.</operator>
+    <description xml:lang="en">Free Text Description</description>
+    <baseURL>http://lci.acme.com/DB</baseURL>
+    <administrativeContact>
+        <contact:centralContactPoint>ACME Inc. Worldwide Headquarters</contact:centralContactPoint>
+        <contact:email>info@acme.com</contact:email>
+        <contact:phone>+49 721 555 4242</contact:phone>
+        <contact:www>www.acme.com</contact:www>
+    </administrativeContact>
+</nodeInfo>]]></programlisting>
+                </para>
+            </sect3>
+        </sect2>
+    </sect1>
+

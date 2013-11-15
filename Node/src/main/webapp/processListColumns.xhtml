@@ -1,0 +1,115 @@
+<!--
+Copyright (c) 2011 Karlsruhe Institute of Technology (KIT) - Institute for 
+Applied Computer Science (IAI). 
+
+This file is part of soda4LCA - the Service-Oriented Life Cycle Data Store.
+
+soda4LCA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by the 
+Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+soda4LCA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with soda4LCA.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+            <!--f:facet name="header">
+                <p:outputPanel>
+                    <h:outputText value="#{i18n['public.proc.searchAllFields']}:" />
+                    <h:inputText id="globalFilter" style="width:150px" />
+                </p:outputPanel>
+            </f:facet-->
+
+            <p:column style="width:40%" sortBy="#{process.name.value}" headerText="#{i18n['common.name']}">
+            
+<!--                <h:link outcome="#{url.process.getDetail(process)}" rendered="#{process.class.name == 'de.iai.ilcd.model.process.Process'}"
+                        value="#{process.name.value}" title="#{process.uuidAsString}   #{process.version}">
+                </h:link>
+                
+                <h:link outcome="#{url.process.getDetailForeign(process)}" rendered="#{process.class.name ne 'de.iai.ilcd.model.process.Process'}"
+                        value="#{process.name.value}" title="#{process.uuidAsString}   #{process.dataSetVersion}">
+                </h:link>-->
+
+              <!-- e.g. href="/showProcess.xhtml?id=6" -->
+                <h:link outcome="showProcess" rendered="#{process.class.name == 'de.iai.ilcd.model.process.Process'}"
+                    value="#{process.name.value}" title="#{process.uuidAsString}   #{process.version}">
+                    <f:param name="uuid" value="#{process.uuid.uuid}" />
+                    <f:param name="version" value="#{process.dataSetVersion}" />
+                    <f:param name="registryUUID" value="#{processesSearchHandler.registry}" />
+                    <f:param name="stock" value="#{stockSelection.currentStockName}" />
+                </h:link>
+                
+                
+                 <h:outputLink value="#{processesSearchHandler.getNodeBaseUrl(process.sourceId)}#{'/showProcess.xhtml?uuid='}#{process.uuidAsString}#{'&amp;version='}#{process.dataSetVersion}#{'&amp;registryUUID='}#{processesSearchHandler.registry}"
+               		rendered="#{process.class.name ne 'de.iai.ilcd.model.process.Process'}">
+                    <h:outputText value="#{process.name.value}"/>
+        				</h:outputLink>
+            </p:column>
+
+            <p:column style="width:6%" sortBy="#{process.sourceId}" headerText="#{i18n['common.node.id']}" rendered="#{distributed}">
+                <h:outputText value="#{process.sourceId}" />
+            </p:column>
+            
+<!--            <p:column style="width:14%" sortBy="#{process.type.value}" headerText="#{i18n['common.type']}">
+                <h:outputText rendered="#{process.parameterized}"
+                    value="(#{i18n['public.proc.parameterized']}) " />
+                <h:outputText value="#{process.type.value}" />
+            </p:column>
+-->            
+            <p:column style="width:6%" sortBy="#{process.location}" headerText="#{i18n['common.proc.loc']}">
+                <h:outputText value="#{process.location}" />
+            </p:column>
+
+            <p:column style="width:14%" sortBy="#{process.classification.classHierarchyAsString}" headerText="#{i18n['common.dataset.classif']}">
+                <h:outputText
+                    value="#{process.classification.classHierarchyAsString}" />
+            </p:column>
+
+            <p:column style="width:6%" sortBy="#{process.timeInformation.referenceYear}" headerText="#{i18n['common.dataset.refYear']}">
+                <h:outputText value="#{process.timeInformation.referenceYear}" />
+            </p:column>
+
+            <p:column style="width:6%" sortBy="#{process.timeInformation.validUntil}" headerText="#{i18n['common.proc.validUntilYear']}">
+                <h:outputText value="#{process.timeInformation.validUntil}" />
+            </p:column>
+
+<!--            <p:column style="width:7%" sortBy="#{process.LCIMethodInformation.methodPrinciple.value}" headerText="#{i18n['public.proc.methodPrinciple']}">
+                <h:outputText
+                    value="#{process.LCIMethodInformation.methodPrinciple.value}" />
+            </p:column>
+-->
+			<!-- somewhat ugly solution due to limitations of p:tooltip which allows only JSF components, no plain HTML -->
+<!--			<p:column style="width:1%" sortBy="#{process.complianceSystems}">
+				<f:facet name="header">
+					<h:outputText id="processTableComplianceHeader" value="#{i18n['public.proc.compliance']}">
+						<p:tooltip for="processTableComplianceHeader" targetPosition="bottomLeft" position="topRight">
+							<h:outputText styleClass="headline" value="#{i18n['public.proc.compliance.tooltip.headline']}"/>
+							<h:outputText styleClass="legendHeader" value="Legend:"/>
+							<h:outputText styleClass="listItem" value="&#x2022; I &#x21D2; #{i18n['public.proc.compliance.tooltip.I']}"/>
+							<h:outputText styleClass="listItem" value="&#x2022; E &#x21D2; #{i18n['public.proc.compliance.tooltip.E']}"/>
+							<h:outputText styleClass="listItem" value="&#x2022; O &#x21D2; #{i18n['public.proc.compliance.tooltip.O']}"/>
+							<h:outputText styleClass="listItem" value="&#x2022; empty &#x21D2; #{i18n['public.proc.compliance.tooltip.N']}"/>
+						</p:tooltip>
+					</h:outputText>
+				</f:facet>
+				<h:outputText id="compliance" value="#{complianceUtil.getComplianceCodeAsString(process.complianceSystems)}">
+					<p:tooltip styleClass="noFixWidth" for="compliance" targetPosition="bottomLeft" position="topRight">
+				        <ui:repeat value="#{complianceUtil.getComplianceSetAsList(process)}" var="c" styleClass="ourDataList">
+	                    	<h:outputText styleClass="listItem" value="&#x2022; #{c.name} (#{i18n['public.proc.overallCompliance']}: #{c.overallCompliance.value})" />
+	                    </ui:repeat>					
+					</p:tooltip>
+				</h:outputText>
+			</p:column>-->
+
+</ui:composition>

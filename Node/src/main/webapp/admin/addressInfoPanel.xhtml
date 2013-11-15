@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+Copyright (c) 2011 Karlsruhe Institute of Technology (KIT) - Institute for 
+Applied Computer Science (IAI). 
+
+This file is part of soda4LCA - the Service-Oriented Life Cycle Data Store.
+
+soda4LCA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by the 
+Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+soda4LCA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with soda4LCA.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:p="http://primefaces.org/ui"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets">
+<!-- 
+ui:params:
+	- countries: country list
+	- chosenCountry: chosen country
+	- address: address instance
+ -->
+<ui:param name="backingBean" value="#{contactListHandler}" />
+    <p:panel header="#{i18n['admin.user.addrInfo']}">
+        <h:panelGrid columns="2">
+            <p:outputLabel value="#{i18n['admin.user.country']}:" for="country" />
+            <!-- Fix with 150px due to problems with tabs: (usage with orgEntry)
+                 dynamic=true for tabs ==> null value set for selectOneMenu
+                 dynamic=false ==> selectOneMenu styling bug, set manually -->
+            <p:selectOneMenu style="width:150px" id="country" value="#{chosenCountry}" converter="geoAreaConverter">
+                <f:selectItem itemLabel="#{i18n['common.select.hint']}" itemValue="0" />
+                <f:selectItems value="#{countries}" var="country" itemLabel="#{country.name}" itemValue="#{country}" />
+            </p:selectOneMenu>
+        </h:panelGrid>
+        <h:panelGrid columns="4">
+            <p:outputLabel value="#{i18n['admin.user.zipCode']}:" for="zipCode" />
+            <p:inputText id="zipCode" value="#{address.zipCode}" maxlength="50" size="10" />
+            <p:outputLabel value="#{i18n['admin.user.city']}:" for="city" />
+            <p:inputText id="city" value="#{address.city}" maxlength="50" size="30" />
+        </h:panelGrid>
+        <h:panelGrid>
+            <p:outputLabel value="#{i18n['admin.user.streetAddr']}:" for="streetAddr" />
+            <p:inputTextarea id="streetAddr" value="#{address.streetAddress}" cols="72" rows="10" />
+        </h:panelGrid>
+    </p:panel>
+</ui:composition>

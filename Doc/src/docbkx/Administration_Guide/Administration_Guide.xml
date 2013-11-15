@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://www.oasis-open.org/docbook/xml/5.0/rng/docbook.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<book xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="Administration_Guide">
+   <info>
+      <title>soda4LCA release <?eval ${project.version}?> Administration Guide</title>
+      <subtitle>
+         <inlinemediaobject>
+            <imageobject>
+               <imagedata fileref="images/soda4LCA_logo.png" width="200px" align="center"/>
+            </imageobject>
+         </inlinemediaobject>
+      </subtitle>
+   </info>
+   <chapter>
+      <title>General Information</title>
+      <para>Before performing any administrative tasks on a database node, you have to be authenticated with administrative permissions. The application ships with a default
+         administrative account, <code>admin</code>. The default password for this account is <code>default</code>.</para>
+      <important>
+         <para>Make sure you change the default password immediately after setting up the node.</para>
+      </important>
+      <section>
+         <title>Logging in as administrator</title>
+         <para>To log in to the application, click on "Login" on the lower left hand side of the page. The login dialog appears:</para>
+
+         <mediaobject>
+            <imageobject>
+               <imagedata fileref="images/soda4LCA_Admin_Login.png" scalefit="1" width="100%" contentdepth="100%"/>
+            </imageobject>
+            <caption><para>Login dialog</para></caption>
+         </mediaobject>
+
+         <para>Enter valid credentials and confirm by clicking "Login".</para>
+
+         <para>Upon successful login, the administrative menu bar will appear in the top section of the page.</para>
+         <mediaobject>
+            <imageobject>
+               <imagedata fileref="images/soda4LCA_Admin_Menu.png" scalefit="1" width="100%" contentdepth="100%"/>
+            </imageobject>
+
+         </mediaobject>
+      </section>
+      <section>
+         <title>Changing the default password</title>
+         <para>Once logged in, click on "My Profile" in the lower left hand corner of the page. Then enter the new password in the "Password" and "Repeat Password" fields.</para>
+         <mediaobject>
+            <imageobject>
+               <imagedata fileref="images/soda4LCA_Admin_MyProfile_Change_Password_0.png" scalefit="1" width="100%" contentdepth="100%"/>
+            </imageobject>
+            <!--            <caption><para>Change password</para></caption>-->
+         </mediaobject>
+
+         <para>Confirm by selecting the button "Change user information".</para>
+         <mediaobject>
+            <imageobject>
+               <imagedata fileref="images/soda4LCA_Admin_MyProfile_Change_Password_1_Confirm.png" scalefit="1" width="100%" contentdepth="100%"/>
+            </imageobject>
+            <!--            <caption><para>Confirm</para></caption>-->
+         </mediaobject>
+
+         <para>A confirmation message will be shown indicating that the password has been changed.</para>
+         <mediaobject>
+            <imageobject>
+               <imagedata fileref="images/soda4LCA_Admin_MyProfile_Change_Password_2_Confirmed.png" scalefit="1" width="100%" contentdepth="100%"/>
+            </imageobject>
+            <!--            <caption><para>Confirmation message</para></caption>-->
+         </mediaobject>
+      </section>
+   </chapter>
+   <chapter>
+      <title>Managing Access</title>
+      <section>
+         <title>User and Group Management</title>
+         <para> For managing access to the various features of the application as well via the web user interface as well as the application service interface, a role-based
+            approach has been implemented.</para>
+         <para>By default, an anonymous user (one that is not authenticated) can browse, search and read all datasets that are public. For all other operations, special permissions
+            are necessary. The following table lists all available permissions (roles):</para>
+         <para>
+            <table>
+               <title>Access rights (roles)</title>
+               <tgroup cols="2">
+                  <thead>
+                     <row>
+                        <entry>Role</entry>
+                        <entry>Description</entry>
+                     </row>
+                  </thead>
+                  <tbody>
+                     <row>
+                        <entry><emphasis>Metadata read</emphasis></entry>
+                        <entry>This role grants permission to read the metadata of process datasets.</entry>
+                     </row>
+                     <row>
+                        <entry><emphasis>Full read and export</emphasis></entry>
+                        <entry>This role grants permission to read/display all sections of a process dataset as well as export (download) it as XML.</entry>
+                     </row>
+                     <row>
+                        <entry><emphasis>Checkout for editing</emphasis></entry>
+                        <entry>This role grants permission to check out a dataset for editing. The dataset will be locked for edit operations until checked in again.</entry>
+                     </row>
+                     <row>
+                        <entry><emphasis>Checkin of data sets</emphasis></entry>
+                        <entry>This role grants permission to check in a dataset after editing.</entry>
+                     </row>
+                     <row>
+                        <entry><emphasis>Release management</emphasis></entry>
+                        <entry>This role grants permission to modify the <emphasis>released</emphasis>/<emphasis>unreleased</emphasis> status of a dataset.</entry>
+                     </row>
+                     <row>
+                        <entry><emphasis>Delete data sets</emphasis></entry>
+                        <entry>This role grants permission to delete datasets from the database.</entry>
+                     </row>
+                     <row>
+                        <entry><emphasis>Manage user</emphasis></entry>
+                        <entry>This role grants permission to add, edit and remove users and groups.</entry>
+                     </row>
+                     <row>
+                        <entry><emphasis>Admin rights</emphasis></entry>
+                        <entry>This role grants permission to access the administrative functions via the web interface.</entry>
+                     </row>
+                  </tbody>
+               </tgroup>
+            </table>
+         </para>
+         <para>These roles can be assigned to groups. For instance, an imaginary group TOOLS may be assigned the roles <emphasis>Checkout for editing</emphasis> and
+               <emphasis>Checkin of data sets</emphasis>. Furthermore, a user can be assigned to a group. For example, the user "tool1" could be assigned to the group TOOLS, hence
+            this user account may connect to the database and perform dataset checkin and checkout operations.</para>
+         <para> </para>
+         <para> </para>
+         <para> </para>
+
+
+         <section>
+            <title>Managing users</title>
+            <para> The "User" menu offers the options to add and manage users or groups. <mediaobject>
+                  <imageobject>
+                     <imagedata fileref="images/soda4LCA_Admin_Menu_Users.png" scalefit="1" width="100%" contentdepth="100%"/>
+                  </imageobject>
+               </mediaobject>
+            </para>
+
+
+            <section>
+               <title>Adding a user</title>
+
+               <para> To add a user, select "Add user" from the User menu. The "Create User" page will appear. <mediaobject>
+                     <imageobject>
+                        <imagedata fileref="images/soda4LCA_Admin_User_Create.png" scalefit="1" width="100%" contentdepth="100%"/>
+                     </imageobject>
+                  </mediaobject> Fields marked with an asterisk (*) are required. When finished with entering the data, select the button "Create user": <mediaobject>
+                     <imageobject>
+                        <imagedata fileref="images/soda4LCA_Admin_User_Create_Confirm_Button.png" scalefit="1" width="100%" contentdepth="100%"/>
+                     </imageobject>
+                  </mediaobject>
+               </para>
+            </section>
+
+
+
+            <section>
+               <title>Editing a user</title>
+
+               <para>To edit a user profile, select "Manage users" from the "User" menu. A page with the list of all users will appear. You can edit a user profile by clicking its
+                  name, or delete users by selecting one or multiple entries using the checkbox in the left column and then selecting the "Delete" button.<mediaobject>
+                     <imageobject>
+                        <imagedata fileref="images/soda4LCA_Admin_User_ManageUsers.png" scalefit="1" width="100%" contentdepth="100%"/>
+                     </imageobject>
+                  </mediaobject>
+               </para>
+
+            </section>
+         </section>
+
+         <section>
+            <title>Managing groups</title>
+
+            <section>
+               <title>Adding a group</title>
+
+               <para> To add a group, select "Add group" from the User menu. The "Create Group" page will appear. You can select the roles that you want to be associated with this
+                  group, as well as the users you want to belong to this group. This can be changed at a later time as well. <mediaobject>
+                     <imageobject>
+                        <imagedata fileref="images/soda4LCA_Admin_User_CreateGroup.png" scalefit="1" width="100%" contentdepth="100%"/>
+                     </imageobject>
+                  </mediaobject>
+               </para>
+
+            </section>
+
+
+            <section>
+               <title>Editing a group</title>
+
+               <para>To edit a group, select "Manage groups" from the "User" menu. A page with the list of all groups will appear, with the list of roles associated with each group
+                  showing in the "Roles associated" column. You can edit a group by clicking its name, or delete groups by selecting one or multiple entries using the checkbox in
+                  the left column and then selecting the "Delete" button.<mediaobject>
+                     <imageobject>
+                        <imagedata fileref="images/soda4LCA_Admin_User_ManageGroups.png" scalefit="1" width="100%" contentdepth="100%"/>
+                     </imageobject>
+                  </mediaobject>
+               </para>
+
+            </section>
+
+         </section>
+
+      </section>
+   </chapter>
+   <chapter>
+      <title>Managing Datasets</title>
+      <section xml:id="import">
+         <title>Data Import</title>
+         <para>To import datasets into your soda4LCA node, select "Import" from the "Data Import/Export" menu: <mediaobject>
+               <imageobject>
+                  <imagedata fileref="images/soda4LCA_Admin_Menu_Import.png" scalefit="1" width="100%" contentdepth="100%"/>
+               </imageobject>
+               <!--               <caption><para>Import menu option</para></caption>-->
+            </mediaobject>
+         </para>
+         <para>Then select "Browse": <mediaobject>
+               <imageobject>
+                  <imagedata fileref="images/soda4LCA_Admin_Import_0.png" scalefit="1" width="100%" contentdepth="100%"/>
+               </imageobject>
+               <!--               <caption><para>Browse</para></caption>-->
+            </mediaobject>
+         </para>
+         <para>Now an operating system file dialog will appear, allowing you to select the desired file(s): <mediaobject>
+               <imageobject>
+                  <imagedata fileref="images/soda4LCA_Admin_Import_1_Select.png" scalefit="1" width="100%" contentdepth="100%"/>
+               </imageobject>
+               <!--               <caption><para>Select file(s)</para></caption>-->
+            </mediaobject>
+         </para>
+         <para>You may select one or several of the following file types: <itemizedlist>
+               <listitem>
+                  <para>XML documents containing ILCD datasets</para>
+               </listitem>
+               <listitem>
+                  <para>ILCD ZIP archives containing ILCD datasets</para>
+               </listitem>
+            </itemizedlist>
+         </para>
+         <para>When you are finished selecting files and confirm the file system dialog, a list of selected files will appear on the page. Click "Upload" to upload them to the server.<mediaobject>
+               <imageobject>
+                  <imagedata fileref="images/soda4LCA_Admin_Import_2_Pre_Upload.png" scalefit="1" width="100%" contentdepth="100%"/>
+               </imageobject>
+               <!--               <caption><para>Files ready for upload</para></caption>-->
+            </mediaobject>
+         </para>
+         <para>Once the upload is finished, a corresponding message will appear:<mediaobject>
+               <imageobject>
+                  <imagedata fileref="images/soda4LCA_Admin_Import_3_Upload_Complete.png" scalefit="1" width="100%" contentdepth="100%"/>
+               </imageobject>
+               <!--               <caption><para>Upload complete</para></caption>-->
+            </mediaobject>
+         </para>
+         <para>Now select the "Continue to step 2" button. A list of all uploaded files will appear. <mediaobject>
+               <imageobject>
+                  <imagedata fileref="images/soda4LCA_Admin_Import_4_Pre_Import.png" scalefit="1" width="100%" contentdepth="100%"/>
+               </imageobject>
+
+            </mediaobject></para>
+         <para>Select "Import files". As the import progresses, messages will be written to the status log console. <important>
+               <para>During the import, do not reload the page.</para>
+            </important></para>
+         <para>
+            <mediaobject>
+               <imageobject>
+                  <imagedata fileref="images/soda4LCA_Admin_Import_5_Import_Finished.png" scalefit="1" width="100%" contentdepth="100%"/>
+               </imageobject>
+
+            </mediaobject></para>
+         <para>When the message "Import of files finished" appears, the import is complete.</para>
+         <para>Review the status log for error messages. When a dataset of the same UUID and version already exists in the database, this dataset will not be imported and a message
+            is written to the status log.</para>
+      </section>
+      <section xml:id="export">
+         <title>Data Export</title>
+         <para>The entire database can be exported to a ZIP file that can be stored locally on the client. That file can later be imported to an empty database.</para>
+         <para>To export the database, select "Export Database" from the "Data Import/Export" Menu.</para>
+         <para>
+            <mediaobject>
+               <imageobject>
+                  <imagedata fileref="images/soda4LCA_Admin_Menu_Export.png" scalefit="1" width="100%" contentdepth="100%"/>
+               </imageobject>
+
+            </mediaobject>
+         </para>
+         <para>Then click the link "Export entire database to ZIP file". </para>
+         <para>
+            <mediaobject>
+               <imageobject>
+                  <imagedata fileref="images/soda4LCA_Admin_Export_Export.png" scalefit="1" width="100%" contentdepth="100%"/>
+               </imageobject>
+
+            </mediaobject>
+         </para>
+         <para>Your browser will prompt you with a download dialog and download the ZIP file.</para>
+      </section>
+      <section>
+         <title>Versioning</title>
+         <para>Each dataset carries a unique UUID (Universally Unique Identifier) as well as a version number that is to be incremented when the dataset is updated.</para>
+         <para>In general, always only the latest version of a dataset (i.e. the dataset with the highest version number) is shown. Previous versions can be accessed by navigating
+            to the most recent version and then selecting the desired version from the "Other versions" section on the dataset overview page: <mediaobject>
+               <imageobject>
+                  <imagedata fileref="images/soda4LCA_Dataset_Versions.png" scalefit="1" width="100%" contentdepth="100%"/>
+               </imageobject>
+
+            </mediaobject>
+         </para>
+      </section>
+      <section>
+         <title>Deleting datasets from the database</title>
+         <para>To delete one or more datasets, select the appropriate entry from the "Manage Datasets" menu: <mediaobject>
+               <imageobject>
+                  <imagedata fileref="images/soda4LCA_Admin_Menu_Manage.png" scalefit="1" width="100%" contentdepth="100%"/>
+               </imageobject>
+
+            </mediaobject>
+         </para>
+
+         <para>Then navigate to the dataset(s) that you intend to delete. Each dataset version will be displayed as a separate entry.<mediaobject>
+               <imageobject>
+                  <imagedata fileref="images/soda4LCA_Admin_Manage_Processes.png" scalefit="1" width="100%" contentdepth="100%"/>
+               </imageobject>
+
+            </mediaobject>
+         </para>
+
+         <para>For every dataset to be deleted on a page, select the checkbox in the first column. Then select the "Delete" button:<mediaobject>
+               <imageobject>
+                  <imagedata fileref="images/soda4LCA_Admin_Manage_Processes_Delete.png" width="400"/>
+               </imageobject>
+
+            </mediaobject>
+         </para>
+
+         <para>A confirmation dialog will appear. <mediaobject>
+               <imageobject>
+                  <imagedata fileref="images/soda4LCA_Admin_Manage_Processes_Delete_Confirm.png" scalefit="1" width="100%" contentdepth="100%"/>
+               </imageobject>
+
+            </mediaobject>
+         </para>
+
+         <para>Upon confirmation, the datasets will be deleted from the database and for each deleted dataset, and information message is shown. <mediaobject>
+               <imageobject>
+                  <imagedata fileref="images/soda4LCA_Admin_Manage_Processes_Delete_Confirmed.png" scalefit="1" width="100%" contentdepth="100%"/>
+               </imageobject>
+
+            </mediaobject>
+         </para>
+
+      </section>
+   </chapter>
+   <chapter>
+      <title>Managing Networking</title>
+      <section>
+         <title>Displaying information about the local node</title>
+         <para>To review the information exposed by the local node to other nodes on the network, select "About this node" from the "Network" menu: <mediaobject>
+               <imageobject>
+                  <imagedata fileref="images/soda4LCA_Admin_Menu_Network.png" scalefit="1" width="100%" contentdepth="100%"/>
+               </imageobject>
+
+            </mediaobject>
+         </para>
+         <para>The node and administrator information is shown. Refer to the Installation Guide for information on how to edit this information.<mediaobject>
+               <imageobject>
+                  <imagedata fileref="images/soda4LCA_Admin_Network_AboutThisNode.png" scalefit="1" width="100%" contentdepth="100%"/>
+               </imageobject>
+
+            </mediaobject>
+         </para>
+      </section>
+
+      <section>
+         <title>Adding nodes</title>
+         <para> To add a node to the list of foreign nodes known to the local node, select "Add Node" from the "Network" menu. On the following page, you can enter the following: <itemizedlist>
+               <listitem>
+                  <para>a service URL (required)</para>
+               </listitem>
+               <listitem>
+                  <para>a username/password combination (optional).</para>
+               </listitem>
+            </itemizedlist></para>
+         <para>
+            <mediaobject>
+               <imageobject>
+                  <imagedata fileref="images/soda4LCA_Admin_Network_01_Add_Node.png" scalefit="1" width="100%" contentdepth="100%"/>
+               </imageobject>
+            </mediaobject>
+         </para>
+         <para>Enter the service URL of the node you want to add and select the "Add node" button:</para>
+
+         <para>
+            <mediaobject>
+               <imageobject>
+                  <imagedata fileref="images/soda4LCA_Admin_Network_01a_Add_node.png" scalefit="1" width="100%" contentdepth="100%"/>
+               </imageobject>
+            </mediaobject>
+         </para>
+         <para>The application will attempt to connect to the foreign node and retrieve its metadata. If this was successful, the node is added to the list of foreign nodes, and a
+            confirmation message will appear: <mediaobject>
+               <imageobject>
+                  <imagedata fileref="images/soda4LCA_Admin_Network_02_Confirmation.png" scalefit="1" width="100%" contentdepth="100%"/>
+               </imageobject>
+            </mediaobject>
+         </para>
+
+         <para>If the connection fails (due to the foreign node being unreachable, the entering service URL being incorrect etc.), the list of nodes will not be altered and the
+            "Add node" page will still be shown.</para>
+
+      </section>
+
+
+      <section>
+         <title>Managing nodes</title>
+         <para>To see the list of foreign nodes, select "Manage Nodes" from the "Network" menu. <mediaobject>
+               <imageobject>
+                  <imagedata fileref="images/soda4LCA_Admin_Network_03_Manage.png" scalefit="1" width="100%" contentdepth="100%"/>
+               </imageobject>
+            </mediaobject>
+         </para>
+         <para>To see the details about a node, click on its name. The details/update page will appear. <mediaobject>
+               <imageobject>
+                  <imagedata fileref="images/soda4LCA_Admin_Network_04_Show_Edit.png" scalefit="1" width="100%" contentdepth="100%"/>
+               </imageobject>
+            </mediaobject> If necessary, you may change the information and confirm by clicking "Update node information". </para>
+      </section>
+
+   </chapter>
+   <chapter>
+      <title>Registering with a registry</title>
+      <para>Note: The functionality described in this chapter is not yet available in the 1.2.0 release.</para>
+
+      <section>
+         <title>Adding a new registry</title>
+         <para>In order to utilize the advanced network capabilities of the application, the node needs to be registered with an existing registry. Before the registration process
+            can start, the registry has to be added to the application's list of known registries. Only users with administrator privileges are allowed to perform this operation.
+            In order to add a new registry: <orderedlist>
+               <listitem>
+                  <para>Navigate to Network -> Registries</para>
+               </listitem>
+               <listitem>
+                  <para>Press the "Add registry" button:<mediaobject>
+                        <imageobject>
+                           <imagedata fileref="images/soda4LCA_Admin_Registry_01_Add.png" scalefit="1" width="100%" contentdepth="100%"/>
+                        </imageobject>
+                     </mediaobject></para>
+               </listitem>
+               <listitem>
+                  <para>The following form will be displayed:<mediaobject>
+                        <imageobject>
+                           <imagedata fileref="images/soda4LCA_Admin_Registry_02_Enter_Details.png" scalefit="1" width="100%" contentdepth="100%"/>
+                        </imageobject>
+                     </mediaobject></para>
+               </listitem>
+               <listitem>
+                  <para>Fill in all mandatory fields and press "Save"</para>
+               </listitem>
+            </orderedlist> All values that have to be inserted will be published. It is important to insert the exact values, especially UUID and Base URL. In case the network
+            doesn’t work as expected, please check the value of UUID. </para>
+      </section>
+
+
+      <section>
+         <title>Showing registry details</title>
+         <para> Users with appropriate privileges have to possibility to inspect the details of a registry. <orderedlist>
+               <listitem>
+                  <para> Select "Registries" from the "Network" menu <mediaobject>
+                        <imageobject>
+                           <imagedata fileref="images/soda4LCA_Admin_Registry_Menu.png" scalefit="1" width="100%" contentdepth="100%"/>
+                        </imageobject>
+                     </mediaobject>
+                  </para>
+               </listitem>
+
+               <listitem>
+                  <para> Click on the appropriate registry name and consult the registry details. <mediaobject>
+                        <imageobject>
+                           <imagedata fileref="images/soda4LCA_Admin_Registry_03_List_of_Registries.png" scalefit="1" width="100%" contentdepth="100%"/>
+                        </imageobject>
+                     </mediaobject>
+                  </para>
+               </listitem>
+               <listitem>
+                  <para> When a node is the part of the network, registry details and a list of nodes in the network will be displayed. Otherwise, only the registry details will be
+                     shown. <mediaobject>
+                        <imageobject>
+                           <imagedata fileref="images/soda4LCA_Admin_Registry_04_Details.png" scalefit="1" width="100%" contentdepth="100%"/>
+                        </imageobject>
+                     </mediaobject>
+                  </para>
+               </listitem>
+            </orderedlist>
+         </para>
+      </section>
+
+
+      <section>
+         <title>Editing registry details</title>
+         <para> Users with appropriate privileges have to possibility to edit details of a registry. <orderedlist>
+               <listitem>
+                  <para>Navigate to "Network" -> "Registries"</para>
+               </listitem>
+               <listitem>
+                  <para>Click "Edit registry" in the "Action" column of the selected registry <mediaobject>
+                        <imageobject>
+                           <imagedata fileref="images/soda4LCA_Admin_Registry_05_List_of_Registries.png" scalefit="1" width="100%" contentdepth="100%"/>
+                        </imageobject>
+                     </mediaobject>
+                  </para>
+               </listitem>
+               <listitem>
+                  <para> You will be redirected to the "Registry details" page. <mediaobject>
+                        <imageobject>
+                           <imagedata fileref="images/soda4LCA_Admin_Registry_06_Edit_Details.png" scalefit="1" width="100%" contentdepth="100%"/>
+                        </imageobject>
+                     </mediaobject>
+                  </para>
+               </listitem>
+               <listitem>
+                  <para>Insert new values and press "Save".</para>
+               </listitem>
+            </orderedlist>
+         </para>
+      </section>
+
+
+
+
+
+      <section>
+         <title>Removing a registry</title>
+         <para>Users with appropriate privileges have the possibility to remove a registry from the list of registries known to the node. Registries on which the node is already
+            registered cannot be removed, the node has to be deregistered first. <orderedlist>
+               <listitem>
+                  <para>Navigate to Network -> Registries</para>
+               </listitem>
+               <listitem>
+                  <para>Click the "Edit registry" link in the "Action" column of the selected registry. <mediaobject>
+                        <imageobject>
+                           <imagedata fileref="images/soda4LCA_Admin_Registry_07_Remove_Registry.png" scalefit="1" width="100%" contentdepth="100%"/>
+                        </imageobject>
+                     </mediaobject>
+                  </para>
+               </listitem>
+
+               <listitem>
+                  <para>The system will ask for confirmation. <mediaobject>
+                        <imageobject>
+                           <imagedata fileref="images/soda4LCA_Admin_Registry_08_Remove_Confirmation.png" scalefit="1" width="100%" contentdepth="100%"/>
+                        </imageobject>
+                     </mediaobject>
+                  </para>
+               </listitem>
+               <listitem>
+                  <para>Confirm the choice.</para>
+               </listitem>
+               <listitem>
+                  <para>A confirmation message will be displayed. <mediaobject>
+                        <imageobject>
+                           <imagedata fileref="images/soda4LCA_Admin_Registry_09_Remove_Confirmed.png" scalefit="1" width="100%" contentdepth="100%"/>
+                        </imageobject>
+                     </mediaobject>
+                  </para>
+               </listitem>
+            </orderedlist>
+         </para>
+      </section>
+
+      <section>
+         <title>Node registration</title>
+         <para>To send a node registration request to a registry, execute the following steps: <orderedlist>
+               <listitem>
+                  <para>Navigate to Network -> Registries <mediaobject>
+                        <imageobject>
+                           <imagedata fileref="images/soda4LCA_Admin_Registry_Menu.png" scalefit="1" width="100%" contentdepth="100%"/>
+                        </imageobject>
+                     </mediaobject>
+                  </para>
+               </listitem>
+               <listitem>
+                  <para>Select "Registry" and in the "Action" column click on "Register" – the registration page will appear. <mediaobject>
+                        <imageobject>
+                           <imagedata fileref="images/soda4LCA_Admin_Registry_10_Node_Registration.png" scalefit="1" width="100%" contentdepth="100%"/>
+                        </imageobject>
+                     </mediaobject></para>
+               </listitem>
+               <listitem>
+                  <para>Complete the "Access Account" and "Access Password" fields. Note: these fields are not your credentials for the node application! These fields will be used
+                     to authenticate the deregistration action, so keep this information for later. Node ID and Base URL are entered by default by the system, but it is possible to
+                     change the values. Please be careful with the URL – in case of an incorrect value, the registration will be not processed.<mediaobject>
+                        <imageobject>
+                           <imagedata fileref="images/soda4LCA_Admin_Registry_11_Register_Node.png" scalefit="1" width="100%" contentdepth="100%"/>
+                        </imageobject>
+                     </mediaobject></para>
+               </listitem>
+               <listitem>
+                  <para>After successfully sending the node registration request, the status of this node on the registry is "Pending registration".<mediaobject>
+                        <imageobject>
+                           <imagedata fileref="images/soda4LCA_Admin_Registry_12_Pending.png" scalefit="1" width="100%" contentdepth="100%"/>
+                        </imageobject>
+                     </mediaobject></para>
+               </listitem>
+               <listitem>
+                  <para>When the registry administrator approves your request, the status will be changed to "Registered". You will be also informed about the approval by email. <mediaobject>
+                        <imageobject>
+                           <imagedata fileref="images/soda4LCA_Admin_Registry_13_Registered.png" scalefit="1" width="100%" contentdepth="100%"/>
+                        </imageobject>
+                     </mediaobject> Note: A node can be registered in multiple networks. <mediaobject>
+                        <imageobject>
+                           <imagedata fileref="images/soda4LCA_Admin_Registry_14_Multiple_Networks.png" scalefit="1" width="100%" contentdepth="100%"/>
+                        </imageobject>
+                     </mediaobject>
+                  </para>
+               </listitem>
+            </orderedlist>
+         </para>
+      </section>
+
+
+
+      <section>
+         <title>Node deregistration</title>
+         <para> In order to deregister a node from a registry, follow these steps: <orderedlist>
+               <listitem>
+                  <para>Navigate to Network -> Registries</para>
+               </listitem>
+               <listitem>
+                  <para>Find the registry you want to deregister from and click the "Deregister" link in the "Action" column <mediaobject>
+                        <imageobject>
+                           <imagedata fileref="images/soda4LCA_Admin_Registry_15_Deregistration.png" scalefit="1" width="100%" contentdepth="100%"/>
+                        </imageobject>
+                     </mediaobject></para>
+               </listitem>
+
+               <listitem>
+                  <para>You will be redirected to the authorization page. Enter user and password which were selected during registration and click Deregister <mediaobject>
+                        <imageobject>
+                           <imagedata fileref="images/soda4LCA_Admin_Registry_16_Deregister_Authenticate.png" scalefit="1" width="100%" contentdepth="100%"/>
+                        </imageobject>
+                     </mediaobject></para>
+               </listitem>
+               <listitem>
+                  <para>After pressing the button, you will be asked for confirmation. Click "Yes":<mediaobject>
+                        <imageobject>
+                           <imagedata fileref="images/soda4LCA_Admin_Registry_17_Deregister_Confirm.png" scalefit="1" width="100%" contentdepth="100%"/>
+                        </imageobject>
+                     </mediaobject></para>
+               </listitem>
+               <listitem>
+                  <para>The system will prevent you from deregistration if there are any registered datasets. You will be asked to deregister the datasets first.<mediaobject>
+                        <imageobject>
+                           <imagedata fileref="images/soda4LCA_Admin_Registry_18_Error_Registered_Datasets.png" scalefit="1" width="100%" contentdepth="100%"/>
+                        </imageobject>
+                     </mediaobject> If the user name and/or password entered are incorrect, an appropriate message will be displayed. <mediaobject>
+                        <imageobject>
+                           <imagedata fileref="images/soda4LCA_Admin_Registry_19_Error_Authentication.png" scalefit="1" width="100%" contentdepth="100%"/>
+                        </imageobject>
+                     </mediaobject></para>
+               </listitem>
+            </orderedlist>
+         </para>
+      </section>
+
+
+
+   </chapter>
+
+
+
+</book>

@@ -1,0 +1,741 @@
+<?xml version="1.0" encoding="UTF-8"?><sect2 xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="Response_Elements_Process">
+<title xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:contact="http://www.ilcd-network.org/ILCD/ServiceAPI/Contact" xmlns:source="http://www.ilcd-network.org/ILCD/ServiceAPI/Source" xmlns:lciamethod="http://www.ilcd-network.org/ILCD/ServiceAPI/LCIAMethod" xmlns:unitGroup="http://www.ilcd-network.org/ILCD/ServiceAPI/UnitGroup" xmlns:flowProperty="http://www.ilcd-network.org/ILCD/ServiceAPI/FlowProperty" xmlns:flow="http://www.ilcd-network.org/ILCD/ServiceAPI/Flow" xmlns:process="http://www.ilcd-network.org/ILCD/ServiceAPI/Process">Process Response Elements</title>
+<para xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:contact="http://www.ilcd-network.org/ILCD/ServiceAPI/Contact" xmlns:source="http://www.ilcd-network.org/ILCD/ServiceAPI/Source" xmlns:lciamethod="http://www.ilcd-network.org/ILCD/ServiceAPI/LCIAMethod" xmlns:unitGroup="http://www.ilcd-network.org/ILCD/ServiceAPI/UnitGroup" xmlns:flowProperty="http://www.ilcd-network.org/ILCD/ServiceAPI/FlowProperty" xmlns:flow="http://www.ilcd-network.org/ILCD/ServiceAPI/Flow" xmlns:process="http://www.ilcd-network.org/ILCD/ServiceAPI/Process">
+<table pgwide="1">
+<title/>
+<tgroup cols="2">
+<colspec colwidth="1*" colname="col1" colnum="1"/>
+<colspec colwidth="3.5*" colname="col2" colnum="2"/>
+<thead>
+<row>
+<entry>Name</entry>
+<entry>Description</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry>
+<para>
+<emphasis>process</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: None</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>@accessRestricted</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>uuid</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>permanentUri</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>dataSetVersion</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>name</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String Multilang</para>
+<para>Ancestors: process</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>classification</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>class</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>may occur multiple times</para>
+<para>Ancestors: process.classification</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>@level</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process.classification.class</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>generalComment</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String Multilang</para>
+<para>Ancestors: process</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>synonyms</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String Multilang</para>
+<para>may occur multiple times</para>
+<para>Ancestors: process</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>type</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>quantitativeReference</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>referenceFlow</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process.quantitativeReference</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>name</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String Multilang</para>
+<para>Ancestors: process.quantitativeReference.referenceFlow</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>meanValue</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process.quantitativeReference.referenceFlow</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>reference</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process.quantitativeReference.referenceFlow</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>@type</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process.quantitativeReference.referenceFlow.reference</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>@refObjectId</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process.quantitativeReference.referenceFlow.reference</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>shortDescription</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String Multilang</para>
+<para>Ancestors: process.quantitativeReference.referenceFlow.reference</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>functionalUnit</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String Multilang</para>
+<para>Ancestors: process.quantitativeReference</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>location</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>time</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>referenceYear</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process.time</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>validUntil</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process.time</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>parameterized</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>hasResults</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>containsProductModel</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>lciMethodInformation</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>methodPrinciple</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process.lciMethodInformation</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>approach</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>may occur multiple times</para>
+<para>Ancestors: process.lciMethodInformation</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>completenessProductModel</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>complianceSystem</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>@name</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process.complianceSystem</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>overallCompliance</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process.complianceSystem</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>review</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>@type</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process.review</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>scope</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process.review</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>@name</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process.review.scope</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>method</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process.review.scope</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>@name</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process.review.scope.method</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>dataQualityIndicators</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process.review</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>dataQualityIndicator</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process.review.dataQualityIndicators</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>@name</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process.review.dataQualityIndicators.dataQualityIndicator</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>@value</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process.review.dataQualityIndicators.dataQualityIndicator</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>reviewDetails</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String Multilang</para>
+<para>Ancestors: process.review</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>overallQuality</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>useAdvice</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String Multilang</para>
+<para>Ancestors: process</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>accessInformation</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>copyright</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process.accessInformation</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>licenseType</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process.accessInformation</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>useRestrictions</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String Multilang</para>
+<para>Ancestors: process.accessInformation</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>format</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>ownership</emphasis>
+</para>
+<para>(process)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>@type</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process.ownership</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>@refObjectId</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: process.ownership</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>shortDescription</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String Multilang</para>
+<para>Ancestors: process.ownership</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+</para>
+</sect2>

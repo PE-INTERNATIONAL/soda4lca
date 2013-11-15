@@ -1,0 +1,705 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://www.oasis-open.org/docbook/xml/5.0/rng/docbook.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<book xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="Installation_Guide">
+    <info>
+        <title>soda4LCA release <?eval ${project.version}?> Installation and Configuration Guide</title>
+        <subtitle>
+            <inlinemediaobject>
+                <imageobject>
+                    <imagedata fileref="images/soda4LCA_logo.png" width="200px" align="center"/>
+                </imageobject>
+            </inlinemediaobject>
+        </subtitle>
+    </info>
+    <chapter>
+        <title>General information</title>
+        <section>
+            <title>Intended audiences</title>
+            <para>This guide gives detailed step-by-step instructions on how to set up a soda4LCA database node. It is intended for network and website managers.</para>
+        </section>
+        <section>
+            <title>System prerequisites</title>
+            <para>This software is conceived as a web application and runs inside a servlet container such as Apache Tomcat. The following components must already be in place in
+                order to install soda4LCA:</para>
+            <itemizedlist>
+                <listitem>
+                    <para>Java 1.6 or newer</para>
+                </listitem>
+                <listitem>
+                    <para>MySQL 5.0 database or newer</para>
+                </listitem>
+                <listitem>
+                    <para>J2EE servlet container (recommended: Tomcat 6.0)</para>
+                </listitem>
+            </itemizedlist>
+            <para>The instructions and configuration examples are for Tomcat 6.0. If you use another servlet container or Tomcat version, the necessary instructions may differ, in
+                that case consult the container's documentation.</para>
+            <para>The guide refers to the base directory of the Tomcat installation as <code>$CATALINA_HOME</code>.</para>
+        </section>
+    </chapter>
+    <chapter>
+        <title>Upgrading</title>
+        <section>
+            <title>Upgrading from a previous release to soda4LCA 2.x</title>
+            <para>For an upgrade of a pre-2.x release to a 2.x release, the database schema must be completely emtpy. Make sure you export your data before wiping your database
+                schema. Any user accounts need to be recreated once the upgrade is complete.</para>
+            <para>To upgrade your soda4LCA installation from a previous (1.x) release to 2.x, follow these steps: <orderedlist>
+                    <listitem>
+                        <para>Export your data (see section <command xlink:href="Administration_Guide#export" xlink:role="http://docbook.org/xlink/role/olink">"Export"</command> in
+                            the Administration Guide for detailed instructions) and save the resulting ZIP file.</para>
+                    </listitem>
+                    <listitem>
+                        <para>Stop the servlet container (Tomcat).</para>
+                    </listitem>
+                    <listitem>
+                        <para>Your application's database schema needs to be completely empty before you start up the 2.x release. The easiest way is to drop and re-create your
+                            database schema. For instance, if the name of your database schema is <code>soda4LCAdb</code>, executing the following statements will ensure your
+                            database schema is
+                            empty:<programlisting>
+DROP SCHEMA soda4LCAdb;
+
+CREATE SCHEMA soda4LCAdb DEFAULT CHARACTER SET utf8;                                
+                            </programlisting></para>
+                    </listitem>
+                    <listitem>
+                        <para>Locate the application's folder inside the <code>$CATALINA_HOME/webapps</code> folder. The name of this folder matches your application's context
+                            path. For instance, if your application' context path is <code>/Node</code>, there will be a folder <code>Node</code>. Delete that (and only that)
+                            folder.</para>
+                    </listitem>
+                    <listitem>
+                        <para>Change the name of the soda4LCA 2.x WAR archive to match your context path. For example, if your context path is <code>/Node</code>, name it
+                                <code>Node.war</code>. Then copy it to <code>$CATALINA_HOME/webapps</code>, overwriting the existing WAR file.</para>
+                    </listitem>
+                    <listitem>
+                        <para>Now start the servlet container (Tomcat).</para>
+                    </listitem>
+                    <listitem>
+                        <para>Once the application is up and running, log in as <code>admin</code> and change the default password.</para>
+                    </listitem>
+                    <listitem>
+                        <para>Now you can import your data using the ZIP file created in step 1. Refer to the section <command xlink:href="Administration_Guide#import"
+                                xlink:role="http://docbook.org/xlink/role/olink">"Import"</command> in the Administration Guide for detailed instructions.</para>
+                    </listitem>
+                </orderedlist>
+            </para>
+        </section>
+    </chapter>
+    <chapter>
+        <title>Preparing the environment</title>
+        <section xml:id="database_system_variables">
+            <title>Database system variables</title>
+            <para>For being able to import large datasets into the database application, the <code>max_allowed_packet</code> system variable needs to be adjusted in your MySQL instance.<itemizedlist>
+                <listitem>
+                    <para><code>max_allowed_packet=25M</code></para>
+                </listitem>
+            </itemizedlist>Depending on your operating system and MySQL installation type, there are different ways to set these variables. You can either add or replace the above line
+                to your <code>my.cnf</code> or alternatively pass them as command line parameters in MySQL's startup script like this <code>--max_allowed_packet=25M</code>.</para>
+<!--            <para>The following two system variables need to be set in your MySQL instance in order for the application to work properly: <itemizedlist>
+                    <listitem>
+                        <para><code>lower_case_table_names=1</code></para>
+                    </listitem>
+                    <listitem>
+                        <para><code>max_allowed_packet=25M</code></para>
+                    </listitem>
+                </itemizedlist>Depending on your operating system and MySQL installation type, there are different ways to set these variables. You can either add the above lines
+                to your <code>my.cnf</code> or alternatively pass them as command line parameters in MySQL's startup script like this <code>-lower_case_table_names=1
+                    -max_allowed_packet=25M</code>.</para>-->
+
+        </section>
+        <section>
+            <title>Recommended: Increasing heap size for Tomcat's Java Virtual Machine</title>
+            <para>To ensure optimum performance of the soda4LCA application, the heap size of the Java Virtual Machine should be increased to at least 400MB. This can be achieved
+                by setting the <code>CATALINA_OPTS</code> environment variable to <code>-Xmx400M</code>.</para>
+        </section>
+    </chapter>
+    <chapter>
+        <title>Installing the application</title>
+        <section>
+            <title>Database setup</title>
+            <orderedlist>
+                <listitem>
+                    <para>Create a new, empty database schema using an UTF-8 character set and the default collation. For example, when using phpMyAdmin, use the "Create new
+                        database" section on the main page: <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/soda4LCA_phpMyAdmin.png" scalefit="1" width="100%" contentdepth="100%"/>
+                            </imageobject>
+                        </mediaobject>The database schema name used in all the examples is <code>soda4LCAdb</code>. If you are using a different schema name, be sure to change it
+                        accordingly in any sample code you may be copying from this manual.</para>
+                </listitem>
+                <listitem>
+                    <para>Obtain and install MySQL database driver<orderedlist>
+                            <listitem>
+                                <para>Download the MySQL database driver here: <link xlink:href="http://dev.mysql.com/downloads/connector/j/"
+                                        >http://dev.mysql.com/downloads/connector/j/</link>.</para>
+                            </listitem>
+                            <listitem>
+                                <para>Unpack it and place the <code>mysql-connector-java-5.x.xx-bin.jar</code> file into the <code>$CATALINA_HOME/lib</code> folder.</para>
+                            </listitem>
+                        </orderedlist>
+                    </para>
+                </listitem>
+            </orderedlist>
+        </section>
+        <section>
+            <title>Basic application setup</title>
+            <para>These instructions are for setting up a single instance of the application. If you require multiple instances running inside the same container, follow the
+                instructions in the section "<link linkend="advanced_application_setup">Advanced application setup</link>".<orderedlist>
+                    <listitem>
+                        <para>Add the following declaration to the <code>&lt;GlobalNamingResources></code> section of your <code>$CATALINA_HOME/conf/server.xml</code> and adjust
+                            username and password and, if necessary, the database URL accordingly:</para>
+                        <para>
+                            <programlisting>
+&lt;Resource auth="Container" 
+     driverClassName="com.mysql.jdbc.Driver" 
+     maxActive="8" 
+     maxIdle="4" 
+     validationQuery="SELECT 1" 
+     testOnBorrow="true" 
+     removeAbandoned="true" 
+     removeAbandonedTimeout="300" 
+     logAbandoned="true" 
+     name="jdbc/soda4LCAdbconnection" 
+     type="javax.sql.DataSource" 
+     url="jdbc:mysql://localhost/soda4LCAdb?useUnicode=yes&amp;characterEncoding=UTF-8" 
+     username="myusername" 
+     password="mypassword"
+/></programlisting>
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>To configure the application, a properties file providing information about node name etc. is required. Using
+                                <code>soda4LCA.properties.template</code> (in the Installation_Guide folder of the documentation) as a template, create the application's
+                            configuration file and place it into <code>$CATALINA_HOME/conf/soda4LCA.properties</code>. For detailed step-by-step instructions, refer to the section
+                                <link linkend="customization">Configuring and customizing a node</link>.</para>
+                    </listitem>
+                </orderedlist></para>
+            <important>
+                <para>Ensure to configure the <code>files.location.datafiles</code> properties in the "data and temp directories" section of your <code>soda4LCA.properties</code>
+                    to point somewhere outside the directory containing web application, otherwise you will lose your data (external files attached to source datasets) on re- or
+                    undeploy! See the section <link linkend="Data_and_temporary_directories">Data and temporary directories</link> section in the "Configuring and customizing a
+                    node" chapter for details.</para>
+            </important>
+        </section>
+        <section xml:id="advanced_application_setup">
+            <title>Advanced application setup</title>
+            <para>If you require multiple instance of the application running in the same container, individual database connections can be declared per-webapp by editing the
+                webapp's context configuration file in Tomcat's <code>$CATALINA_HOME/conf/Catalina/localhost</code> folder. You can specify the path to the configuration file for
+                each instance using the soda4LCAProperties environment via JNDI.</para>
+            <programlisting>
+&lt;Context antiJARLocking="true" swallowOutput="true">
+    &lt;Resource auth="Container" 
+        driverClassName="com.mysql.jdbc.Driver" 
+        maxActive="8" maxIdle="4" 
+        validationQuery="SELECT 1" 
+        testOnBorrow="true"
+        removeAbandoned="true" 
+        removeAbandonedTimeout="300" 
+        logAbandoned="true" 
+        name="jdbc/soda4LCAdbconnection" 
+        type="javax.sql.DataSource"
+        url="jdbc:mysql://localhost/soda4LCAdb?useUnicode=yes&amp;characterEncoding=UTF-8" 
+        username="myusername" 
+        password="mypassword"/>
+    &lt;Environment name="soda4LCAProperties" value="/path/to/soda4LCA.properties" type="java.lang.String"/>
+&lt;/Context>
+                </programlisting>
+            <tip>
+                <title>Make context configuration immutable</title>
+                <para>It is a good idea to make the context configuration file immutable (using <code>chattr +i</code>) so it won't be overwritten by Tomcat when the context is
+                    redeployed.</para>
+            </tip>
+        </section>
+        <section>
+            <title>WAR file installation</title>
+            <para>Now copy the <code>Node.war</code> file to <code>$CATALINA_HOME/webapps</code>. You may rename the WAR file to whatever you wish, the name of the WAR file will
+                match your application's context path once deployed.</para>
+        </section>
+        <section xml:id="startup">
+            <title>Startup the application</title>
+            <para>Once you have completed customizing the configuration file, start the servlet container by executing <code>$CATALINA_HOME/bin/startup.bat</code> (on Windows) or
+                    <code>$CATALINA_HOME/bin/startup.sh</code> (on Mac OS/unix) and closely observe the console output. If there are any errors, consult the following section
+                "Common problems" for information on how to resolve them.</para>
+            <para>Once the application has started successfully, you can access the application by pointing your browser to the URL</para>
+            <para><link xlink:href="http://localhost:8080/Node/"><code>http://localhost:8080/Node/</code></link></para>
+            <para>Please login in and immediately change the default administrator password as described below.</para>
+            <important>
+                <title>Immediately change default administrator password</title>
+                <para>The application ships with a default administrator password that has to be changed immediately upon successful installation in order to prevent unauthorized
+                    access.</para>
+                <para>Once the application is up and running, log in with the administrative account (username: admin, password: default) and change the password (select "My
+                    Profile" in the footer bar and enter a new password in the respective fields of the following screen).</para>
+            </important>
+        </section>
+        <section>
+            <title>Common problems</title>
+            <section>
+                <title>Error: application configuration properties not found</title>
+                <para>Make sure you have a soda4LCA.properties in place either at <code>$CATALINA_HOME/conf/soda4LCA.properties</code> or at some other location with a proper
+                    Environment entry in your Context configuration that points to the location of the file. </para>
+            </section>
+            <section>
+                <title>FATAL ERROR: could not determine base URL for service interface</title>
+                <para>If no hostname (and, optionally, port) have been declared in soda4LCA.properties, the application will try to detect the hostname, port and context path. If
+                    it cannot build a valid URL from the obtained information, this error will be raised. </para>
+            </section>
+            <section>
+                <title>Error: Cannot set nodeid/nodename from configuration file</title>
+                <para>This means the soda4LCA.properties configuration file does not contain said information. Refer to the soda4LCA.properties.template for an example
+                    configuration file.</para>
+            </section>
+            <section>
+                <title>FATAL ERROR: database schema is not properly initialized</title>
+                <para>This error occurs when the application finds a database schema that is corrupt or not compatible with the current application version. At first setup, make
+                    sure the database schema is empty. Also, be sure you have set the <code>lower_case_table_names</code> property correctly for your MySQL instance as described in
+                    section <link linkend="database_system_variables">Database system variables</link>.</para>
+            </section>
+            <section>
+                <title>FATAL ERROR: could not lookup datasource</title>
+                <para>This is likely caused by an incorrect servlet container configuration. Make sure you have added a correct Resource declaration in the GlobalNamingResources
+                    section of the server.xml as described above.</para>
+            </section>
+
+        </section>
+    </chapter>
+    <chapter xml:id="customization">
+        <title>Configuring and customizing a node</title>
+        <para>Follow these instructions to configure and customize your node. Optional steps are marked as such and can be omitted.</para>
+
+        <para>Make a copy of the included <code>doc/soda4LCA.properties.template</code> and place it in <code>$CATALINA_HOME/conf/soda4LCA.properties</code> (this is the default
+            location where the application will be looking for it). Then edit this file, following these steps to complete configuring and customizing the application.</para>
+        <para>NOTE: The only information that always needs to be changed in this configuration file are <itemizedlist>
+                <listitem>
+                    <para>all entries unter <code>service.node.*</code></para>
+                </listitem>
+                <listitem>
+                    <para>all entries unter <code>service.admin.*</code></para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>files.location.datafiles</code></para>
+                </listitem>
+            </itemizedlist> All other options can be left untouched if no further customization is desired.</para>
+        <section>
+            <title>Hostname and port</title>
+            <para>If your host is not behind a proxy, the hostname will be autodetected and does not need to be configured, so it can simply be commented out. Example: <informalexample>
+                    <programlisting>#service.url.hostname = localhost</programlisting>
+                </informalexample></para>
+            <para>Otherwise, use the hostname that is exposed to the public network. Example: <informalexample>
+                    <programlisting>service.url.hostname = lcadata.acme.org</programlisting>
+                </informalexample></para>
+            <para>The port number needs to be set to the HTTP port of your application server. For a default Tomcat installation, this is port 8080. Example: <informalexample>
+                    <programlisting>service.url.port = 8080</programlisting>
+                </informalexample></para>
+        </section>
+
+
+        <section>
+            <title>Node information</title>
+            <para>Choose a suitable node ID (this must not contain any spaces) and provide a node name, description and operator. The node ID is the name under which the node will
+                be visible on the network. Example: <informalexample>
+                    <programlisting>service.node.id = ACME_LCI
+service.node.name = ACME public LCI data
+service.node.description = provides public LCI data about products and services by ACME International, Inc.
+service.node.operator = ACME International, Inc.</programlisting>
+                </informalexample></para>
+        </section>
+
+
+        <section>
+            <title>Administrative contact</title>
+            <para>Provide administrative contact information. Example: <informalexample>
+                    <programlisting>service.admin.name = John Doe 
+service.admin.phone = +49 721 555-4242
+service.admin.email = lci-node-admin@acme.com
+service.admin.www = http://www.acme.com/
+ </programlisting>
+                </informalexample></para>
+        </section>
+
+
+        <section>
+            <title>Template</title>
+            <para>Declare the template that will determine the appearance of the application. To use the default template that ships with the application, use "default". Example: <informalexample>
+                    <programlisting>template = default</programlisting>
+                </informalexample></para>
+            <para>If you have made your own template (for instance, by deriving it from the default template), specify the folder name. Example: <informalexample>
+                    <programlisting>template = mytemplate</programlisting>
+                </informalexample>The folder <code>mytemplate</code> has to reside inside the folder <code>web/templates</code> .</para>
+        </section>
+
+
+        <section>
+            <title>Theme</title>
+            <para>Specify the theme that will determine the look and feel of the application. Example: <informalexample>
+                    <programlisting>theme = cupertino</programlisting>
+                </informalexample> Refer to the <link xlink:href="http://primefaces.org/themes.html">Primefaces documentation</link> for a list of possible themes that ship with
+                the application by default. </para>
+        </section>
+
+
+        <section>
+            <title>Welcome page (optional)</title>
+            <para>You may specify a custom welcome page that will be shown when as the application's index page. Example: <informalexample>
+                    <programlisting>welcomePage = path/to/jumppage.xhtml</programlisting>
+                </informalexample></para>
+        </section>
+
+
+        <section>
+            <title>Application title (optional)</title>
+            <para>Use the title property to modify the title of the application that is displayed in the header section as well as in the browser's window title. Example: <informalexample>
+                    <programlisting>title = ACME Public LCI Database</programlisting>
+                </informalexample>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/configuration_title.png" scalefit="1" width="100%" contentdepth="100%"/>
+                    </imageobject>
+                    <!--                  <caption><para>Changing the application title</para></caption>-->
+                </mediaobject>
+            </para>
+        </section>
+
+
+        <section>
+            <title>Logo (optional)</title>
+            <para>Use the logo property to make a custom logo appear next to the application title in the header section. If you put the image file with the logo relative to the
+                application's context path, use the expression %contextPath% as replacement. Example: <informalexample>
+                    <programlisting>logo = %contextPath%/logo.png</programlisting>
+                </informalexample>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/configuration_logo.png" scalefit="1" width="100%" contentdepth="100%"/>
+                    </imageobject>
+                    <!--                  <caption><para>Displaying a custom logo</para></caption>-->
+                </mediaobject> Use "false" to disable display of a logo. Example: <informalexample>
+                    <programlisting>logo = false</programlisting>
+                </informalexample>
+            </para>
+        </section>
+
+        <section xml:id="preferred_languages">
+            <title>Preferred Languages (optional)</title>
+            <para>As datasets may contain information in multiple languages, the handling of those when displaying datasets can be controlled with this setting. </para>
+            <para>By default, the preferred languages used by the application are en, de and fr (in this order, en being the default language). If information within a dataset is
+                not available in the default language, the next language on the list will be used, and so forth.</para>
+            <para>You may configure your own specific languages and their precedence, the first language in the list being the default one, the second the first alternative, etc.
+                The language codes have to be separated by commas. Example:<informalexample>
+                    <programlisting>preferredlanguages = de, en, fr, es, ru</programlisting>
+                </informalexample></para>
+        </section>
+
+
+        <section xml:id="Data_and_temporary_directories">
+            <title>Data and temporary directories</title>
+            <para>External files attached to source datasets are currently stored on the filesystem. The default location is <code>WEB-INF/var/files</code> but can (and is strongly
+                recommended to) be changed with the <code>files.location.datafiles</code> option. Example: <informalexample>
+                    <programlisting>files.location.datafiles = /usr/local/soda4LCA/datafiles</programlisting>
+                </informalexample>
+                <important>
+                    <para>The option <code>files.location.datafiles</code> must point somewhere outside the directory containing the web application, otherwise the data may be lost
+                        on re- or undeploy!</para>
+                </important></para>
+            <para>For temporary storage of uploads and ZIP files, separate configuration options are available, these default to <code>WEB-INF/var/uploads</code> and
+                    <code>WEB-INF/var/zips</code>, respectively, and do not necessarily need to be set. Example: <informalexample>
+                    <programlisting>files.location.uploads = /tmp/uploads
+files.location.zipfiles = /tmp/zips
+</programlisting>
+                </informalexample>
+            </para>
+            <para>Now you have configured all necessary options in order to run the application. Start the servlet container as described in section <link linkend="startup">Startup
+                    the application</link>.</para>
+            <para>For a complete list of all available configuration options, refer to the following section.</para>
+        </section>
+        <section>
+            <title>Overview of configuration options in soda4LCA.properties file</title>
+            <table>
+                <title>Configuration options in soda4LCA.properties file</title>
+                <tgroup cols="4">
+                    <thead>
+                        <row>
+                            <entry>Option</entry>
+                            <entry>Required</entry>
+                            <entry>Possible Values</entry>
+                            <entry>Explanation</entry>
+                        </row>
+                    </thead>
+                    <!-- use the zero-width space character &#x200B; for the option column to make the text wrap nicely -->
+                    <tbody>
+                        <row>
+                            <entry>service.url&#x200B;.hostname</entry>
+                            <entry>optional (default: auto-detect)</entry>
+                            <entry>valid hostname or IP address</entry>
+                            <entry>The hostname or IP address for this node as it is supposed to appear in the service URL. Will be usually be auto-detected by the application, so
+                                this only needs to be specified if the node is behind a proxy.</entry>
+                        </row>
+                        <row>
+                            <entry>service.url&#x200B;.port</entry>
+                            <entry>optional (default: 80)</entry>
+                            <entry>valid port number</entry>
+                            <entry>Port number of the application.</entry>
+                        </row>
+                        <row>
+                            <entry>service.node&#x200B;.baseURL</entry>
+                            <entry>optional</entry>
+                            <entry>full URL</entry>
+                            <entry>If you are behind a proxy and auto-detect does not work for your specific configuration, but you need to specify an exact custom URL, use this
+                                optional property.</entry>
+                        </row>
+                        <row>
+                            <entry>service.node.id</entry>
+                            <entry>yes</entry>
+                            <entry>string, but MUST NOT contain any spaces!</entry>
+                            <entry>This is the name to identify the node in the network.</entry>
+                        </row>
+                        <row>
+                            <entry>service.node&#x200B;.name</entry>
+                            <entry>yes</entry>
+                            <entry>string</entry>
+                            <entry>Name for this node</entry>
+                        </row>
+                        <row>
+                            <entry>service.node&#x200B;.description</entry>
+                            <entry>yes</entry>
+                            <entry>string</entry>
+                            <entry>Description for this node</entry>
+                        </row>
+                        <row>
+                            <entry>service.node&#x200B;.operator</entry>
+                            <entry>yes</entry>
+                            <entry>string</entry>
+                            <entry>Name of the organization operation this node</entry>
+                        </row>
+                        <row>
+                            <entry>service.admin&#x200B;.name</entry>
+                            <entry>yes</entry>
+                            <entry>String</entry>
+                            <entry>name of the administrative contact for this node</entry>
+                        </row>
+                        <row>
+                            <entry>service.admin&#x200B;.phone</entry>
+                            <entry>yes</entry>
+                            <entry>String</entry>
+                            <entry>phone number of the administrative contact for this node</entry>
+                        </row>
+                        <row>
+                            <entry>service.admin&#x200B;.email</entry>
+                            <entry>yes</entry>
+                            <entry>String</entry>
+                            <entry>email address of the administrative contact for this node</entry>
+                        </row>
+                        <row>
+                            <entry>service.admin&#x200B;.www</entry>
+                            <entry>yes</entry>
+                            <entry>String</entry>
+                            <entry>web site of the administrative contact for this node</entry>
+                        </row>
+
+
+                        <row>
+                            <entry>template</entry>
+                            <entry>yes</entry>
+                            <entry>template folder name</entry>
+                            <entry>This is the XHTML template that will be used for displaying the site. You can build and use your custom template.</entry>
+                        </row>
+
+                        <row>
+                            <entry>theme</entry>
+                            <entry>yes</entry>
+                            <entry>String</entry>
+                            <entry>Specifies the jQueryUI theme, consult the PrimeFaces manual for details on how to change themes.</entry>
+                        </row>
+
+
+                        <row>
+                            <entry>welcomePage</entry>
+                            <entry>optional</entry>
+                            <entry>path to jump page, relative to web directory</entry>
+                            <entry>This can be used to make the application show a custom jump page instead of the default browse view.</entry>
+                        </row>
+
+
+                        <row>
+                            <entry>title</entry>
+                            <entry>yes</entry>
+                            <entry>String</entry>
+                            <entry>The title of the database instance that will be shown on top of the page.</entry>
+                        </row>
+
+
+
+                        <row>
+                            <entry>logo</entry>
+                            <entry>yes</entry>
+                            <entry>full qualified path to logo, or "false" to disable</entry>
+                            <entry>This can be used to display a custom logo in the page header. Use "false" to disable the logo. For specifying a path relative to the
+                                application's context, path, you may use the expression %contextPath% as replacement, for instance "%contextPath%/my/path/to/image.png" .</entry>
+                        </row>
+
+
+                        <row>
+                            <entry>security.guest&#x200B;.metadataOnly</entry>
+                            <entry>yes</entry>
+                            <entry>true, false</entry>
+                            <entry>By default, only metadata is publicly available. If this is set to false, then full data sets will be publicly available.</entry>
+                        </row>
+
+
+
+                        <row>
+                            <entry>user.registration&#x200B;.activated</entry>
+                            <entry>optional</entry>
+                            <entry>true, false</entry>
+                            <entry>Allow users to register themselves.</entry>
+                        </row>
+                        <row>
+                            <entry>user.registration&#x200B;.selfActivation</entry>
+                            <entry>optional</entry>
+                            <entry>true, false</entry>
+                            <entry>Allow new users to activate their accounts upon registration.</entry>
+                        </row>
+                        <row>
+                            <entry>user.registration&#x200B;.activationEmail</entry>
+                            <entry>optional</entry>
+                            <entry>true, false</entry>
+                            <entry>Check new users' email addresses by sending an activation email.</entry>
+                        </row>
+                        <row>
+                            <entry>user.registration&#x200B;.spam.protection</entry>
+                            <entry>optional</entry>
+                            <entry>true, false</entry>
+                            <entry/>
+                        </row>
+
+                        <row>
+                            <entry>user.registration&#x200B;.registrationAddress</entry>
+                            <entry>optional</entry>
+                            <entry>String</entry>
+                            <entry>An email address where notifications about newly registered users are sent.</entry>
+                        </row>
+                        <row>
+                            <entry>user.registration&#x200B;.admin.email</entry>
+                            <entry>optional</entry>
+                            <entry>String</entry>
+                            <entry>Email address to use for the From header of registration emails.</entry>
+                        </row>
+
+
+                        <row>
+                            <entry>mail.sender</entry>
+                            <entry>yes</entry>
+                            <entry>String</entry>
+                            <entry>Email address to use for the From header for emails sent by the application.</entry>
+                        </row>
+                        <row>
+                          <entry>mail.hostname</entry>
+                          <entry>yes</entry>
+                          <entry>String</entry>
+                          <entry>Hostname for the SMTP server.</entry>
+                        </row>
+                        <row>
+                          <entry>mail.port</entry>
+                          <entry>optional, defaults to 25</entry>
+                          <entry>String</entry>
+                          <entry>Port number for the SMTP server.</entry>
+                        </row>
+                        <row>
+                            <entry>mail.sitename</entry>
+                            <entry>yes</entry>
+                            <entry>String</entry>
+                            <entry>Application title to use for emails sent by the application.</entry>
+                        </row>
+                        <row>
+                            <entry>mail.auth</entry>
+                            <entry>optional, defaults to false</entry>
+                            <entry>Boolean</entry>
+                            <entry>Whether to use authentication information for the SMTP server.</entry>
+                        </row>
+                        <row>
+                            <entry>mail.user</entry>
+                            <entry>yes if mail.auth=true</entry>
+                            <entry>String</entry>
+                            <entry>SMTP server username.</entry>
+                        </row>
+                        <row>
+                            <entry>mail.password</entry>
+                            <entry>yes if mail.auth=true</entry>
+                            <entry>String</entry>
+                            <entry>SMTP server password.</entry>
+                        </row>
+                        
+
+                        <row>
+                            <entry>files.location&#x200B;.datafiles</entry>
+                            <entry>optional, defaults to WEB-INF/var/files</entry>
+                            <entry>full qualified path name</entry>
+                            <entry>Directory where external files attached to source datasets will be stored. IMPORTANT: This should point to somewhere outside the directory
+                                containing web application, otherwise you will lose your data on re- or undeploy!</entry>
+                        </row>
+                        <row>
+                            <entry>files.location&#x200B;.uploads</entry>
+                            <entry>optional, defaults to WEB-INF/var/uploads</entry>
+                            <entry>full qualified path name</entry>
+                            <entry>Directory where uploaded files are temporarily stored.</entry>
+                        </row>
+                        <row>
+                            <entry>files.location&#x200B;.zipfiles</entry>
+                            <entry>optional, defaults to WEB-INF/var/zips</entry>
+                            <entry>full qualified path name</entry>
+                            <entry>Directory where zip files are temporarily stored.</entry>
+                        </row>
+
+
+                        <row>
+                            <entry>feature.browse&#x200B;.processes</entry>
+                            <entry>yes</entry>
+                            <entry>true, false</entry>
+                            <entry>Enable/disable browsing of process datasets</entry>
+                        </row>
+                        <row>
+                            <entry>feature.browse&#x200B;.lciamethods</entry>
+                            <entry>yes</entry>
+                            <entry>true, false</entry>
+                            <entry>Enable/disable browsing of LCIA method datasets</entry>
+                        </row>
+                        <row>
+                            <entry>feature.browse&#x200B;.flows</entry>
+                            <entry>yes</entry>
+                            <entry>true, false</entry>
+                            <entry>Enable/disable browsing of flow datasets</entry>
+                        </row>
+                        <row>
+                            <entry>feature.browse&#x200B;.flowproperties</entry>
+                            <entry>yes</entry>
+                            <entry>true, false</entry>
+                            <entry>Enable/disable browsing of flow property datasets</entry>
+                        </row>
+                        <row>
+                            <entry>feature.browse&#x200B;.unitgroups</entry>
+                            <entry>yes</entry>
+                            <entry>true, false</entry>
+                            <entry>Enable/disable browsing of unit group datasets</entry>
+                        </row>
+                        <row>
+                            <entry>feature.browse&#x200B;.sources</entry>
+                            <entry>yes</entry>
+                            <entry>true, false</entry>
+                            <entry>Enable/disable browsing of source datasets</entry>
+                        </row>
+                        <row>
+                            <entry>feature.browse&#x200B;.contacts</entry>
+                            <entry>yes</entry>
+                            <entry>true, false</entry>
+                            <entry>Enable/disable browsing of contact datasets</entry>
+                        </row>
+                        <row>
+                            <entry>feature.search&#x200B;.processes</entry>
+                            <entry>yes</entry>
+                            <entry>true, false</entry>
+                            <entry>Enable/disable search of process datasets</entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+        </section>
+    </chapter>
+</book>

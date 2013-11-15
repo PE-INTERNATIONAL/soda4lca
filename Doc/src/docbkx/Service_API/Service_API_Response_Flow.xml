@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?><sect2 xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="Response_Elements_Flow">
+<title xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:contact="http://www.ilcd-network.org/ILCD/ServiceAPI/Contact" xmlns:source="http://www.ilcd-network.org/ILCD/ServiceAPI/Source" xmlns:lciamethod="http://www.ilcd-network.org/ILCD/ServiceAPI/LCIAMethod" xmlns:unitGroup="http://www.ilcd-network.org/ILCD/ServiceAPI/UnitGroup" xmlns:flowProperty="http://www.ilcd-network.org/ILCD/ServiceAPI/FlowProperty" xmlns:flow="http://www.ilcd-network.org/ILCD/ServiceAPI/Flow" xmlns:process="http://www.ilcd-network.org/ILCD/ServiceAPI/Process">Flow Response Elements</title>
+<para xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:contact="http://www.ilcd-network.org/ILCD/ServiceAPI/Contact" xmlns:source="http://www.ilcd-network.org/ILCD/ServiceAPI/Source" xmlns:lciamethod="http://www.ilcd-network.org/ILCD/ServiceAPI/LCIAMethod" xmlns:unitGroup="http://www.ilcd-network.org/ILCD/ServiceAPI/UnitGroup" xmlns:flowProperty="http://www.ilcd-network.org/ILCD/ServiceAPI/FlowProperty" xmlns:flow="http://www.ilcd-network.org/ILCD/ServiceAPI/Flow" xmlns:process="http://www.ilcd-network.org/ILCD/ServiceAPI/Process">
+<table pgwide="1">
+<title/>
+<tgroup cols="2">
+<colspec colwidth="1*" colname="col1" colnum="1"/>
+<colspec colwidth="3.5*" colname="col2" colnum="2"/>
+<thead>
+<row>
+<entry>Name</entry>
+<entry>Description</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry>
+<para>
+<emphasis>flow</emphasis>
+</para>
+<para>(flow)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: None</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>uuid</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: flow</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>permanentUri</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: flow</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>dataSetVersion</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: flow</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>name</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String Multilang</para>
+<para>Ancestors: flow</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>generalComment</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String Multilang</para>
+<para>Ancestors: flow</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>synonyms</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String Multilang</para>
+<para>may occur multiple times</para>
+<para>Ancestors: flow</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>flowCategorization</emphasis>
+</para>
+<para>(flow)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: flow</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>category</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>may occur multiple times</para>
+<para>Ancestors: flow.flowCategorization</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>@level</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: flow.flowCategorization.category</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>type</emphasis>
+</para>
+<para>(flow)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: flow</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>casNumber</emphasis>
+</para>
+<para>(flow)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: flow</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>sumFormula</emphasis>
+</para>
+<para>(flow)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: flow</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>referenceFlowProperty</emphasis>
+</para>
+<para>(flow)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: flow</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>@href</emphasis>
+</para>
+<para>()</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: flow.referenceFlowProperty</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>name</emphasis>
+</para>
+<para>(flow)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String Multilang</para>
+<para>Ancestors: flow.referenceFlowProperty</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>defaultUnit</emphasis>
+</para>
+<para>(flow)</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: flow.referenceFlowProperty</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>reference</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: flow.referenceFlowProperty</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>@type</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: flow.referenceFlowProperty.reference</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>@refObjectId</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String</para>
+<para>Ancestors: flow.referenceFlowProperty.reference</para>
+</entry>
+</row>
+<row>
+<entry>
+<para>
+<emphasis>shortDescription</emphasis>
+</para>
+</entry>
+<entry>
+<para> &lt;description here&gt;</para>
+<para>Type: String Multilang</para>
+<para>Ancestors: flow.referenceFlowProperty.reference</para>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+</para>
+</sect2>

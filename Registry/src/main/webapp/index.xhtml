@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/templates/publicLayout.xhtml">
+	<ui:define name="content">
+		<f:view>
+			<f:event type="preRenderView" listener="#{loginBean.checkLogin}" />
+			<h:body>
+				<h:panelGroup layout="block" styleClass="fullscreen">
+					<h:panelGroup layout="block" styleClass="innerCenter">
+						<h:form prependId="false" styleClass="loginForm">
+							<p:panel>
+								<p:focus />
+								<h:panelGrid columns="3">
+									<h:outputLabel value="#{msg.loginPage_login}:" for="login" />
+									<p:inputText id="login" value="#{loginBean.login}"
+										required="true"
+										requiredMessage="#{msg.loginPage_loginRequired}" />
+									<p:message for="login"/>
+
+									<h:outputLabel value="#{msg.loginPage_pass}:" for="pass" />
+									<p:password id="pass" value="#{loginBean.password}"
+										feedback="false" required="true"
+										requiredMessage="#{msg.loginPage_passRequired}" />
+									<p:message for="pass"/>
+								</h:panelGrid>
+							</p:panel>
+							<div>
+								<p:commandButton value="#{msg.loginPage_loginButton}"
+									action="#{loginBean.login}" ajax="false" />
+							</div>
+							<ui:include src="/messages.xhtml" />
+						</h:form>
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:body>
+		</f:view>
+	</ui:define>
+</ui:composition>
+</html>

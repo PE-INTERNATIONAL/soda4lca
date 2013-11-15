@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:body>
+	<ui:composition template="/templates/restrictedLayout.xhtml">
+	<ui:param name="contentTitle" value="#{listNodesBean.approved ? msg.listNodes_headerApp : msg.listNodes_headerNotApp}" />
+		<ui:define name="content">
+			<h:form id="nodesList">
+				<ui:include src="/messages.xhtml" />
+				<p:dataTable id="nodestable" var="node" value="#{listNodesBean.nodes}"
+					paginator="true" rows="10" lazy="true"
+					paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+					rowsPerPageTemplate="5,10,15" onRowSelectUpdate="display">
+
+					<p:column headerText="#{msg.node_nodeId}">
+						<h:commandLink immediate="true" value="#{node.nodeId}"  action="#{listNodesBean.showDetails}">
+							<f:setPropertyActionListener value="#{node}"
+								target="#{listNodesBean.selectedNode}" />
+						</h:commandLink>
+					</p:column>
+
+					<p:column headerText="#{msg.node_name}">
+						<h:outputText value="#{node.name}" />
+					</p:column>
+
+					<p:column headerText="#{msg.node_baseUrl}">
+						<h:outputText value="#{node.baseUrl}" />
+					</p:column>
+
+					<p:column headerText="#{msg.node_status}">
+						<h:outputText value="#{node.status}" />
+					</p:column>
+					
+					<p:column headerText="#{msg.listNodes_action}" >
+						<p:commandLink immediate="true" action="#{listNodesBean.setSelectedNode(node)}" oncomplete="deregistration.show();" rendered="#{node.status=='APPROVED'}">
+	                     	<h:outputText value="#{msg.listNodes_deregister}"  />
+	                    </p:commandLink>
+					</p:column>
+				</p:dataTable>
+				
+				<p:dialog header="#{msg.listNodes_deregister_header}"
+					widgetVar="deregistration" resizable="false" severity="alert"
+					modal="true" width="340" onHide="document.getElementById('nodesList:deregistrationreason').value=''">
+							<h:panelGrid columns="1">
+								<h:outputText for="deregistrationreason"
+									value="#{msg.listNodes_deregister_areYouSureDeregister}" />
+								<h:outputText for="deregistrationreason"
+									value="#{msg.listNodes_deregister_enterReason}" />
+								<p:inputTextarea required="true" requiredMessage="#{msg.listNodes_deregistrationreason_required}"
+									id="deregistrationreason" value="#{listNodesBean.reason}"
+									style="width:300px;height:100px;" />
+							</h:panelGrid>
+							<p:commandButton value="#{msg.button_yes}"
+								oncomplete="deregistration.hide();"
+								actionListener="#{listNodesBean.deregisterNode}"
+								update="nodestable, messages" />
+							<p:commandButton value="#{msg.button_no}"
+								onclick="deregistration.hide()" type="button"/>
+				</p:dialog>
+				
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+Copyright (c) 2011 Karlsruhe Institute of Technology (KIT) - Institute for 
+Applied Computer Science (IAI). 
+
+This file is part of soda4LCA - the Service-Oriented Life Cycle Data Store.
+
+soda4LCA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by the 
+Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+soda4LCA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with soda4LCA.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:body>
+        <ui:composition template="#{conf.templatePath}/frontend.xhtml">
+            <ui:param name="pageTitle" value="#{i18n['public.user.registrationForm.title']}" />
+            <ui:define name="content">
+
+                <h:form id="generalForm" prependId="false">
+                
+                    <ui:include src="/admin/userEntry.xhtml">
+                    	<ui:param name="nameEditable" value="true" />
+                    	<ui:param name="pwShown" value="false" />
+                    	<ui:param name="handler" value="#{uparHandler}" />
+                    </ui:include>
+
+                    <p:panel header="#{i18n['public.user.captcha.legend']}">
+                        <p><h:outputText value="#{i18n['public.user.captcha.msg']}" /></p>
+                        <p><p:captcha label="#{i18n['public.user.captcha.label']}" language="en" theme="white"
+                                      validatorMessage="#{i18n['public.user.captcha.errorMsg']}"
+                                      requiredMessage="#{i18n['public.user.captcha.errorMsg']}" /></p>
+                        <p><h:outputText value="#{i18n['public.user.captcha.sliderMsg']}!" /></p>
+                        <h:panelGrid columns="1" style="margin-bottom:10px">
+                            <h:panelGroup>
+                                <h:outputText value="&nbsp;%" style="float:right;" />
+                                <h:outputText id="sliderOutput" value="#{uparHandler.spamSliderValue}" style="float:right;" />
+                            </h:panelGroup>
+
+                            <h:inputHidden id="sliderValue" value="#{uparHandler.spamSliderValue}" />
+                            <p:slider for="sliderValue" display="sliderOutput" style="width:200px" />
+                        </h:panelGrid>
+                    </p:panel>
+                    <div class="buttonCenter">
+                        <p:commandButton value="#{i18n['public.user.register']}"
+                                         action="#{uparHandler.doRegister}" update="messages"
+                                         ajax="false" />
+                    </div>
+                    <ui:include src="/messages.xhtml" />
+                </h:form>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

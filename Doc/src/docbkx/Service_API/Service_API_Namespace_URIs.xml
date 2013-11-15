@@ -1,0 +1,67 @@
+<sect1 xmlns="http://docbook.org/ns/docbook" version="5.0">
+    <title>Namespace URIs</title>
+        <para> If not otherwise specified, response elements (except in full dataset mode) belong to the http://www.ilcd-network.org/ILCD/ServiceAPI namespace. The following table lists the keys that are used
+            to reference the namespaces for response elements.</para>
+        <para>
+            <table>
+                <title>Namespace URIs</title>
+                <tgroup cols="2">
+                    <colspec colnum="1" colname="col1" colwidth="1*"/>
+                    <colspec colnum="2" colname="col2" colwidth="3*"/>
+                    <thead>
+                        <row>
+                            <entry>Key</entry>
+                            <entry>Namespace URI</entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry>serviceapi</entry>
+                            <entry> http://www.ilcd-network.org/ILCD/ServiceAPI</entry>
+                        </row>
+                        <row>
+                            <entry>xlink</entry>
+                            <entry> http://www.w3.org/1999/xlink</entry>
+                        </row>
+                        <row>
+                            <entry>process</entry>
+                            <entry> http://www.ilcd-network.org/ILCD/ServiceAPI/Process</entry>
+                        </row>
+                        <row>
+                            <entry>flow</entry>
+                            <entry> http://www.ilcd-network.org/ILCD/ServiceAPI/Flow</entry>
+                        </row>
+                        <row>
+                            <entry>flowProperty</entry>
+                            <entry> http://www.ilcd-network.org/ILCD/ServiceAPI/FlowProperty</entry>
+                        </row>
+                        <row>
+                            <entry>unitGroup</entry>
+                            <entry> http://www.ilcd-network.org/ILCD/ServiceAPI/UnitGroup</entry>
+                        </row>
+                        <row>
+                            <entry>lciamethod</entry>
+                            <entry> http://www.ilcd-network.org/ILCD/ServiceAPI/LCIAMethod</entry>
+                        </row>
+                        <row>
+                            <entry>source</entry>
+                            <entry> http://www.ilcd-network.org/ILCD/ServiceAPI/Source</entry>
+                        </row>
+                        <row>
+                            <entry>contact</entry>
+                            <entry> http://www.ilcd-network.org/ILCD/ServiceAPI/Contact</entry>
+                        </row>
+                        <row>
+                            <entry>datastock</entry>
+                            <entry>http://www.ilcd-network.org/ILCD/ServiceAPI/DataStock</entry>
+                        </row>
+                        <row>
+                            <entry>nodeinfo</entry>
+                            <entry>http://www.ilcd-network.org/ILCD/ServiceAPI/NodeInfo</entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+        </para>
+    </sect1>
+

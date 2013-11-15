@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+Copyright (c) 2011 Karlsruhe Institute of Technology (KIT) - Institute for 
+Applied Computer Science (IAI). 
+
+This file is part of soda4LCA - the Service-Oriented Life Cycle Data Store.
+
+soda4LCA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by the 
+Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+soda4LCA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with soda4LCA.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<!--
+Parameters for this composition:
+	via ui:define:
+		columns
+	via ui:param:
+		appendToBody
+		includeMessages
+		dataTableId
+		backingBean
+		lazyDataModel
+		selectionProperty
+		nameFilterField
+		nameFilterActionMethod 
+		selectedActionButtonLabel
+		actionDialogHeader
+		actionDialogMessage
+		actionDialogOKLabel
+		actionDialogCancelLabel
+		actionDialogOKActionMethod
+		publicShowFacelet
+		initialRows (optional, default is 15)
+		nameProperty (optional, default is name.defaultValue)
+		namePropertyField (mandatory if nameProperty is declared, else optional and ignored if set)
+-->
+	
+	
+
+<!-- CAUTION: This template is being used for: manageXXXXList.xhtml / stockEntry.xhtml (Assigning datasets, 2 times). -->
+
+		<ui:param name="diaOpenBtnId" value="#{dataTableId}btn" />
+	
+	    <p:commandButton id="#{diaOpenBtnId}" styleClass="#{diaOpenBtnId}" value="#{selectedActionButtonLabel}" onclick="#{dataTableId}Confirm.show()" type="button" disabled="#{lazyDataModel.nothingSelected}" />
+
+		<ui:insert name="additionalButtons"></ui:insert>
+	
+	    <p:confirmDialog message="#{actionDialogMessage}" header="#{actionDialogHeader}" severity="alert" widgetVar="#{dataTableId}Confirm" appendToBody="#{appendToBody}">
+	    	<div class="confirmDlgButtons">
+	    		<p:commandButton value="#{actionDialogCancelLabel}" onclick="#{dataTableId}Confirm.hide();" />
+	    		<!-- following button is a fake button because h/p:commandbutton won't trigger the action - bug?! -->
+	    		<h:commandLink value="#{actionDialogOKLabel}" action="#{backingBean[actionDialogOKActionMethod]}" styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" style="padding: 6.5px 11px;" />
+	    	</div>
+	    </p:confirmDialog>
+	
+		<c:if test="#{includeMessages}">
+	    	<ui:include src="/messages.xhtml" />
+		</c:if>
+
+
+	    <p:dataTable id="#{dataTableId}" styleClass="#{dataTableId}"
+	                 var="dataset" rowKey="#{dataset.id}"
+	                 value="#{lazyDataModel}" lazy="true"
+	                 selection="#{selectionProperty}"
+	                 paginator="true" rows="#{empty initialRows ? 15 : initialRows}" rowsPerPageTemplate="5,10,15,50,100,#{lazyDataModel.rowCount > 100 ? lazyDataModel.rowCount : null}"
+	                 paginatorTemplate="{CurrentPageReport} {FirstPageLink}
+	                 {PreviousPageLink} {PageLinks} {NextPageLink}
+	                 {LastPageLink} {RowsPerPageDropdown} #{i18n['common.list.entriesPerPage']}
+	                 (#{lazyDataModel.rowCount} #{i18n['common.list.total']})"
+	                 emptyMessage="#{i18n['common.list.noneFound']}"
+	                 resizableColumns="true">
+	
+           <p:ajax event="rowSelectCheckbox" process="@this" update="@(.#{diaOpenBtnId})" />
+            <p:ajax event="rowUnselectCheckbox" process="@this" update="@(.#{diaOpenBtnId})" />
+            <p:ajax event="toggleSelect" process="@this" update="@(.#{diaOpenBtnId})" />
+            
+	       	<p:column style="text-align: center;" selectionMode="multiple" />
+
+      
+
+	    	<p:column headerText="#{i18n['common.name']}">
+				<h:link outcome="/#{publicShowFacelet}.xhtml" value="#{empty nameProperty ? dataset.name.defaultValue : dataset[nameProperty][namePropertyField]}" title="#{dataset.uuidAsString}   #{dataset.version}">
+				    <f:param name="uuid" value="#{dataset.uuid.uuid}" />
+				    <f:param name="version" value="#{dataset.version}" />
+				</h:link>
+				<div style="margin: 2px 0; font-size: smaller;">UUID: <h:outputText value="#{dataset.uuid.uuid}" /></div>
+			</p:column>	
+	
+	     	<ui:insert name="columns">columns</ui:insert>
+	    </p:dataTable>
+		
+</ui:composition>

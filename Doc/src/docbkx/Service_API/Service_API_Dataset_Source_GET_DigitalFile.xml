@@ -1,0 +1,53 @@
+<sect1 xmlns="http://docbook.org/ns/docbook" version="5.0">
+    <title>GET Digital File of a Source Dataset</title>
+    <para>GET operation to retrieve the digital file attachment for a specific source dataset.</para>
+    <sect2>
+        <title>Requests</title>
+
+        <sect3>
+            <title>Syntax</title>
+            <para>
+                <programlisting>GET /sources/{uuid}/{filename}</programlisting> The filename must be URL encoded. <programlisting>GET /sources/{uuid}/digitalfile</programlisting>
+                The latter variant will retrieve the first digital file entry for the specified dataset. </para>
+        </sect3>
+        <sect3>
+            <title>Request Parameters</title>
+            <para> none </para>
+        </sect3>
+    </sect2>
+
+    <sect2>
+        <title>Responses</title>
+        <para>The digital file.</para>
+        <para>The returned MIME type will be <code>image/*</code> for images and <code>application/pdf</code> for files that carry a <code>.pdf</code> extension.</para>
+    </sect2>
+    <sect2>
+        <title>Examples</title>
+
+        <sect3>
+            <title>Sample Request</title>
+            <para>
+                <programlisting>GET /sources/0a34866e-ce75-48c8-82e6-0080739e7154/100512%20System%20boundaries%20diagram%20-%20with%20reuse.jpg</programlisting>
+            </para>
+        </sect3>
+        <sect3>
+            <title>Sample Response</title>
+            <para>
+                <programlisting>HTTP/1.1 200 OK
+Content-Type: image/jpg</programlisting> (the image) </para>
+        </sect3>
+        <sect3>
+            <title>Sample Request</title>
+            <para>
+                <programlisting>GET /sources/cb1c5d4a-50ed-4d7b-828b-6fcd560ee17b/digitalfile</programlisting>
+            </para>
+        </sect3>
+        <sect3>
+            <title>Sample Response</title>
+            <para>
+                <programlisting>HTTP/1.1 200 OK
+Content-Type: application/pdf</programlisting> (the PDF document) </para>
+        </sect3>
+
+    </sect2>
+</sect1>

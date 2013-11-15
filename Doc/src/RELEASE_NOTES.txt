@@ -1,0 +1,190 @@
+CHANGES - soda4LCA
+------------------
+
+2.0.0   November 5, 2013
+
+Please see the Installation Guide for detailed instructions on how to upgrade your soda4LCA installation.
+
+You may upgrade to this release from the previous beta release without erasing the database, however, any LCIA method 
+datasets need to be deleted and re-imported after the upgrade.
+
+
+Bugfixes:
+
+- fix issue where display of process datasets would not work under certain circumstances
+- fix issue with import of LCIA method datasets
+- fix issue where wrong tab would be displayed initially when managing data stocks
+- issue #212: read subReferences of GlobalReferences during import 
+- fix issue in Flow import where a missing reference flowproperty would result in the dataset silently not being imported
+
+
+Enhancements:
+
+- add "display all rows" option to dataset tables in administration backend
+
+
+
+
+2.0.0 Beta 3   June 26, 2013
+
+Please see the Installation Guide for detailed instructions on how to upgrade your soda4LCA installation.
+
+Bugfixes:
+
+- fix issue where editing a user profile would not work
+- fix issue where the application would not work with MySQL default lower_case_table_names=0 by adjusting table names
+- fix missing i18n strings
+- fix delete registry issue
+- fix issue with misleading error message when deleting datasets
+- fix issue with optional smtp auth settings
+- fix issue with optional user.registration.registrationAddress
+
+
+Enhancements:
+
+- improve documentation
+- add SMTP port configuration option
+- upgrade eclipselink library to 2.5.0
+
+
+
+
+2.0.0 Beta 2   June 19, 2013
+
+Please see the Installation Guide for detailed instructions on how to upgrade your soda4LCA installation.
+
+Bugfixes:
+
+- fixed issue where import of process datasets would fail for partial datasets
+- fix issue with display of review section for process datasets 
+
+
+Enhancements:
+
+- add support for mail server authentication
+- add new fields to user: job position, dataset use purpose
+
+
+
+
+2.0.0 Beta 1   May 6, 2013
+
+Please see the Installation Guide for detailed instructions on how to upgrade your soda4LCA installation.
+
+Bugfixes:
+
+- various issues have been fixed, as well as performance enhancements have been applied
+
+
+New features:
+
+- The new data stocks feature has been introduced, where datasets can be logically combined into data stocks, which can
+  be assigned fine-grained permissions for controlling access
+
+- The new registry feature has been introduced, allowing a node to join a data network that is controlled by a registry.  
+   
+- The REST service API supports some more features now (see Service API documentation for details).
+
+
+Other:
+
+- The user interface has been improved throughout various parts of the application.
+
+- Comprehensive documentation in HTML and PDF format has been added.
+
+
+
+
+1.2.0  January 16, 2012 (build 167)
+
+NOTICE: For handling changes to the database schema, the Flyway framework has been introduced. This will make it
+		unneccessary to perform manual database upgrades in the future. The downside is, that this release will NOT
+		work with 1.1.x databases and requires an empty database schema. That means you may have to backup your data 
+		prior to using this release (using the export feature introduced in release 1.1.3), emtpy the database and
+		re-import the data afterwards.
+
+   
+	   
+Bugfixes:
+
+- issue 166: elementary flow detection bug
+- issue 171: export log info - elapsed time displayed is actually in seconds, not milliseconds
+- issue 175: export fails if zip file directory does not exist
+- issue 178: fail to show source datasets after import
+
+New features:
+
+- issue 167: add feature to export entire database, using context path as filename
+- issue 102: when retrieving datasets, show only the most recent version of a dataset
+- issue 165: add navigation by input/output flows
+- issue 144: make paths to external files storage and temporary files configurable
+- issue 113: add option to review own node information
+
+Other:
+
+- issue 76: rework configuration
+- issue 138: introduce Flyway framework for automatic database migration
+- issue 110: i18n - restructure lang.properties keys
+- issue 83: nodeinfo: if port number is 80, do not include it in generated service URL
+
+
+
+
+1.1.3 January 2, 2012 (build 144)
+
+New features:
+
+- issue 167: add feature to export entire database as ZIP archive
+
+
+
+
+1.1.2 November 29, 2011 (build 136)
+
+Bugfixes:
+
+- issue 160: distributed search fails (unknown property exception)
+- issue 146: change meaning of "Compliance" column in process dataset table
+- issue 163: process full dataset view: no variables shown for outputs
+- issue 156: hide empty section, subsection headers in full dataset HTML view
+
+
+
+
+1.1.1 November 17, 2011 (build 131)
+
+Bugfixes:
+
+- issue 147: xlink:href attribute missing in service output
+- issue 148: wrong cascade type on User, UserGroup
+- issue 150: create user not working
+- issue 153/154: html view: hide null values, show variables/parameters
+- issue 155: broken authentication for RESTful service
+- issue 158: display variables in process exchanges section
+- issue 85: fixed issue with adapter classes for RESTful service which could result in timeouts on client side
+
+New features:
+
+- issue 159: add tooltips to links in dataset list view with dataset UUID, version
+
+
+
+
+1.1.0 September 27, 2011
+
+NOTICE: The database schema has changed slightly from the beta release. You need to either re-initialize the database
+	    using the init.db script or apply the upgrade script in src/sql/db_upgrade_1.1beta_to_1.1final as well as the
+	    password encryption tool at the same location.
+	   
+	   
+Bugfixes:
+
+- fixed an issue where the IMPACTINDICATOR column for LCIA method would hold only 255 characters instead of a maximum of 500 
+- fixed some issues where local and remote search would not work correctly
+- include soda4LCA.properties.template in distribution
+- update Installation Guide to include correct connection string with proper encoding
+
+New features:
+
+- passwords for user accounts are now stored encrypted in the database
+- show compliance in process list views

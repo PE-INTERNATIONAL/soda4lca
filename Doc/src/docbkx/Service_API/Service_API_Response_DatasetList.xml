@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sect2 xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="Response_Elements_DatasetList" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>DatasetList Response Elements</title>
+    <para>
+        <table pgwide="1">
+            <title/>
+            <tgroup cols="2">
+                <colspec colwidth="1*" colname="col1" colnum="1"/>
+                <colspec colwidth="4*" colname="col2" colnum="2"/>
+                <thead>
+                    <row>
+                        <entry>Name</entry>
+                        <entry>Description</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>
+                            <para>
+                                <emphasis>dataSetList</emphasis>
+                            </para>
+                        </entry>
+                        <entry>
+                            <para>The container element for the list of dataset objects.</para>
+                            <para>Type: Container</para>
+                            <para>Ancestors: None</para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <para>
+                                <emphasis>@sourceId</emphasis>
+                            </para>
+                        </entry>
+                        <entry>
+                            <para>Node ID of the originating node.</para>
+                            <para>Type: String</para>
+                            <para>Ancestors: dataSetList</para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <para>
+                                <emphasis>@totalSize</emphasis>
+                            </para>
+                        </entry>
+                        <entry>
+                            <para>Total size of the result set, i.e. number of contained dataset objects.</para>
+                            <para>Type: Integer</para>
+                            <para>Ancestors: dataSetList</para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <para>
+                                <emphasis>@startIndex</emphasis>
+                            </para>
+                        </entry>
+                        <entry>
+                            <para>The index of the first item in this list in relation to the entire result set.</para>
+                            <para>Type: Integer</para>
+                            <para>Ancestors: dataSetList</para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <para>
+                                <emphasis>@pageSize</emphasis>
+                            </para>
+                        </entry>
+                        <entry>
+                            <para>The page size (number of items) for this list.</para>
+                            <para>Type: Integer</para>
+                            <para>Ancestors: dataSetList</para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <para>
+                                <emphasis>process</emphasis>
+                            </para>
+                            <para>(process)</para>
+                        </entry>
+                        <entry>
+                            <para>A process dataset object. See section <link linkend="Response_Elements_Process">"Process Response Elements"</link> for a detailed
+                                description.</para>
+                            <para>Type: Container</para>
+                            <para>optional, may occur multiple times</para>
+                            <para>Ancestors: dataSetList</para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <para>
+                                <emphasis>flow</emphasis>
+                            </para>
+                            <para>(flow)</para>
+                        </entry>
+                        <entry>
+                            <para>A flow dataset object. See section <link linkend="Response_Elements_Flow">"Flow Response Elements"</link> for a detailed description.</para>
+                            <para>Type: Container</para>
+                            <para>optional, may occur multiple times</para>
+                            <para>Ancestors: dataSetList</para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <para>
+                                <emphasis>flowProperty</emphasis>
+                            </para>
+                            <para>(flowproperty)</para>
+                        </entry>
+                        <entry>
+                            <para>A flow property dataset object. See section <link linkend="Response_Elements_FlowProperty">"FlowProperty Response Elements"</link> for a detailed
+                                description.</para>
+                            <para>Type: Container</para>
+                            <para>optional, may occur multiple times</para>
+                            <para>Ancestors: dataSetList</para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <para>
+                                <emphasis>unitGroup</emphasis>
+                            </para>
+                            <para>(unitgroup)</para>
+                        </entry>
+                        <entry>
+                            <para>A unit group dataset object. See section <link linkend="Response_Elements_UnitGroup">"UnitGroup Response Elements"</link> for a detailed
+                                description.</para>
+                            <para>Type: Container</para>
+                            <para>optional, may occur multiple times</para>
+                            <para>Ancestors: dataSetList</para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <para>
+                                <emphasis>contact</emphasis>
+                            </para>
+                            <para>(contact)</para>
+                        </entry>
+                        <entry>
+                            <para>A source dataset object. See section <link linkend="Response_Elements_Source">"Source Response Elements"</link> for a detailed description.</para>
+                            <para>Type: Container</para>
+                            <para>optional, may occur multiple times</para>
+                            <para>Ancestors: dataSetList</para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <para>
+                                <emphasis>contact</emphasis>
+                            </para>
+                            <para>(contact)</para>
+                        </entry>
+                        <entry>
+                            <para>A contact dataset object. See section <link linkend="Response_Elements_Contact">"Contact Response Elements"</link> for a detailed
+                                description.</para>
+                            <para>Type: Container</para>
+                            <para>optional, may occur multiple times</para>
+                            <para>Ancestors: dataSetList</para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <para>
+                                <emphasis>lciamethod</emphasis>
+                            </para>
+                            <para>(lciamethod)</para>
+                        </entry>
+                        <entry>
+                            <para>An LCIA method dataset object. See section <link linkend="Response_Elements_LCIAMethod">"LCIAMethod Response Elements"</link> for a detailed
+                                description.</para>
+                            <para>Type: Container</para>
+                            <para>optional, may occur multiple times</para>
+                            <para>Ancestors: dataSetList</para>
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
+    </para>
+</sect2>

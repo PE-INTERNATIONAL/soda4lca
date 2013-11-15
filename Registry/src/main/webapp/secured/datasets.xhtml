@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:body>
+	<ui:composition template="/templates/restrictedLayout.xhtml">
+		<ui:param name="contentTitle"
+			value="#{listDatasetsBean.approved ? msg.listDatasets_headerApp : msg.listDatasets_headerNotApp}" />
+		<ui:define name="content">
+			<ui:include src="/messages.xhtml" />
+			
+			<h:form id="listDS">
+				<p:dataTable var="ds" value="#{listDatasetsBean.datasets}"
+					paginator="true" rows="10" lazy="true"
+					selection="#{listDatasetsBean.selectedDatasets}"
+					paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+					rowsPerPageTemplate="5,10,15" onRowSelectUpdate="display"
+					binding="#{listDatasetsBean.data}">
+
+					<p:column selectionMode="multiple"
+						rendered="#{ds.status==null or ds.status=='NEW' or ds.status=='ACCEPTED'}" />
+					<p:column
+						rendered="#{ds.status=='UPDATE' or  ds.status=='NEW_ALTERNATIVE'}" />
+
+					<p:column headerText="#{msg.dataset_uuid}">
+						<h:outputLink
+							value="#{ds.node.baseUrl}#{'/resource/processes/'}#{ds.uuid}#{'?format=html&amp;version='}#{ds.version}">
+							<h:outputText value="#{ds.uuid}" />
+						</h:outputLink>
+					</p:column>
+					
+					<p:column headerText="#{msg.dataset_name}">
+						<h:outputText value="#{ds.name}" />
+					</p:column>
+
+					<p:column headerText="#{msg.dataset_version}">
+						<h:outputText value="#{ds.version}" />
+					</p:column>
+
+					<p:column headerText="#{msg.dataset_owner}">
+						<h:outputText value="#{ds.owner}" />
+					</p:column>
+
+					<p:column headerText="#{msg.dataset_user}">
+						<h:outputText value="#{ds.userEmail}" />
+					</p:column>
+
+					<p:column headerText="#{msg.dataset_compliances}">
+						<h:panelGrid column="1" styleClass="noBorder">
+							<ui:repeat value="#{listDatasetsBean.supportedCompliances}"
+								var="comp">
+								<h:outputText value="#{comp}" />
+							</ui:repeat>
+						</h:panelGrid>
+					</p:column>
+
+					<p:column headerText="#{msg.node_nodeId}"
+						filterOptions="#{listDatasetsBean.onlyApproved ? nodesForAcceptedDSSelectItems.items : nodesForNotAcceptedDSSelectItems.items}"
+						filterBy="#{ds.node.id}">
+						<h:outputText value="#{ds.node.nodeId}" />
+					</p:column>
+
+					<p:column headerText="#{msg.dataset_status}">
+						<h:outputText value="#{msg[ds.status]}"
+							rendered="#{ds.status!='UPDATE' and ds.status!='NEW_ALTERNATIVE'}" />
+						<h:link value="#{msg[ds.status]}"
+							rendered="#{ds.status=='UPDATE' or  ds.status=='NEW_ALTERNATIVE'}"
+							outcome="updateDatasets?uuid=#{ds.uuid}" />
+					</p:column>
+				</p:dataTable>
+
+				<p:commandButton value="#{msg.listDatasets_acceptSelected}"
+					oncomplete="acceptance.show()"
+					rendered="#{!listDatasetsBean.onlyApproved}" />
+
+				<p:commandButton value="#{msg.listDatasets_rejectSelected}"
+					oncomplete="rejection.show()"
+					rendered="#{!listDatasetsBean.onlyApproved}" />
+
+				<p:commandButton value="#{msg.listDatasets_deregisterSelected}"
+					oncomplete="deregistration.show()"
+					rendered="#{listDatasetsBean.onlyApproved}" />
+
+			</h:form>
+
+			
+			<p:confirmDialog header="#{msg.listDatasets_acceptance}"
+				message="#{msg.listDatasets_areYouSureAccept}"
+				widgetVar="acceptance" resizable="false" severity="alert"
+				modal="true">
+				<h:form id="acceptanceForm">
+					<p:commandButton value="#{msg.button_yes}"
+						oncomplete="acceptance.hide();"
+						actionListener="#{listDatasetsBean.acceptSelected}"
+						update="listDS,messages" ajax="false"/>
+					<p:commandButton value="#{msg.button_no}"
+						onclick="acceptance.hide()" type="button" />
+				</h:form>
+			</p:confirmDialog>
+
+			<p:dialog header="#{msg.listDatasets_rejection}"
+				widgetVar="rejection" resizable="false" severity="alert"
+				modal="true" width="340"
+				onHide="document.getElementById('rejectionForm:reason').value=''">
+				<h:form id="rejectionForm">
+					<h:panelGrid columns="1">
+						<h:outputText for="reason"
+							value="#{msg.listDatasets_areYouSureReject}" />
+						<h:outputText for="reason" value="#{msg.listDatasets_enterReason}" />
+						<p:inputTextarea required="true" requiredMessage="#{msg.listDatasets_rejectionReason_required}"
+							id="reason" value="#{listDatasetsBean.reason}"
+							style="width:300px;height:100px;" />
+					</h:panelGrid>
+					<p:commandButton value="#{msg.button_yes}"
+						oncomplete="rejection.hide();"
+						actionListener="#{listDatasetsBean.rejectSelected}"
+						update="listDS,messages"/>
+					<p:commandButton value="#{msg.button_no}"
+						onclick="rejection.hide()" type="button" />
+				</h:form>
+			</p:dialog>
+
+			<p:dialog header="#{msg.listDatasets_deregistration}"
+				widgetVar="deregistration" resizable="false" severity="alert"
+				modal="true" width="340"
+				onHide="document.getElementById('deregistrationForm:deregistrationreason').value=''">
+				<h:form id="deregistrationForm">
+					<h:panelGrid columns="1">
+						<h:outputText for="deregistrationreason"
+							value="#{msg.listDatasets_areYouSureDeregister}" />
+						<h:outputText for="deregistrationreason"
+							value="#{msg.listDatasets_enterDeregistrationReason}" />
+						<p:inputTextarea required="true" id="deregistrationreason" requiredMessage="#{msg.listDatasets_deregistrationreason_required}"
+							value="#{listDatasetsBean.reason}"
+							style="width:300px;height:100px;" />
+					</h:panelGrid>
+					<p:commandButton value="#{msg.button_yes}"
+						oncomplete="deregistration.hide();"
+						actionListener="#{listDatasetsBean.deregisterSelected}"
+						ajax="false" update="listDS,messages" />
+					<p:commandButton value="#{msg.button_no}"
+						onclick="deregistration.hide()" type="button" />
+				</h:form>
+			</p:dialog>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

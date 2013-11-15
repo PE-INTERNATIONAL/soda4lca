@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+Copyright (c) 2011 Karlsruhe Institute of Technology (KIT) - Institute for 
+Applied Computer Science (IAI). 
+
+This file is part of soda4LCA - the Service-Oriented Life Cycle Data Store.
+
+soda4LCA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by the 
+Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+soda4LCA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with soda4LCA.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:body>
+        <ui:composition template="/admin/layout/adminDesign.xhtml">
+            <ui:param name="pageTitle" value="#{i18n['admin.source.manageList']}" />
+            <ui:define name="content">
+			<ui:include src="include/sourceListInclude.xhtml">
+			    <ui:param name="backingBean" value="#{sourceListHandler}" />
+			    <ui:param name="lazyDataModel" value="#{sourceListHandler.lazyModel}" />
+			    <ui:param name="selectionProperty" value="#{sourceListHandler.selectedSources}" />
+			    <ui:param name="selectedActionButtonLabel" value="#{i18n['admin.deleteSelected']}" />
+			    <ui:param name="actionDialogHeader" value="#{i18n['admin.confirmDlg.delete']}" />
+			    <ui:param name="actionDialogMessage" value="#{i18n['admin.confirmMsg.deleteSelected']}?" />
+			    <ui:param name="actionDialogCancelLabel" value="#{i18n['admin.cancel']}" />
+			    <ui:param name="actionDialogOKLabel" value="#{i18n['admin.ok']}" />
+			    <ui:param name="actionDialogOKActionMethod" value="deleteSelected" />
+			    <ui:param name="includeMessages" value="true" />
+			</ui:include>
+		</ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

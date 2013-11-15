@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+Copyright (c) 2011 Karlsruhe Institute of Technology (KIT) - Institute for 
+Applied Computer Science (IAI). 
+
+This file is part of soda4LCA - the Service-Oriented Life Cycle Data Store.
+
+soda4LCA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by the 
+Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+soda4LCA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with soda4LCA.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:panel header="#{i18n['admin.node.serviceURL']}">
+            <h:panelGrid columns="2" cellspacing="7">
+                <p:outputLabel value="#{i18n['admin.node.baseURL']}" styleClass="boldText" for="baseUrl" />
+                <p:inputText id="baseUrl" value="#{nodeHandler.node.baseUrl}" required="true" requiredMessage="#{i18n['admin.node.requiredMsg.url']}" maxlength="250" size="80" />
+            </h:panelGrid>
+        </p:panel>
+
+        <p:panel header="#{i18n['admin.node.authentication']}">
+            <h:panelGrid columns="2" cellspacing="7">
+                <p:outputLabel value="Login" for="login" />
+                <p:inputText id="login" value="#{nodeHandler.node.accessAccount}" maxlength="50" size="50" />
+                <p:outputLabel value="Password" for="passw" />
+                <p:password id="passw" value="#{nodeHandler.node.accessPassword}" minLength="0" maxlength="50" size="50" feedback="false" />
+            </h:panelGrid>
+        </p:panel>
+
+        <h:panelGroup
+            rendered="#{(not empty nodeHandler.node.nodeId) or (not empty nodeHandler.node.name) or (not empty nodeHandler.node.operator) or (not empty nodeHandler.node.description)}">
+            <p:panel header="#{i18n['admin.node.nodeInfo']}">
+                <h:panelGrid columns="2" cellspacing="7">
+                    <p:outputLabel value="#{i18n['common.node.id']}" for="nodeId" rendered="#{not empty nodeHandler.node.nodeId}" />
+                    <h:outputText id="nodeId" value="#{nodeHandler.node.nodeId}" rendered="#{not empty nodeHandler.node.nodeId}" />
+                    <p:outputLabel value="#{i18n['common.name']}" for="name" rendered="#{not empty nodeHandler.node.nodeId}" />
+                    <h:outputText id="name" value="#{nodeHandler.node.name}" rendered="#{not empty nodeHandler.node.nodeId}" />
+                    <p:outputLabel value="#{i18n['admin.node.op']}" for="op" rendered="#{not empty nodeHandler.node.operator}" />
+                    <h:outputText id="op" value="#{nodeHandler.node.operator}" rendered="#{not empty nodeHandler.node.operator}" />
+                    <p:outputLabel value="#{i18n['admin.description']}" for="desc" rendered="#{not empty nodeHandler.node.description}" />
+                    <h:outputText id="desc" value="#{nodeHandler.node.description}" rendered="#{not empty nodeHandler.node.description}" />
+                </h:panelGrid>
+            </p:panel>
+        </h:panelGroup>
+
+        <h:panelGroup
+            rendered="#{(not empty nodeHandler.node.adminName) or (not empty nodeHandler.node.adminWwwAddress) or (not empty nodeHandler.node.adminEmailAddress) or (not empty nodeHandler.node.adminPhone)}">
+            <p:panel header="#{i18n['admin.node.adminInfo']}">
+                <h:panelGrid columns="2" cellspacing="7">
+                    <p:outputLabel value="#{i18n['common.name']}" for="adminName" rendered="#{not empty nodeHandler.node.adminName}" />
+                    <h:outputText id="adminName" value="#{nodeHandler.node.adminName}" rendered="#{not empty nodeHandler.node.adminName}" />
+                    <p:outputLabel value="#{i18n['admin.node.admin.wwwAdr']}" for="hp" rendered="#{not empty nodeHandler.node.adminWwwAddress}" />
+                    <h:outputLink id="hp" value="#{nodeHandler.node.adminWwwAddress}" rendered="#{not empty nodeHandler.node.adminWwwAddress}" target="_blank">
+                        <h:outputText value="#{nodeHandler.node.adminWwwAddress}" rendered="#{not empty nodeHandler.node.adminWwwAddress}" />
+                    </h:outputLink>
+                    <p:outputLabel value="#{i18n['common.email']}" for="email" rendered="#{not empty nodeHandler.node.adminEmailAddress}" />
+                    <h:outputText id="email" value="#{nodeHandler.node.adminEmailAddress}" rendered="#{not empty nodeHandler.node.adminEmailAddress}" />
+                    <p:outputLabel value="#{i18n['common.phone']}" for="phone" rendered="#{not empty nodeHandler.node.adminPhone}" />
+                    <h:outputText id="phone" value="#{nodeHandler.node.adminPhone}" rendered="#{not empty nodeHandler.node.adminPhone}" />
+                </h:panelGrid>
+            </p:panel>
+        </h:panelGroup>
+    </ui:composition>
+</html>

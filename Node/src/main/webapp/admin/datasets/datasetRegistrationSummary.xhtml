@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:body>
+	<ui:composition template="/admin/layout/adminDesign.xhtml">
+		<ui:param name="pageTitle" value="#{i18n['admin.datasetRegistrationSummary.title']}" />
+		<ui:define name="content">
+			<h:form id="generalForm" prependId="false">
+				<p:panel header="#{i18n['admin.datasetRegistrationSummary.title']}" rendered="#{datasetRegistrationSummaryBean.registry!=null}">
+					<h:panelGrid columns="2"
+						columnClasses="column1of4,column2of4"
+						styleClass="detailsWidth" >
+						
+						<h:outputLabel value="#{i18n['admin.datasetRegistrationSummary.registry']}:" for="registryName" />
+						<h:outputText id="registryName"
+							value="#{datasetRegistrationSummaryBean.registry.name}" />
+
+						<h:outputLabel value="#{i18n['admin.datasetRegistrationSummary.approved']}:"
+							for="accepted" />
+						<h:outputText id="accepted"
+							value="#{datasetRegistrationSummaryBean.accepted}" />
+
+						<h:outputLabel value="#{i18n['admin.datasetRegistrationSummary.rejected']}:"
+							for="rejected" />
+						<h:outputText id="rejected"
+							value="#{datasetRegistrationSummaryBean.rejected}" />
+							
+					</h:panelGrid>
+				</p:panel>
+				
+				<p:panel header="#{i18n['admin.datasetRegistrationSummary.rejectedDataSets']}" rendered="#{datasetRegistrationSummaryBean.registry!=null}">
+					<p:dataTable id="processTable" var="process"
+						value="#{datasetRegistrationSummaryBean.rejectedProcesses}" paginator="true"
+						rows="15" lazy="false" rowsPerPageTemplate="5,10,15,50"
+						paginatorTemplate="{CurrentPageReport} {FirstPageLink}
+			                     {PreviousPageLink} {PageLinks} {NextPageLink}
+			                     {LastPageLink} {RowsPerPageDropdown} #{i18n['common.list.entriesPerPage']}"
+						emptyMessage="#{i18n['common.list.noneFound']}">
+						
+						<p:column headerText="#{i18n['common.name']}">
+							<h:outputText value="#{process.name.value}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['admin.proc.version']}">
+							<h:outputText value="#{process.version}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['common.type']}">
+							<h:outputText value="#{process.type.value}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['common.dataset.classif']}">
+							<h:outputText value="#{process.classification.classHierarchyAsString}" />
+						</p:column>
+						
+						<p:column headerText="#{i18n['admin.datasetRegistrationSummary.rejectionReason']}">
+							<h:outputText value="#{i18n['admin.datasetRegistrationSummary.invalidCompliance']}" 
+								rendered="#{datasetRegistrationSummaryBean.isRejectedCompliance(process)}"/>
+							<h:outputText value="#{i18n['admin.datasetRegistrationSummary.noDifference']}" 
+								rendered="#{!datasetRegistrationSummaryBean.isRejectedCompliance(process)}"/>
+						</p:column>
+						
+					</p:dataTable>
+				</p:panel>
+				
+			</h:form>
+			<ui:include src="/messages.xhtml" />
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
+

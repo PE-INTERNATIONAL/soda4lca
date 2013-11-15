@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+Copyright (c) 2011 Karlsruhe Institute of Technology (KIT) - Institute for 
+Applied Computer Science (IAI). 
+
+This file is part of soda4LCA - the Service-Oriented Life Cycle Data Store.
+
+soda4LCA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by the 
+Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+soda4LCA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with soda4LCA.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<!--
+Parameters for this composition:
+	via ui:param:
+		dsType: data set type string for IDs (no whitespaces!)
+		listInclude: which list to include from ../../datasets/include/ directory
+		sHandler: stock handler
+		dsWrapper: data set wrapper instance
+		tabTitleKey: i18n key for title of the tab
+		typeKey: i18n key for data set type (singular)
+-->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<p:tab title="#{i18n[tabTitleKey]}" titletip="#{dsWrapper.contentModel.rowCount} #{i18n[tabTitleKey]}">
+		<ui:fragment rendered="#{not sHandler.entry.root}">
+			<div class="floatRight">
+				<p:commandButton id="assignDataSetBtn#{dsType}" value="#{i18n['admin.assign']} #{utilStr['unicodeChar.hellip']}" onclick="assign#{dsType}Dlg.show();" type="button" />
+			</div>
+		</ui:fragment>
+		<p:dialog id="assign#{dsType}Dialog" widgetVar="assign#{dsType}Dlg" dynamic="true" modal="true">
+			<f:facet name="header">
+				<h:outputFormat value="#{i18n['admin.assignDataSets']}">
+					<f:param value="#{i18n[typeKey]}" />
+				</h:outputFormat>				
+			</f:facet>
+			<ui:include src="../../datasets/include/#{listInclude}">
+				<ui:param name="dtId" value="ad#{dsType}DataTable" />
+				<ui:param name="appendToBody" value="true" />
+				<ui:param name="backingBean" value="#{dsWrapper}" />
+				<ui:param name="lazyDataModel" value="#{dsWrapper.candidateModel}" />
+				<ui:param name="selectionProperty" value="#{dsWrapper.candidateModel.selectedItems}" />
+				<ui:param name="selectedActionButtonLabel" value="#{i18n['admin.assignSelected']}" />
+				<ui:param name="actionDialogHeader" value="#{i18n['admin.confirmDlg.assign']}" />
+				<ui:param name="actionDialogMessage" value="#{i18n['admin.confirmMsg.assignSelected']}?" />
+				<ui:param name="actionDialogCancelLabel" value="#{i18n['admin.cancel']}" />
+				<ui:param name="actionDialogOKLabel" value="#{i18n['admin.ok']}" />
+				<ui:param name="actionDialogOKActionMethod" value="attachSelectedToStock" />
+				<ui:param name="includeMessages" value="false" />
+				<ui:param name="omitForm" value="true" />
+				<ui:param name="closeDialog" value="assign#{dsType}Dlg" />
+				<ui:param name="updateAlso" value="ct#{dsType}DataTable" />
+			</ui:include>
+		</p:dialog>
+			
+		<ui:include src="../../datasets/include/#{listInclude}">
+			<ui:param name="dtId" value="ct#{dsType}DataTable" />
+			<ui:param name="appendToBody" value="false" />
+			<ui:param name="backingBean" value="#{dsWrapper}" />
+			<ui:param name="lazyDataModel" value="#{dsWrapper.contentModel}" />
+			<ui:param name="selectionProperty" value="#{dsWrapper.contentModel.selectedItems}" />
+			<ui:param name="selectedActionButtonLabel" value="#{sHandler.entry.root ? i18n['admin.deleteSelected'] : i18n['admin.removeSelected']}" />
+			<ui:param name="actionDialogHeader" value="#{sHandler.entry.root ? i18n['admin.confirmDlg.delete'] : i18n['admin.confirmDlg.remove']}" />
+			<ui:param name="actionDialogMessage" value="#{sHandler.entry.root ? i18n['admin.confirmMsg.deleteSelected'] : i18n['admin.confirmMsg.removeSelected']}?" />
+			<ui:param name="actionDialogCancelLabel" value="#{i18n['admin.cancel']}" />
+			<ui:param name="actionDialogOKLabel" value="#{i18n['admin.ok']}" />
+			<ui:param name="actionDialogOKActionMethod" value="#{sHandler.entry.root ? 'deleteSelected' : 'detachSelectedFromStock'}" />
+			<ui:param name="includeMessages" value="false" />
+			<ui:param name="omitForm" value="true" />
+		</ui:include>
+	</p:tab>
+
+</ui:composition>
+

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2011 Karlsruhe Institute of Technology (KIT) - Institute for 
+  Applied Computer Science (IAI). 
+  
+  This file is part of soda4LCA - the Service-Oriented Life Cycle Data Store.
+  
+  soda4LCA is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by the 
+  Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  soda4LCA is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public License
+  along with soda4LCA.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<tools>
+  <toolbox scope="request" xhtml="true">
+    <tool key="params" class="org.apache.velocity.tools.view.ParameterTool"/>
+    <tool key="listTool" class="org.apache.velocity.tools.generic.ListTool"/>
+    <tool key="sortTool" class="org.apache.velocity.tools.generic.SortTool"/>
+    <tool key="linkTool" class="org.apache.velocity.tools.view.LinkTool"/>
+    <tool key="conf" class="de.iai.ilcd.gui.utils.ConfigurationTool"/>
+    <tool key="user" class="de.iai.ilcd.security.UserAccessBean"/>
+  </toolbox>
+
+  <toolbox scope="application" xhtml="true">
+      <tool key="esc" class="org.apache.velocity.tools.generic.EscapeTool"/>
+  </toolbox>
+</tools>

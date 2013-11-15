@@ -1,0 +1,26 @@
+<!-- Workaround due to p:menu bugs and lack of functionality -->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+
+	<h:form>
+		<p:menu>
+			<p:menuitem value="#{msg.menu_home}" url="/secured/main.xhtml" ajax="false"/>
+			<p:submenu label="#{msg.menu_nodesManagement}">
+				<p:menuitem value="#{msg.menu_registeredNodes}" url="/secured/nodes.xhtml?approved=true" ajax="false"/>
+				<p:menuitem value="#{msg.menu_nodesToApprove}" url="/secured/nodes.xhtml?approved=false" ajax="false"/>
+			</p:submenu>
+			<p:submenu label="#{msg.menu_datasetsManagement}">
+				<p:menuitem value="#{msg.menu_registeredDataSets}" url="/secured/datasets.xhtml?approved=true" ajax="false"/>
+				<p:menuitem value="#{msg.menu_datasetsToApprove}" url="/secured/datasets.xhtml?approved=false" ajax="false"/>
+			</p:submenu>
+			<p:submenu label="Logout">
+				<p:menuitem value="#{msg.menu_logout}" actionListener="#{loginBean.logout}" ajax="false"/>
+			</p:submenu>
+		</p:menu>
+	</h:form>
+
+</ui:composition>

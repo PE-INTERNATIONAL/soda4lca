@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<!DOCTYPE targetset [
+<!ENTITY agtargets SYSTEM "../../target/target.db/Administration_Guide.target.db"> 
+<!ENTITY igtargets SYSTEM "../../target/target.db/Installation_Guide.target.db">
+]>
+<targetset>
+    <targetsetinfo>target database document for soda4LCA documentation</targetsetinfo>
+
+    <!-- Site map for generating relative paths between documents -->
+    <sitemap>
+        <dir name="doc">
+            <dir name="Administration_Guide">
+                <document targetdoc="Administration_Guide" baseuri="../Administration_Guide/Administration_Guide.html"> &agtargets; </document>
+            </dir>
+            <dir name="Installation_Guide">
+                <document targetdoc="Installation_Guide" baseuri="../Installation_Guide/Installation_Guide.html"> &igtargets; </document>
+            </dir>
+        </dir>
+    </sitemap>
+</targetset>
